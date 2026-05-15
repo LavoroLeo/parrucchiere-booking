@@ -1,0 +1,113 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                                                                            ║
+║          🚀 COME AGGIORNARE IL SITO - GUIDA SEMPLICE PER CLIENTE           ║
+║                                                                            ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+Ciao! Se devi aggiornare il sito delle prenotazioni, segui questi 5 step semplici.
+
+Non serve sapere niente di programmazione - è solo click del mouse!
+
+════════════════════════════════════════════════════════════════════════════════
+
+⏱️ TEMPO: 5 minuti
+
+════════════════════════════════════════════════════════════════════════════════
+
+📋 STEP 1: ACCEDI A VERCEL
+
+Apri il browser e vai a:
+  https://vercel.com/dashboard
+
+Ti apparirà una pagina con i tuoi progetti.
+
+════════════════════════════════════════════════════════════════════════════════
+
+📋 STEP 2: SELEZIONA IL PROGETTO
+
+Cerca il progetto chiamato "parrucchiere-booking"
+
+Clicca su di esso.
+
+════════════════════════════════════════════════════════════════════════════════
+
+📋 STEP 3: CLICCA REDEPLOY
+
+In alto a DESTRA della pagina vedi un bottone grigio che dice:
+  "Redeploy"
+
+Cliccaci sopra.
+
+════════════════════════════════════════════════════════════════════════════════
+
+📋 STEP 4: CONFERMA
+
+Ti appare una finestra che chiede:
+  "Redeploy to production?"
+
+Clicca "Redeploy" (il bottone blu).
+
+════════════════════════════════════════════════════════════════════════════════
+
+📋 STEP 5: ASPETTA
+
+Vedrai una schermata che mostra i progressi.
+
+Aspetta 2-3 minuti che finisca.
+
+Quando finisce, il sito è aggiornato! ✅
+
+════════════════════════════════════════════════════════════════════════════════
+
+✅ FINITO!
+
+Il sito è aggiornato. Ora puoi:
+
+1. Andare a https://parrucchiere-booking.vercel.app
+2. Ricaricare (Ctrl+F5)
+3. Testare che tutto funziona
+
+════════════════════════════════════════════════════════════════════════════════
+
+❓ DOMANDE COMUNI
+
+D: Quanto tempo ci vuole?
+R: 2-3 minuti normalmente
+
+D: Il sito va down mentre si aggiorna?
+R: No, rimane sempre online
+
+D: Posso interrompere l'aggiornamento?
+R: Meglio di no, aspetta che finisca
+
+D: Se qualcosa va male?
+R: Chiama il developer - Vercel tiene i backup
+
+D: Devo aggiornare spesso?
+R: Solo quando fai cambiamenti importanti
+
+════════════════════════════════════════════════════════════════════════════════
+
+🎯 QUELLO CHE SUCCEDE DIETRO:
+
+Quando clicchi "Redeploy", Vercel:
+1. Prende i file dal tuo repository GitHub
+2. Ricompila il sito
+3. Pubblica la nuova versione
+4. Il sito rimane online tutto il tempo
+
+════════════════════════════════════════════════════════════════════════════════
+
+💡 TIP: Se il sito non aggiorna:
+
+1. Ricaricare il browser (Ctrl+F5)
+2. Aspettare 1 minuto
+3. Ricaricare di nuovo
+
+Sometimes la cache del browser rimane vecchia.
+
+════════════════════════════════════════════════════════════════════════════════
+
+Domande? Scrivi al developer!
+
+════════════════════════════════════════════════════════════════════════════════

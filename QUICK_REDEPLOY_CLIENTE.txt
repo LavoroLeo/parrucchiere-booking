@@ -1,0 +1,25 @@
+╔═══════════════════════════════════════════════════════════════════════════╗
+║                    AGGIORNA IL SITO IN 5 MINUTI                          ║
+╚═══════════════════════════════════════════════════════════════════════════╝
+
+PASSO 1:
+  Vai a: https://vercel.com/dashboard
+
+PASSO 2:
+  Clicca: parrucchiere-booking
+
+PASSO 3:
+  In alto a destra vedi "Redeploy"
+  Cliccaci
+
+PASSO 4:
+  Clicca il bottone blu "Redeploy"
+
+PASSO 5:
+  Aspetta 2-3 minuti
+
+✅ FINITO! Il sito è aggiornato.
+
+═══════════════════════════════════════════════════════════════════════════
+
+Dubbio? Chiama il developer!

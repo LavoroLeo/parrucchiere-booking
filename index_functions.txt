@@ -1,0 +1,11 @@
+function getOpeningHours
+function getServices
+function loadAllBookings
+function loadServices
+function loadSocialLinks
+function selectTime
+function showBookingAccess
+function submitBooking
+function updateAvailableTimes
+function updateServiceSummary
+function updateSummaryTime

@@ -1,0 +1,738 @@
+═══════════════════════════════════════════════════════════════
+    ISTRUZIONI: COME VENDERE UN SITO A UN NUOVO CLIENTE
+═══════════════════════════════════════════════════════════════
+
+FLUSSO COMPLETO QUANDO VENDI A UN PARRUCCHIERE
+───────────────────────────────────────────────────
+
+📋 PASSO 1: COPIA IL SITO
+├─ Duplica la cartella "Artigiani"
+├─ Rinominala: es. "Parrucchiere_NomeCliente"
+└─ Copia tutto il contenuto (HTML, CSS, JS, immagini, ecc.)
+
+🔐 PASSO 2: GENERA NUOVI CODICI DI SICUREZZA
+├─ Crea un codice NUMERICO (20+ cifre)
+│  Esempio: 73948562938475629384756293
+│
+├─ Crea un codice ALFABETICO (20+ lettere)
+│  Esempio: NEWSALONACCESS2026SECURE
+│
+└─ Annota i due codici (li userai nei prossimi passi)
+
+💾 PASSO 3: SALVA I CODICI IN FIREBASE
+├─ Accedi a https://console.firebase.google.com/
+├─ Progetto: "parrucchieri-online"
+├─ Vai a "Realtime Database"
+├─ Naviga a: businesses/[businessId]/securityCodes
+├─ Aggiungi un nuovo sito (es: sito4):
+│  {
+│    "nome": "Nome Parrucchiere",
+│    "dataCreazione": "2026-05-13",
+│    "codicNumerico": "73948562938475629384756293",
+│    "codicAlfabetico": "NEWSALONACCESS2026SECURE"
+│  }
+└─ Salva
+
+📝 PASSO 4: AGGIORNA IL FILE LOCALE
+├─ Apri: codici-sicurezza.js
+├─ Aggiungi un nuovo oggetto (es: SITO_4)
+├─ Compila con nome, data e i due codici
+└─ Salva il file
+
+📧 PASSO 5: COMUNICA AL CLIENTE - CODICI DI ACCESSO
+├─ Metodo: WhatsApp, Email o SMS
+├─ Contenuto da mandare:
+│
+│  "Ecco i tuoi codici di accesso alla dashboard:
+│
+│   🔢 Codice Numerico: 73948562938475629384756293
+│   🔤 Codice Alfabetico: NEWSALONACCESS2026SECURE
+│
+│   Per accedere:
+│   1. Vai sulla homepage del sito
+│   2. Clicca su 'Accedi alle tue prenotazioni'
+│   3. Nel campo 'Nome' inserisci il codice numerico
+│   4. Nel campo 'Cognome' inserisci il codice alfabetico
+│   5. Clicca 'Accedi'
+│
+│   Aspetta le credenziali email/password nel prossimo messaggio!"
+│
+└─ Invia subito
+
+🔑 PASSO 6: SISTEMA DI PASSWORD DEMO (PER VENDITA)
+
+Quando vendi il sito al cliente, dagli una PASSWORD DEMO da cambiare subito.
+
+┌─────────────────────────────────────────────────────────────┐
+│ COME FUNZIONA IL SISTEMA DI PASSWORD DEMO
+├─────────────────────────────────────────────────────────────┤
+│
+│ PRIMO ACCESSO (Tu - Proprietario):
+│ ├─ Email: parrucchiere@parrucchiererossi.it
+│ ├─ Password DEMO: demo2026 (password temporanea)
+│ └─ Spieghi al cliente: "Accedi con questa password DEMO"
+│
+│ SECONDO ACCESSO (Cliente):
+│ ├─ Cliente accede con email/password DEMO
+│ ├─ Entra nel dashboard
+│ ├─ Clicca: "Impostazioni" → "Cambia Password"
+│ ├─ Inserisce la NUOVA password (scelta da lui)
+│ └─ ✅ Adesso solo lui conosce la password
+│
+│ SUCCESSIVI ACCESSI (Cliente):
+│ ├─ Usa la sua NUOVA password (non più la DEMO)
+│ └─ ✅ Sito completamente personale
+│
+│ ⚠️ VANTAGGI DI QUESTO SISTEMA:
+│ ├─ Tu non conosci la password finale
+│ ├─ Cliente ha pieno controllo
+│ ├─ Maggiore sicurezza
+│ └─ Cliente non sa il codice numerico/alfabetico
+└─────────────────────────────────────────────────────────────┘
+
+🔐 PASSO 6B: GENERA CREDENZIALI FINALI
+
+┌─────────────────────────────────────────────────────────────┐
+│ CREDENZIALI PER IL CLIENTE
+├─────────────────────────────────────────────────────────────┤
+│
+│ Email: parrucchiere@parrucchiererossi.it (o personalizzata)
+│
+│ Password DEMO (temporanea):
+│  ├─ Standard: demo2026
+│  └─ (Da cambiare al primo accesso)
+│
+│ Come Cambiarla:
+│  ├─ Cliente accede al dashboard
+│  ├─ Va in "Impostazioni"
+│  ├─ Clicca "Cambia Password"
+│  ├─ Inserisce la nuova password (min 8 caratteri)
+│  └─ Salva
+│
+│ ⚠️ COMUNICARE AL CLIENTE:
+│ "Ti ho mandato una password DEMO (demo2026).
+│  La usi SOLO per il primo accesso.
+│  Dentro il dashboard, cambiaila subito.
+│  Nessuno deve conoscere la tua password finale!"
+└─────────────────────────────────────────────────────────────┘
+
+🌐 PASSO 6B: PUBBLICA IL SITO SU VERCEL (100% GRATUITO)
+├─ ⚠️ IMPORTANTE: Fare DOPO aver collegato Firebase!
+│  (Ordine: Firebase → POI Vercel)
+├─
+├─ Soluzione 100% GRATUITA: Vercel (hosting gratuito + dominio)
+├─
+├─ ✅ PIANO GRATUITO VERCEL INCLUDE:
+│  ├─ Hosting illimitato
+│  ├─ Banda illimitata
+│  ├─ Certificato SSL gratis (HTTPS)
+│  ├─ Custom domain gratis
+│  ├─ Deploy automatico da GitHub
+│  ├─ Uptime 99.9%
+│  └─ PERFETTO PER PARRUCCHIERI!
+│
+├─ ⚠️ Quando diventa pagato?
+│  ├─ Raramente - solo se traffico MOLTO alto (milioni di visite)
+│  ├─ Per un parrucchiere: PRATICAMENTE GRATIS PER SEMPRE
+│  ├─ A meno che non abbia sito con traffico tipo Amazon
+│  └─ Vercel avvisa prima di addebitare
+│
+├─ 💡 CONSIGLIO: Digli che è 100% GRATUITO
+│    Nessun costo nascosto, nessun pagamento, nothing!
+│
+├─ COME FARE:
+│  1. Accedi a https://vercel.com/
+│  2. Clicca "Sign up" (registrati con GitHub o email)
+│  3. Completa registrazione
+│  4. Clicca "New Project"
+│  5. Seleziona "Import Git Repository"
+│     (Oppure uploada la cartella manualmente)
+│  6. Seleziona la cartella del sito
+│  7. Vercel propone automaticamente le impostazioni
+│  8. Clicca "Deploy"
+│  9. Attendi il caricamento (2-3 minuti)
+│  10. Riceverai un URL: es. "parrucchiere-rossi.vercel.app"
+│
+├─ DOPO IL DEPLOY:
+│  ├─ Il sito è ONLINE e raggiungibile dal web
+│  ├─ Puoi condividere il link: https://parrucchiere-rossi.vercel.app
+│  ├─ Ogni volta che modifichi il sito, Vercel lo rideploya
+│  └─ È gratuito per sempre!
+│
+├─ AGGIUNGERE UN DOMINIO PERSONALIZZATO (Opzionale):
+│  ├─ Acquista dominio: es. parrucchiererossi.it
+│     Dove: Godaddy, Namecheap, Aruba, ecc.
+│  ├─ Nel pannello Vercel: Progetto → Settings → Domains
+│  ├─ Aggiungi il tuo dominio
+│  ├─ Modifica i DNS del dominio (Vercel ti guida)
+│  ├─ Attendi 24-48 ore per propagazione
+│  └─ Pronto! Il sito è raggiungibile con il tuo dominio
+│
+└─ ✅ Adesso il sito è PUBBLICO e funzionante!
+
+📧 PASSO 7: COMUNICA AL CLIENTE - CREDENZIALI LOGIN
+├─ Metodo: Email (più sicuro di WhatsApp)
+├─ Contenuto da mandare:
+│
+│  "Ecco le tue credenziali di accesso alla dashboard:
+│
+│   📧 Email: parrucchiere@parrucchiererossi.it
+│   🔐 Password: SecurePass2026!
+│
+│   Accedi qui dopo aver inserito i codici segreti:
+│   [link al sito]/parrucchiere-login.html
+│
+│   ⚠️ IMPORTANTE:
+│   - Cambia la password al primo accesso
+│   - Non condividere questi dati con nessuno
+│   - Se perdi la password, contattami"
+│
+└─ Invia via email
+
+✅ PASSO 8: VERIFICA FUNZIONAMENTO
+├─ Chiedi al cliente di testare l'accesso
+├─ Deve:
+│  1. Cliccare "Accedi alle tue prenotazioni" dalla home
+│  2. Inserire i due codici
+│  3. Accedere con email/password
+│  4. Verificare che veda la dashboard
+└─ Fagli sapere di contattarti se ha problemi
+
+═══════════════════════════════════════════════════════════════
+
+🔧 PASSO 9: GUIDA CLIENTE A CREARE ACCOUNT FIREBASE PERSONALE
+├─ ⚠️ IMPORTANTE: Il cliente deve avere un proprio account Firebase
+├─ Se non lo ha, deve crearlo:
+│  1. Vai su https://console.firebase.google.com/
+│  2. Clicca "Crea progetto"
+│  3. Nome: es. "Parrucchiere_NomeCliente"
+│  4. Seleziona "Abilita Google Analytics" (facoltativo)
+│  5. Clicca "Crea progetto"
+│  6. Attendi il caricamento (2-3 minuti)
+│
+└─ Una volta creato il progetto, il cliente avrà:
+   - projectId: es. "parrucchiere-nome-cliente"
+   - apiKey: chiave API (importante!)
+
+🔗 PASSO 10: GUIDA CLIENTE A COLLEGARE IL SITO A FIREBASE
+├─ ⚠️ IMPORTANTE: FARE QUESTO PRIMA DI PUBBLICARE SU VERCEL!
+│
+├─ Il cliente deve sostituire le credenziali Firebase nel sito
+├─ Apri il file: firebase-config.js (nella cartella del sito)
+├─ Trova questa sezione:
+│  const firebaseConfig = {
+│      apiKey: "AIzaSyA5qAqCxYuE3FvkvBT3FZScFPLzGG6OE",
+│      authDomain: "parrucchieri-online.firebaseapp.com",
+│      databaseURL: "https://parrucchieri-online-...",
+│      projectId: "parrucchieri-online",
+│      storageBucket: "parrucchieri-online.firebasestorage.app",
+│      messagingSenderId: "744961592639",
+│      appId: "1:744961592639:web:bf257e1f805394eeca178a"
+│  };
+│
+├─ Sostituisci con le sue credenziali Firebase:
+│  - Vai su Firebase Console
+│  - Progetto → Impostazioni → Generale
+│  - Scorri fino a "Le tue app"
+│  - Clicca l'icona </> (Web)
+│  - Copia tutta la configurazione
+│  - Incolla nel file firebase-config.js
+│
+├─ Salva il file
+└─ ✅ PRONTO PER PUBBLICARE SU VERCEL!
+
+🔧 PASSO 10C: CONFIGURARE FIREBASE DA COMMAND LINE (ALTERNATIVA COMPLETA)
+├─ Se il cliente vuole deployare direttamente su Firebase invece di Vercel
+├─ ⚠️ IMPORTANTE: Usare CMD non PowerShell (Windows)
+│
+├─ STEP 1: INSTALLA FIREBASE CLI
+│  ├─ Apri CMD (Prompt dei Comandi - "Esegui Come Amministratore")
+│  ├─ Digita ESATTAMENTE:
+│  │
+│  │  npm install -g firebase-tools
+│  │
+│  ├─ Premi INVIO
+│  ├─ Attendi il completamento (~2-3 minuti)
+│  ├─ Vedrai: "added 675 packages" (o simile)
+│  └─ ✅ Firebase CLI è installato
+│
+├─ STEP 2: LOGIN A FIREBASE
+│  ├─ Nel CMD digita ESATTAMENTE:
+│  │
+│  │  firebase login
+│  │
+│  ├─ Premi INVIO
+│  ├─ DOMANDA 1: "Enable Gemini in Firebase?"
+│  │  └─ Rispondi: n (poi INVIO)
+│  │
+│  ├─ DOMANDA 2: "Allow Firebase to collect usage data?"
+│  │  └─ Rispondi: n (poi INVIO)
+│  │
+│  ├─ Si aprirà il browser automaticamente
+│  ├─ Accedi con il tuo account Google
+│  ├─ Autorizza Firebase
+│  ├─ Chiudi il browser
+│  ├─ Torna a CMD
+│  └─ ✅ Login completato
+│
+├─ STEP 3: PREPARAZIONE CARTELLA PROGETTO
+│  ├─ In CMD, naviga alla cartella del sito:
+│  │
+│  │  cd C:\Users\[TuoNome]\Desktop\Parrucchiere_NomeCliente
+│  │
+│  │  (Sostituisci [TuoNome] e il percorso corretto)
+│  │
+│  ├─ Premi INVIO
+│  ├─ Verifica che sei nella cartella giusta (deve contenere index.html, ecc.)
+│  └─ ✅ Sei nella cartella corretta
+│
+├─ STEP 4: INIZIALIZZA IL PROGETTO FIREBASE
+│  ├─ Nel CMD digita ESATTAMENTE:
+│  │
+│  │  firebase init
+│  │
+│  ├─ Premi INVIO
+│  ├─ DOMANDA 1: "Which Firebase features do you want to setup for this directory?"
+│  │  ├─ Usa frecce ↑↓ per navigare
+│  │  ├─ Seleziona SOLO "Realtime Database" (con barra spaziatrice)
+│  │  ├─ Deseleziona gli altri (se selezionati)
+│  │  └─ Premi INVIO quando fatto
+│  │
+│  ├─ DOMANDA 2: "Which project do you want to use?"
+│  │  ├─ Usa frecce per trovare il tuo progetto Firebase
+│  │  └─ Premi INVIO per selezionarlo
+│  │
+│  ├─ DOMANDA 3: "What file should be served as the public directory?"
+│  │  ├─ Default è "public"
+│  │  ├─ Cancella e digita: .  (solo un punto)
+│  │  └─ Premi INVIO
+│  │
+│  ├─ DOMANDA 4: "Configure as a single-page app?"
+│  │  └─ Rispondi: n (non serve per questo sito)
+│  │
+│  ├─ Altre domande → Premi INVIO per default
+│  ├─ Attendi che finisca (crea cartella .firebase e file di config)
+│  └─ ✅ Progetto inizializzato
+│
+├─ STEP 5: DEPLOY SU FIREBASE HOSTING
+│  ├─ Nel CMD digita ESATTAMENTE:
+│  │
+│  │  firebase deploy
+│  │
+│  ├─ Premi INVIO
+│  ├─ Attendi il caricamento (2-5 minuti)
+│  ├─ Vedrai: "Deploy complete!"
+│  ├─ Vedrai anche l'URL del sito: https://[nomeprogetto].web.app
+│  ├─ Copia questo URL
+│  └─ ✅ Sito online su Firebase!
+│
+├─ STEP 6: VERIFICA FUNZIONAMENTO
+│  ├─ Apri il browser
+│  ├─ Vai all'URL che hai copiato (es: parrucchiere-rossi.web.app)
+│  ├─ Verifica che il sito carichi correttamente
+│  ├─ Prova ad accedere con i codici
+│  └─ ✅ Tutto funziona!
+│
+├─ COME AGGIORNARE IL SITO SU FIREBASE (Dopo modifiche):
+│  ├─ Modifica i file sul tuo computer
+│  ├─ Apri CMD nella cartella del progetto
+│  ├─ Digita: firebase deploy
+│  ├─ Premi INVIO
+│  ├─ Attendi il completamento
+│  └─ ✅ Sito aggiornato automaticamente
+│
+└─ ✅ Firebase Hosting configurato completamente!
+
+═══════════════════════════════════════════════════════════════
+
+🚀 PASSO 10D: DEPLOY SU VERCEL (GUIDA RAPIDA E FACILE)
+
+IMPORTANTE: Questo è il metodo CONSIGLIATO per i clienti!
+Vercel è 100% gratuito, facile e automatico.
+
+├─ STEP 1: INSTALLA VERCEL CLI
+│  ├─ Apri CMD (Prompt dei Comandi)
+│  ├─ Digita ESATTAMENTE:
+│  │
+│  │  npm install -g vercel
+│  │
+│  ├─ Premi INVIO
+│  ├─ Attendi il completamento (~1-2 minuti)
+│  ├─ Vedrai: "added 312 packages in 28s"
+│  └─ ✅ Vercel CLI installato
+│
+├─ STEP 2: LOGIN A VERCEL
+│  ├─ Nel CMD digita:
+│  │
+│  │  vercel login
+│  │
+│  ├─ Premi INVIO
+│  ├─ Scegli metodo login (Email consigliato)
+│  ├─ Completa il login nel browser
+│  ├─ Vedrai: "Congratulations! You are now signed in."
+│  └─ ✅ Login completato
+│
+├─ STEP 3: NAVIGA ALLA CARTELLA DEL SITO
+│  ├─ Nel CMD digita:
+│  │
+│  │  cd C:\Users\[TuoNome]\Desktop\Parrucchiere_NomeCliente
+│  │
+│  │  (Sostituisci [TuoNome] con il tuo nome utente Windows)
+│  │
+│  ├─ Premi INVIO
+│  └─ ✅ Sei nella cartella del sito
+│
+├─ STEP 4: DEPLOY SU VERCEL
+│  ├─ Nel CMD digita:
+│  │
+│  │  vercel deploy --prod
+│  │
+│  ├─ Premi INVIO
+│  ├─ Rispondi alle domande:
+│  │  ├─ "Set up and deploy?" → y
+│  │  ├─ "Which scope?" → Premi INVIO (default)
+│  │  ├─ "Link to existing project?" → n
+│  │  ├─ "Project name?" → parrucchiere-booking (o nome generico)
+│  │  ├─ "Directory?" → Premi INVIO (.)
+│  │  ├─ "Modify settings?" → n
+│  │  └─ "Additional settings?" → n
+│  │
+│  ├─ Attendi il completamento (~2-3 minuti)
+│  └─ ✅ Deploy completato!
+│
+├─ STEP 5: OTTIENI L'URL PUBBLICO
+│  ├─ Vedrai nel CMD:
+│  │
+│  │  ✓ Production: https://parrucchiere-booking-xxxxx.vercel.app
+│  │  🔗 Aliased: https://parrucchiere-booking.vercel.app
+│  │
+│  ├─ Copia l'URL principale (l'Aliased è più facile da ricordare)
+│  └─ ✅ Questo è l'URL che darai ai clienti!
+│
+├─ STEP 6: TESTA IL SITO ONLINE
+│  ├─ Apri il browser
+│  ├─ Vai all'URL: https://parrucchiere-booking.vercel.app
+│  ├─ Verifica che il sito carichi correttamente
+│  ├─ Prova ad accedere con:
+│  │  ├─ Email: demo@parrucchiererossi.it
+│  │  └─ Password: demo2026
+│  ├─ Controlla il dashboard
+│  └─ ✅ Tutto funziona!
+│
+└─ ✅ SITO ONLINE E PUBBLICO!
+
+🎯 COME USARE VERCEL CON GITHUB (Per Future Modifiche):
+
+Quando il cliente vuole modificare il sito in futuro:
+
+1. **Cliente modifica i file locali** (HTML, CSS, JS, ecc.)
+2. **Cliente fa:** git push (1 comando)
+3. **Vercel rideploya automaticamente** (niente da fare!)
+
+VANTAGGI:
+├─ ✅ Deploy automatico
+├─ ✅ Nessun comando Vercel da ricordare
+├─ ✅ Storico di tutte le modifiche (Git)
+├─ ✅ Facile per il cliente
+└─ ✅ Professionale
+
+SETUP GITHUB (Una volta sola):
+├─ 1. Crea account GitHub (gratis)
+├─ 2. Crea repository "parrucchiere-booking"
+├─ 3. Push il codice su GitHub
+├─ 4. Nel Dashboard Vercel: Connetti il repository GitHub
+├─ 5. Ogni git push = deploy automatico su Vercel!
+└─ ✅ Pronto!
+
+💳 PASSO 11: INFORMAZIONE SU UTILIZZO E PAGAMENTI
+├─ Piano GRATUITO:
+│  ├─ Operazioni lettura/scrittura: 100 al giorno
+│  ├─ Archiviazione: 1 GB
+│  └─ Perfetto per test e piccoli saloni
+│
+├─ Piano PAGATO (dopo il limite gratuito):
+│  ├─ Operazioni illimitate
+│  ├─ Archiviazione illimitata
+│  ├─ Support prioritario
+│  └─ Costo: ~$5-50+ al mese (dipende da utilizzo)
+│
+└─ ⚠️ Quando il cliente supera il limite gratuito:
+   ├─ Firebase lo avvisa via email
+   ├─ Deve attivare un piano pagato
+   ├─ Deve aggiungere una CARTA DI CREDITO
+   └─ Poi gli verrà addebitato in base all'utilizzo
+
+═══════════════════════════════════════════════════════════════
+
+💰 PASSO 12: METODI DI PAGAMENTO PER IL CLIENTE
+
+Il cliente ha 3 opzioni per pagare Firebase (e altri servizi):
+
+┌─────────────────────────────────────────────────────────────┐
+│ OPZIONE 1: CARTA DI CREDITO (Diretto su Firebase)
+├─────────────────────────────────────────────────────────────┤
+│ ⚡ VELOCE - Pagamento automatico quando supera il limite
+│
+│ PASSI:
+│ 1. Accedi a Firebase Console
+│ 2. Progetto → Fatturazione
+│ 3. "Aggiungi account di fatturazione"
+│ 4. Inserisci dati carta:
+│    - Numero carta (16 cifre)
+│    - Data scadenza (MM/YY)
+│    - CVC (3 numeri dietro)
+│    - Nome titolare
+│    - Indirizzo di fatturazione
+│ 5. Clicca "Salva carta"
+│
+│ ✅ Fatto! Firebase addebita automaticamente
+│    quando supera il limite gratuito
+│
+│ ⚠️ Importante:
+│   - La carta rimane salvata in Firebase
+│   - Puoi impostare un limite di spesa massima
+│   - Riceverai notifiche via email degli addebiti
+└─────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────┐
+│ OPZIONE 2: PAYPAL
+├─────────────────────────────────────────────────────────────┤
+│ 💳 FLESSIBILE - Pagamento tramite conto PayPal
+│
+│ PASSI:
+│ 1. Il cliente si registra su https://www.paypal.com/
+│    (se non ha account)
+│ 2. Accedi a Firebase Console
+│ 3. Progetto → Fatturazione
+│ 4. "Aggiungi account di fatturazione"
+│ 5. Seleziona "PayPal" come metodo di pagamento
+│ 6. Clicca "Connetti a PayPal"
+│ 7. Accedi al suo account PayPal
+│ 8. Autorizza Firebase ad accedere a PayPal
+│ 9. Torna a Firebase
+│
+│ ✅ Fatto! Quando supera il limite, Firebase
+│    addebita direttamente dal conto PayPal
+│
+│ ⚠️ Importante:
+│   - PayPal prende una commissione (2-3%)
+│   - Riceverà ricevute via email sia da Firebase che da PayPal
+│   - Può modificare il metodo in qualsiasi momento
+└─────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────┐
+│ OPZIONE 3: BONIFICO ISTANTANEO / SEPA
+├─────────────────────────────────────────────────────────────┤
+│ 🏦 TRADIZIONALE - Pagamento tramite banca
+│
+│ PASSI:
+│ 1. Contattami (il proprietario del sito)
+│ 2. Ti do le coordinate bancarie IBAN
+│ 3. Il cliente esegue un BONIFICO al seguente:
+│    - IBAN: [da fornire dal proprietario]
+│    - Causale: "Pagamento Firebase - [Nome Parrucchiere]"
+│    - Importo: come concordato
+│
+│ 4. Inviagli una FATTURA/RICEVUTA
+│ 5. Una volta ricevuto il pagamento, io abilito:
+│    - Piano pagato su Firebase
+│    - Aggiungo carta di credito al sito
+│    - Il cliente può continuare ad usare il sito
+│
+│ ⚠️ Importante:
+│   - Bonifico istantaneo = arriva subito (SEPA)
+│   - bonifico normale = arriva entro 1-2 giorni
+│   - Chiedere sempre RICEVUTA di pagamento
+│   - Fagli sapere di contattarti se problemi
+└─────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────┐
+│ OPZIONE 4: STRIPE (Consigliato)
+├─────────────────────────────────────────────────────────────┤
+│ 💰 MODERNO - Pagamento tramite Stripe
+│
+│ PASSI:
+│ 1. Vai su https://www.stripe.com/
+│ 2. Clicca "Accedi" (o "Registrati" se nuovo)
+│ 3. Crea account Stripe
+│ 4. Verifica email
+│ 5. Completa il profilo:
+│    - Nome salone
+│    - Email
+│    - Numero telefono
+│    - Indirizzo
+│    - IBAN (per ricevere pagamenti)
+│ 6. Una volta verificato, condividi il link di pagamento
+│    (io te lo creo)
+│ 7. Il cliente clicca il link e paga con:
+│    - Carta di credito
+│    - PayPal
+│    - Apple Pay
+│    - Google Pay
+│
+│ ✅ Pagamento = Immediatamente abilitato
+│
+│ ⚠️ Importante:
+│   - Stripe prende commissione (2,9% + €0,30)
+│   - È la soluzione più moderna e flessibile
+│   - Il cliente riceve ricevuta automatica
+│   - Perfetto per pagamenti one-time o abbonamenti
+└─────────────────────────────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════
+
+🎯 QUALE METODO CONSIGLIARE AL CLIENTE?
+
+├─ Se cliente TEDESCO/EUROPA → SEPA Bonifico istantaneo
+├─ Se cliente vuole AUTOMATICO → Carta di credito su Firebase
+├─ Se cliente ha PayPal → PayPal (facile, conosce piattaforma)
+├─ Se cliente vuole FLESSIBILITÀ → Stripe (più metodi pagamento)
+└─ Se cliente INCERTO → Stripe (più moderno e sicuro)
+
+═══════════════════════════════════════════════════════════════
+
+📋 CHECKLIST COMUNICAZIONE AL CLIENTE:
+
+Quando spieghi i pagamenti al cliente parrucchiere, digli:
+
+□ "Il sito è GRATUITO per i primi 100 utilizzi al giorno"
+□ "Dopo quel limite, Firebase ti chiede di attivare un piano"
+□ "Puoi scegliere tra 4 metodi di pagamento"
+□ "Consiglio: [il metodo che preferisci per lui]"
+□ "Una volta pagato, il sito funziona ILLIMITATAMENTE"
+□ "Se supera ancora il limite, paga solo quello che usa"
+□ "Riceverà email di notifica da Firebase quando supera limite"
+□ "Può contattarmi se ha problemi con pagamenti"
+
+═══════════════════════════════════════════════════════════════
+
+⚙️ DATI IMPORTANTI DA TENERE TRACCIA:
+
+Nome Cliente: ___________________________
+Sito Numero: _____ (sito1, sito2, sito3, ecc.)
+Data Creazione: ___________________________
+
+Codice Numerico: ___________________________
+Codice Alfabetico: ___________________________
+
+Email Admin: ___________________________
+Password Admin: ___________________________
+
+Note: ___________________________________
+______________________________________
+
+═══════════════════════════════════════════════════════════════
+
+🔒 TRACCIA DEGLI ACCESSI IN FIREBASE:
+
+I codici rimangono salvati in Firebase e ogni volta che il
+parrucchiere accede, il sistema registra automaticamente:
+- Data e ora dell'accesso
+- Codice usato (offuscato per privacy)
+- Status accesso
+
+Puoi consultare il log in Firebase Console:
+businesses/[businessId]/parrucchiereAccessLog
+
+═══════════════════════════════════════════════════════════════
+
+🌍 ALTERNATIVE A VERCEL (PIATTAFORME GRATUITE):
+
+Se Vercel non piace al cliente, altre opzioni:
+
+┌─────────────────────────────────────────────────────────────┐
+│ NETLIFY (Alternativa a Vercel)
+├─────────────────────────────────────────────────────────────┤
+│ ✅ Gratuito
+│ ✅ Facile da usare
+│ ✅ Supporta custom domain
+│
+│ PASSI:
+│ 1. Vai su https://netlify.com/
+│ 2. Sign up
+│ 3. Drag & drop la cartella del sito
+│ 4. Netlify lo deploya automaticamente
+│ 5. Riceverai URL: es. "parrucchiere-rossi.netlify.app"
+└─────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────┐
+│ GITHUB PAGES (Se cliente sa usare GitHub)
+├─────────────────────────────────────────────────────────────┤
+│ ✅ Gratuito
+│ ✅ Perfetto per siti statici
+│ ✅ Versioning automatico
+│
+│ PASSI:
+│ 1. Crea repository su GitHub
+│ 2. Upload cartella del sito
+│ 3. Settings → Pages → Deploy from main branch
+│ 4. Riceverai URL: es. "username.github.io/parrucchiere-rossi"
+└─────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────┐
+│ FIREBASE HOSTING (Se usa Firebase)
+├─────────────────────────────────────────────────────────────┤
+│ ✅ Gratuito
+│ ✅ Integrato con Realtime Database
+│ ✅ Deploy facile dalla CLI
+│
+│ PASSI:
+│ 1. Firebase Console → Hosting
+│ 2. Installa Firebase CLI
+│ 3. Esegui: firebase init
+│ 4. Esegui: firebase deploy
+│ 5. Riceverai URL: es. "parrucchiere-rossi.web.app"
+└─────────────────────────────────────────────────────────────┘
+
+🎯 CONSIGLIO: Usa VERCEL (è il più facile e moderno)
+
+═══════════════════════════════════════════════════════════════
+
+📊 RIEPILOGO COMPLETO DEL PROCESSO DI VENDITA:
+
+PRIMA DI VENDERE (Tu - Proprietario):
+├─ 1. Copia il sito
+├─ 2. Genera codici di sicurezza
+├─ 3. Pubblica su Vercel
+└─ 4. Pronto per il cliente!
+
+QUANDO VENDI (Comunica al cliente):
+├─ Passo 1: Crea account Firebase
+├─ Passo 2: Collega il sito a Firebase
+├─ Passo 3: Riceve link per il sito online
+├─ Passo 4: Riceve codici di accesso
+├─ Passo 5: Riceve credenziali email/password
+└─ Passo 6: Accede e inizia a usare
+
+PAGAMENTI (Spiega al cliente):
+├─ Firebase gratuito per 100 utilizzi/giorno
+├─ Oltre quel limite paga in base all'utilizzo
+├─ 4 metodi di pagamento disponibili
+└─ Può cambiare metodo in qualsiasi momento
+
+SUPPORTO (Durante il primo mese):
+├─ Aiuta il cliente a completare la configurazione
+├─ Risolvi eventuali problemi con Firebase
+├─ Spiega come usare il dashboard
+└─ Dai il tuo contatto per emergenze
+
+═══════════════════════════════════════════════════════════════
+
+❓ DOMANDE FREQUENTI:
+
+D: Cosa faccio se il cliente dimentica i codici?
+R: Puoi fornirglieli di nuovo o cambiare i codici in Firebase
+   e comunicare i nuovi.
+
+D: Posso usare gli stessi codici per più clienti?
+R: NO. Ogni cliente deve avere codici diversi per sicurezza.
+
+D: Come cambio i codici dopo che ho venduto il sito?
+R: Cambia i codici in Firebase nella sezione securityCodes
+   e comunica i nuovi al cliente.
+
+D: Il cliente può vedere i codici altrove?
+R: No. I codici sono salvati solo in Firebase e nel file
+   locale codici-sicurezza.js
+
+═══════════════════════════════════════════════════════════════

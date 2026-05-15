@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parrucchiere Rossi - Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+            color: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: linear-gradient(135deg, #1a1a1a, #252525);
+            padding: 60px 40px;
+            border-radius: 16px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.15);
+            max-width: 450px;
+            width: 100%;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .login-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #d4af37, #c0a080);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 32px;
+            color: #000;
+            margin: 0 auto 25px;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .login-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            color: #d4af37;
+            margin-bottom: 8px;
+        }
+
+        .login-header p {
+            color: #cccccc;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #f5f5f5;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #333;
+            background: #0f0f0f;
+            color: #f5f5f5;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #d4af37;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+            background: rgba(212, 175, 55, 0.02);
+        }
+
+        .form-group input::placeholder {
+            color: #666;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #d4af37, #c0a080);
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-link a {
+            color: #d4af37;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .back-link a:hover {
+            color: #ffd700;
+        }
+
+        .error-msg {
+            display: none;
+            background: rgba(231, 76, 60, 0.15);
+            color: #e74c3c;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #e74c3c;
+            font-size: 14px;
+        }
+
+        .error-msg.show {
+            display: block;
+        }
+
+        .info-text {
+            background: rgba(212, 175, 55, 0.1);
+            color: #cccccc;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 3px solid #d4af37;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 600px) {
+            .login-container {
+                padding: 40px 25px;
+            }
+
+            .login-header h1 {
+                font-size: 28px;
+            }
+
+            .login-logo {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <div class="login-logo">PR</div>
+            <h1>Dashboard</h1>
+            <p id="loginSalonName">Parrucchiere Rossi</p>
+        </div>
+
+        <div class="error-msg" id="errorMsg"></div>
+
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label for="email">📧 Email</label>
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Es: parrucchiere@parrucchiererossi.it"
+                    required
+                    autofocus
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">🔐 Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Inserisci la password"
+                    required
+                >
+            </div>
+
+            <button type="submit" class="login-btn">🔓 Accedi al Dashboard</button>
+        </form>
+
+        <div style="margin-top: 30px; padding-top: 30px; border-top: 1px solid rgba(212, 175, 55, 0.2);">
+            <p style="color: #d4af37; font-weight: 600; margin-bottom: 12px; font-size: 13px;">📝 Credenziali Demo (Test):</p>
+            <div style="background: #0f0f0f; padding: 12px; border-radius: 8px; border-left: 3px solid #d4af37;">
+                <p style="color: #ccc; font-size: 12px; margin-bottom: 6px;"><strong>Email:</strong> demo@parrucchiererossi.it</p>
+                <p style="color: #ccc; font-size: 12px;"><strong>Password:</strong> demo2026</p>
+            </div>
+        </div>
+
+        <div class="back-link">
+            <a href="index.html">← Torna alla Home</a>
+        </div>
+    </div>
+
+    <!-- Firebase SDK (Compat - compatibile con script tag) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="firebase-database.js"></script>
+
+    <script>
+        // Carica logo e nome salone da Firebase
+        async function loadSalonLogoAndName() {
+            try {
+                if (typeof DatabaseAdapter === 'undefined') {
+                    console.warn('DatabaseAdapter non disponibile');
+                    return;
+                }
+
+                const data = await DatabaseAdapter.load();
+                const settings = data.settings || {};
+                const logo = data.logo || localStorage.getItem('salone_logo');
+                const saloneName = settings.name || localStorage.getItem('salone_name') || 'Parrucchiere Rossi';
+
+                // Aggiorna il nome salone
+                const salonNameEl = document.getElementById('loginSalonName');
+                if (salonNameEl) {
+                    salonNameEl.textContent = saloneName;
+                }
+
+                // Aggiorna il logo
+                const logoEl = document.querySelector('.login-logo');
+                if (logoEl) {
+                    if (logo) {
+                        // Se c'è un'immagine logo, usa quella
+                        logoEl.innerHTML = `<img src="${logo}" style="width: 100%; height: 100%; object-fit: contain;">`;
+                    } else {
+                        // Altrimenti usa le iniziali del nome salone
+                        const initials = saloneName.split(' ').map(w => w[0]).join('').toUpperCase().substring(0, 2);
+                        logoEl.textContent = initials || 'PR';
+                    }
+                }
+
+                // Salva in localStorage per velocità
+                localStorage.setItem('salone_name', saloneName);
+                if (logo) localStorage.setItem('salone_logo', logo);
+
+                console.log('✅ Logo e nome salone caricati da Firebase');
+            } catch (e) {
+                console.warn('Errore caricamento logo/nome da Firebase:', e.message);
+                // Fallback a localStorage
+                const saloneName = localStorage.getItem('salone_name') || 'Parrucchiere Rossi';
+                const logo = localStorage.getItem('salone_logo');
+
+                const salonNameEl = document.getElementById('loginSalonName');
+                if (salonNameEl) salonNameEl.textContent = saloneName;
+
+                if (logo) {
+                    const logoEl = document.querySelector('.login-logo');
+                    if (logoEl) logoEl.innerHTML = `<img src="${logo}" style="width: 100%; height: 100%; object-fit: contain;">`;
+                }
+            }
+        }
+
+        // Initialize demo credentials
+        async function initializeCredentials() {
+            try {
+                if (typeof DatabaseAdapter === 'undefined') {
+                    console.warn('DatabaseAdapter non disponibile, usando localStorage');
+                    const parrucchiereCreds = JSON.parse(localStorage.getItem('parrucchiere_credentials') || '[]');
+                    if (parrucchiereCreds.length === 0) {
+                        parrucchiereCreds.push({
+                            email: 'demo@parrucchiererossi.it',
+                            password: 'demo2026',
+                            name: 'Demo Admin'
+                        });
+                        localStorage.setItem('parrucchiere_credentials', JSON.stringify(parrucchiereCreds));
+                    }
+                    return;
+                }
+
+                // Carica da Firebase
+                const data = await DatabaseAdapter.load();
+                if (!data.parrucchiere || data.parrucchiere.length === 0) {
+                    // Crea credenziali demo in Firebase
+                    const parrucchiereCreds = [{
+                        email: 'demo@parrucchiererossi.it',
+                        password: 'demo2026',
+                        name: 'Demo Admin'
+                    }];
+                    data.parrucchiere = parrucchiereCreds;
+                    await DatabaseAdapter.save(data);
+                    console.log('🔥 Credenziali parrucchiere salvate in Firebase');
+                }
+            } catch (e) {
+                console.warn('Errore caricamento credenziali da Firebase, fallback localStorage:', e.message);
+                const parrucchiereCreds = JSON.parse(localStorage.getItem('parrucchiere_credentials') || '[]');
+                if (parrucchiereCreds.length === 0) {
+                    parrucchiereCreds.push({
+                        email: 'demo@parrucchiererossi.it',
+                        password: 'demo2026',
+                        name: 'Demo Admin'
+                    });
+                    localStorage.setItem('parrucchiere_credentials', JSON.stringify(parrucchiereCreds));
+                }
+            }
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const errorMsg = document.getElementById('errorMsg');
+
+            let parrucchiereCreds = [];
+
+            // Carica credenziali da Firebase
+            try {
+                if (typeof DatabaseAdapter !== 'undefined') {
+                    const data = await DatabaseAdapter.load();
+                    let credsData = data.parrucchiere || [];
+
+                    // Se parrucchiere è un oggetto (vecchio formato), convertilo in array
+                    if (credsData && !Array.isArray(credsData)) {
+                        console.warn('⚠️ Formato credenziali vecchio (oggetto), convertendo in array');
+                        parrucchiereCreds = [credsData];
+                    } else if (Array.isArray(credsData)) {
+                        parrucchiereCreds = credsData;
+                    }
+
+                    console.log('🔥 Credenziali caricate da Firebase:', parrucchiereCreds.length, 'credenziali');
+                } else {
+                    throw new Error('DatabaseAdapter non disponibile');
+                }
+            } catch (e) {
+                console.warn('Firebase non disponibile, usando localStorage:', e.message);
+                parrucchiereCreds = JSON.parse(localStorage.getItem('parrucchiere_credentials') || '[]');
+                if (!Array.isArray(parrucchiereCreds)) {
+                    parrucchiereCreds = [parrucchiereCreds];
+                }
+            }
+
+            console.log('📋 Credenziali da usare:', parrucchiereCreds);
+
+            // Verifica credenziali
+            const validCreds = parrucchiereCreds.find(cred => cred && cred.email === email && cred.password === password);
+
+            if (validCreds) {
+                // Login successful
+                sessionStorage.setItem('parrucchiere_logged_in', 'true');
+                sessionStorage.setItem('parrucchiere_name', validCreds.name);
+                sessionStorage.setItem('parrucchiere_email', validCreds.email);
+                errorMsg.classList.remove('show');
+                console.log('✅ Login riuscito:', email);
+
+                // Redirect to dashboard
+                setTimeout(() => {
+                    window.location.href = 'parrucchiere-login.html';
+                }, 500);
+            } else {
+                // Login failed
+                errorMsg.textContent = '❌ Email o password errata! Riprova.';
+                errorMsg.classList.add('show');
+                document.getElementById('email').value = '';
+                document.getElementById('password').value = '';
+                document.getElementById('email').focus();
+            }
+        }
+
+        // Check if already logged in
+        window.addEventListener('DOMContentLoaded', () => {
+            initializeCredentials();
+            loadSalonLogoAndName();
+
+            // Load salon name dynamically (fallback)
+            const salonName = localStorage.getItem('salone_name') || 'Parrucchiere Rossi';
+            document.title = salonName + ' - Login';
+
+            // Load from Firebase
+            (async () => {
+                try {
+                    if (typeof DatabaseAdapter !== 'undefined') {
+                        const data = await DatabaseAdapter.load();
+                        if (data && data.settings && data.settings.name) {
+                            document.title = data.settings.name + ' - Login';
+                            localStorage.setItem('salone_name', data.settings.name);
+                            const loginSalonNameEl = document.getElementById('loginSalonName');
+                            if (loginSalonNameEl) {
+                                loginSalonNameEl.textContent = data.settings.name;
+                            }
+                        }
+                    }
+                } catch (e) {
+                    console.warn('Errore caricamento nome salone da Firebase:', e.message);
+                }
+            })();
+
+            const isLoggedIn = sessionStorage.getItem('parrucchiere_logged_in');
+            if (isLoggedIn) {
+                window.location.href = 'parrucchiere-login.html';
+            }
+        });
+
+        // Allow Enter key to submit
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('password').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    document.getElementById('loginForm').dispatchEvent(new Event('submit'));
+                }
+            });
+        });
+    </script>
+</body>
+</html>

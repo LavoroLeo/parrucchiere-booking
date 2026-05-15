@@ -1,0 +1,168 @@
+================================================================================
+  VERIFICA RAPIDA - FIREBASE SU HTTPS FUNZIONA?
+================================================================================
+
+⏱️ TEMPO: 2 minuti per verificare tutto
+
+================================================================================
+  TEST 1: VERIFICARE FIREBASE COLLEGATO (30 secondi)
+================================================================================
+
+1. Apri il sito: https://parrucchiere-booking.vercel.app
+2. Premi F12 per aprire Console
+3. Aspetta che pagina carichi completamente (max 3 secondi)
+
+CERCA QUESTO MESSAGGIO IN CONSOLE:
+  ✅ Firebase enabled: true
+
+Se lo vedi = FIREBASE FUNZIONA ✅
+
+Se NON lo vedi:
+  - Ricaricare pagina (Ctrl+F5)
+  - Aspettare 3 secondi
+  - Se ancora non appare, c'è un problema
+
+================================================================================
+  TEST 2: FARE PRENOTAZIONE DI TEST (1 minuto)
+================================================================================
+
+1. Clicca "Accedi alle tue prenotazioni"
+2. Inserisci codice accesso (o email/password)
+3. Compila modulo:
+   - Data: Domani
+   - Servizio: Qualsiasi
+   - Ora: Qualsiasi disponibile
+   - Nome: "Test"
+   - Telefono: "333123456789"
+4. Clicca "Conferma Prenotazione"
+
+ASPETTA 2 SECONDI
+
+CERCA IN CONSOLE:
+  ✅ Booking salvato con ID: [numero]
+
+Se lo vedi = PRENOTAZIONE SALVATA SU FIREBASE ✅✅✅
+
+Dovresti anche vedere messaggio verde:
+  "✅ Prenotazione confermata! Ti contatteremo..."
+
+================================================================================
+  TEST 3: VERIFICA IN DASHBOARD (30 secondi)
+================================================================================
+
+1. Accedi a login-parrucchiere.html
+2. Email: demo@parrucchiererossi.it
+3. Password: demo2026
+4. Clicca "Accedi"
+
+GUARDA DASHBOARD:
+  - Sezione "Prenotazioni Recenti" → Deve apparire prenotazione di test
+  - Campo "Totale Prenotazioni" → Numero deve essere almeno 1
+
+TIMELINE:
+  - Subito dopo prenotazione: Salvato su Firebase
+  - Entro 5 secondi: Appare in dashboard automaticamente
+  - Se non appare: Ricaricare dashboard (F5)
+
+Se prenotazione appare = FIREBASE SINCRONIZZATO PERFETTAMENTE ✅✅✅
+
+================================================================================
+  TEST 4: VERIFICARE DATI SU FIREBASE (non localStorage)
+================================================================================
+
+Opzionale, ma importante:
+
+1. Apri DevTools → Application → Local Storage → Sito
+2. Cerca voce "bookingDB"
+3. Elimina quella voce
+4. Ricaricare pagina
+
+RISULTATO:
+  ✅ Prenotazioni RIAPPAIONO = Sono su Firebase!
+  ❌ Prenotazioni SCOMPAIONO = Erano solo in localStorage
+
+Deve essere ✅ (Firebase)
+
+================================================================================
+  CHECKSUM FINALE
+================================================================================
+
+Verificare che TUTTI questi siano ✅:
+
+  [ ] Firebase enabled: true (in console)
+  [ ] Booking salvato con ID: (in console)
+  [ ] Prenotazione appare in dashboard
+  [ ] Nessun errore rosso in console
+  [ ] Dati persistono se elimino localStorage
+
+Se ✅ TUTTI = FIREBASE FUNZIONA PERFETTAMENTE!
+
+Se ❌ alcuni = Controllare sezione "PROBLEMI" sotto
+
+================================================================================
+  PROBLEMI COMUNI
+================================================================================
+
+PROBLEMA: "Firebase enabled: false"
+  SOLUZIONE:
+    1. Ricaricare pagina (Ctrl+F5)
+    2. Aspettare 5 secondi
+    3. Se ancora false, controllare connessione internet
+
+PROBLEMA: "Booking salvato" NON appare
+  SOLUZIONE:
+    1. Verificare che nessun errore rosso in console
+    2. Ricaricare pagina (F5)
+    3. Riprovare a fare prenotazione
+    4. Se persiste, controllare Firebase status
+
+PROBLEMA: Prenotazione non appare in dashboard
+  SOLUZIONE:
+    1. Aspettare 5 secondi (auto-refresh)
+    2. Ricaricare dashboard (F5)
+    3. Se ancora non appare, verificare console dashboard
+    4. Controllare che prenotazione sia salvata in console cliente
+
+PROBLEMA: Errore rosso in console
+  SOLUZIONE:
+    1. Leggere messaggio di errore
+    2. Se "Cannot use import statement", ricaricare pagina
+    3. Se "Firebase not defined", verificare firebase-config.js
+    4. Se altro, contattare supporto con screenshot errore
+
+================================================================================
+  MESSAGGIO DI SUCCESSO
+================================================================================
+
+Se vedi tutti questi messaggi in console:
+
+  ✅ Firebase initialized successfully
+  ✅ Firebase enabled: true
+  ✅ Booking salvato con ID: [numero]
+  📊 Prenotazioni totali: [numero]
+  👥 Clienti totali: [numero]
+  ✅ Prenotazioni caricate da Firebase: [numero]
+
+==> FIREBASE FUNZIONA PERFETTAMENTE! 🎉🎉🎉
+
+================================================================================
+  TL;DR (TROPPO LUNGO, NON HO LETTO)
+================================================================================
+
+3 cose da fare:
+
+1. Apri sito HTTPS, premi F12, cerca "Firebase enabled: true"
+   → Se vedi ✅ = Firebase collegato
+
+2. Fai prenotazione, aspetta 2 secondi, cerca "Booking salvato" in console
+   → Se vedi ✅ = Prenotazione salvata su Firebase
+
+3. Accedi a dashboard, aspetta 5 secondi, verifica prenotazione appare
+   → Se appare ✅ = Tutto perfetto!
+
+Se tutte e 3 ✅ = Sistema funziona perfettamente!
+
+================================================================================
+
+Data: 15 Maggio 2026
+Status: 🟢 FIREBASE FUNZIONANTE SU HTTPS

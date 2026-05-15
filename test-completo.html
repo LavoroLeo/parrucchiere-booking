@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Completo Sistema Prenotazioni</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0f0f0f;
+            color: #f5f5f5;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 { color: #d4af37; margin-bottom: 30px; text-align: center; font-size: 28px; }
+        .test-section {
+            background: #1a1a1a;
+            border: 2px solid #d4af37;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+        .test-section h2 { color: #d4af37; margin-bottom: 15px; }
+        .result {
+            background: #0f0f0f;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 5px;
+            border-left: 4px solid #d4af37;
+            font-size: 13px;
+        }
+        .success { border-left-color: #27ae60; color: #27ae60; }
+        .error { border-left-color: #e74c3c; color: #e74c3c; }
+        .warning { border-left-color: #f39c12; color: #f39c12; }
+        .test-results { background: #2a2a2a; padding: 12px; border-radius: 5px; max-height: 250px; overflow-y: auto; font-family: monospace; font-size: 12px; }
+        button {
+            background: #d4af37;
+            color: #000;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-right: 8px;
+            margin-top: 12px;
+        }
+        button:hover { background: #c0a080; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>VERIFICA COMPLETA SISTEMA</h1>
+
+        <div class="test-section">
+            <h2>Test 1: Flusso Prenotazione</h2>
+            <div id="test1" class="test-results"></div>
+            <button onclick="testOne()">Esegui Test</button>
+        </div>
+
+        <div class="test-section">
+            <h2>Test 2: Form e Validazione</h2>
+            <div id="test2" class="test-results"></div>
+            <button onclick="testTwo()">Esegui Test</button>
+        </div>
+
+        <div class="test-section">
+            <h2>Test 3: Pagina Prenotazioni Cliente</h2>
+            <div id="test3" class="test-results"></div>
+            <button onclick="testThree()">Esegui Test</button>
+        </div>
+
+        <div class="test-section">
+            <h2>Test 4: Admin Dashboard</h2>
+            <div id="test4" class="test-results"></div>
+            <button onclick="testFour()">Esegui Test</button>
+        </div>
+
+        <div class="test-section">
+            <h2>Test 5: Responsive Design</h2>
+            <div id="test5" class="test-results"></div>
+            <button onclick="testFive()">Esegui Test</button>
+        </div>
+
+        <div class="test-section" style="text-align: center; background: #d4af37; color: #000; border-color: #000;">
+            <h2 style="color: #000;">ESEGUI TUTTI I TEST</h2>
+            <button style="background: #000; color: #d4af37; font-size: 16px; padding: 15px 30px;" onclick="runAll()">AVVIA TUTTI I TEST</button>
+        </div>
+    </div>
+
+    <script>
+        function log(id, msg, type) {
+            const el = document.getElementById(id);
+            const div = document.createElement('div');
+            div.className = 'result ' + (type || 'info');
+            div.textContent = msg;
+            el.appendChild(div);
+        }
+
+        function clear(id) {
+            document.getElementById(id).innerHTML = '';
+        }
+
+        function testOne() {
+            clear('test1');
+            const sel = document.getElementById('bookingService');
+            if (sel) {
+                const opts = sel.querySelectorAll('option:not([value=""])').length;
+                if (opts > 0) {
+                    log('test1', 'OK: Dropdown servizi con ' + opts + ' opzioni', 'success');
+                } else {
+                    log('test1', 'ERRORE: Dropdown vuoto', 'error');
+                }
+            } else {
+                log('test1', 'ERRORE: Dropdown non trovato', 'error');
+            }
+
+            if (document.getElementById('bookingDate')) {
+                log('test1', 'OK: Campo data presente', 'success');
+            } else {
+                log('test1', 'ERRORE: Campo data mancante', 'error');
+            }
+
+            if (document.getElementById('orariGrid')) {
+                log('test1', 'OK: Grid orari presente', 'success');
+            } else {
+                log('test1', 'ERRORE: Grid orari mancante', 'error');
+            }
+
+            if (document.getElementById('submitBtn')) {
+                log('test1', 'OK: Pulsante conferma presente', 'success');
+            } else {
+                log('test1', 'ERRORE: Pulsante mancante', 'error');
+            }
+        }
+
+        function testTwo() {
+            clear('test2');
+            const fields = ['bookingName', 'bookingSurname', 'bookingPhone'];
+            fields.forEach(f => {
+                if (document.getElementById(f)) {
+                    log('test2', 'OK: Campo ' + f + ' trovato', 'success');
+                } else {
+                    log('test2', 'AVVISO: Campo ' + f + ' non trovato', 'warning');
+                }
+            });
+        }
+
+        function testThree() {
+            clear('test3');
+            const elems = ['loginForm', 'clientName', 'prenotazioniContainer'];
+            elems.forEach(e => {
+                if (document.getElementById(e)) {
+                    log('test3', 'OK: ' + e + ' trovato', 'success');
+                } else {
+                    log('test3', 'NOTA: ' + e + ' non in questa pagina', 'warning');
+                }
+            });
+        }
+
+        function testFour() {
+            clear('test4');
+            if (document.querySelector('form')) {
+                log('test4', 'OK: Form login trovato', 'success');
+            }
+            if (document.querySelector('input[type="email"]')) {
+                log('test4', 'OK: Campo email trovato', 'success');
+            }
+            const demoText = document.body.innerText;
+            if (demoText.includes('demo@') && demoText.includes('demo2026')) {
+                log('test4', 'OK: Credenziali demo visibili', 'success');
+            } else {
+                log('test4', 'NOTA: Non in pagina parrucchiere (atteso)', 'warning');
+            }
+        }
+
+        function testFive() {
+            clear('test5');
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+            log('test5', 'Viewport: ' + w + 'x' + h, 'info');
+            if (w >= 1024) log('test5', 'OK: Desktop size', 'success');
+            else if (w >= 768) log('test5', 'OK: Tablet size', 'success');
+            else log('test5', 'OK: Mobile size', 'success');
+
+            if (document.querySelector('meta[name="viewport"]')) {
+                log('test5', 'OK: Meta viewport presente', 'success');
+            }
+        }
+
+        function runAll() {
+            testOne();
+            testTwo();
+            testThree();
+            testFour();
+            testFive();
+            log('test1', 'COMPLETO: Tutti i test eseguiti', 'success');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+                    <li><a href="index-stitch-rossi.html">← Torna al sito</a></li>
+                <a href="index.html" class="back-btn" style="margin-top: 20px;">← Prenota Ora</a>
+            <a href="index.html" class="back-btn">← Torna al Sito</a>
+            <a href="index.html">← Torna alla Home</a>
+    <link rel="stylesheet" href="style-stitch-rossi.css">

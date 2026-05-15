@@ -1,0 +1,1676 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parrucchiere Rossi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0f0f0f;
+            color: #f5f5f5;
+        }
+
+        .header {
+            position: sticky;
+            top: 0;
+            background: linear-gradient(135deg, rgba(15, 15, 15, 0.99), rgba(20, 20, 20, 0.97));
+            border-bottom: 3px solid #d4af37;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 60px;
+            gap: 30px;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: fit-content;
+        }
+
+        .logo-placeholder {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #d4af37, #c0a080);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 18px;
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2);
+        }
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: 700;
+            color: #f5f5f5;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .header-phone {
+            display: flex;
+            align-items: center;
+            min-width: fit-content;
+        }
+
+        .header-phone a {
+            color: #d4af37;
+            font-size: 15px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .header-phone a:hover {
+            color: #fff;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 8px;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            margin: 0;
+        }
+
+        .nav-menu li {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 14px;
+        }
+
+        .nav-menu li:not(:last-child) {
+            border-right: 1px solid rgba(212, 175, 55, 0.4);
+            padding-right: 14px;
+        }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            justify-content: flex-end;
+        }
+
+        .nav-menu a {
+            color: #f5f5f5;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 6px 0;
+            border-bottom: 2px solid transparent;
+            white-space: nowrap;
+        }
+
+        .nav-menu a:hover {
+            color: #d4af37;
+            border-bottom-color: #d4af37;
+        }
+
+        .booking-access-btn {
+            background: linear-gradient(135deg, #d4af37, #c0a080) !important;
+            color: #000 !important;
+            padding: 10px 20px !important;
+            border-radius: 8px !important;
+            font-weight: 700 !important;
+            white-space: nowrap !important;
+            font-size: 13px !important;
+            transition: all 0.3s !important;
+            display: inline-block;
+            border: none !important;
+            cursor: pointer !important;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2) !important;
+        }
+
+        .booking-access-btn:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4) !important;
+            color: #000 !important;
+        }
+
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            background: none;
+            border: none;
+            cursor: pointer;
+            gap: 6px;
+        }
+
+        .nav-toggle span {
+            width: 25px;
+            height: 3px;
+            background: #f5f5f5;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 64px;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #d4af37, #ffd700);
+            color: #000;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.25);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.4s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 35px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-secondary {
+            border: 2px solid #d4af37;
+            background: transparent;
+            color: #d4af37;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(212, 175, 55, 0.15);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn-large {
+            padding: 18px 48px;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        /* BOOKING FORM */
+        .booking-form {
+            background: linear-gradient(135deg, #1a1a1a, #252525);
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #f5f5f5;
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(15, 15, 15, 0.8);
+            border: 2px solid #333;
+            color: #f5f5f5;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 14px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group input:hover,
+        .form-group select:hover {
+            border-color: rgba(212, 175, 55, 0.5);
+            background: rgba(15, 15, 15, 0.95);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #d4af37;
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.15), 0 0 20px rgba(212, 175, 55, 0.2);
+            background: rgba(15, 15, 15, 0.98);
+        }
+
+        /* ORARI GRID ORIZZONTALE */
+        .orari-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .orario-btn {
+            padding: 10px;
+            border: 2px solid rgba(51, 51, 51, 0.6);
+            background: rgba(15, 15, 15, 0.7);
+            color: #f5f5f5;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .orario-btn:hover:not(.disabled) {
+            border-color: #d4af37;
+            background: rgba(212, 175, 55, 0.12);
+            color: #d4af37;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.25);
+        }
+
+        .orario-btn.selected {
+            background: linear-gradient(135deg, #d4af37, #c0a080);
+            color: #000;
+            border-color: #d4af37;
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
+            font-weight: 700;
+        }
+
+        .orario-btn.disabled {
+            background: rgba(0, 0, 0, 0.2);
+            color: #555;
+            cursor: not-allowed;
+            text-decoration: line-through;
+            opacity: 0.4;
+            border-color: rgba(51, 51, 51, 0.3);
+        }
+
+        /* SERVICE SUMMARY */
+        .service-summary {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0.04));
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 14px;
+            padding: 24px;
+            margin-bottom: 25px;
+            display: none;
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.1);
+            animation: slideInDown 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease;
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .service-summary.show {
+            display: block;
+        }
+
+        .service-summary h4 {
+            color: #d4af37;
+            margin-bottom: 16px;
+            font-size: 17px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .service-summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .summary-item {
+            color: #ccc;
+            font-size: 14px;
+        }
+
+        .summary-label {
+            color: #999;
+            font-size: 12px;
+            margin-bottom: 3px;
+        }
+
+        .summary-value {
+            color: #d4af37;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #d4af37, #c0a080);
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.15);
+            transition: left 0.4s ease;
+        }
+
+        .form-submit:hover {
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 12px 35px rgba(212, 175, 55, 0.4);
+        }
+
+        .form-submit:hover::before {
+            left: 100%;
+        }
+
+        .form-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* HERO */
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .trust-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        /* SECTIONS */
+        section {
+            width: 100%;
+        }
+
+        .trust-card {
+            transition: all 0.3s;
+        }
+
+        .trust-card:hover {
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
+            transform: translateY(-5px);
+        }
+
+        /* FOOTER */
+        .footer {
+            background: #1a1a1a;
+            padding: 40px 64px;
+            border-top: 1px solid #333;
+            margin-top: 80px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-bottom: 30px;
+            max-width: 1280px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-section h4 {
+            color: #d4af37;
+            margin-bottom: 15px;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            text-align: center;
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .footer-section a:hover {
+            color: #d4af37;
+            transform: translateY(-3px);
+        }
+
+        .footer-section li a svg {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .footer-section li a:hover svg {
+            filter: drop-shadow(0 4px 12px rgba(212, 175, 55, 0.3));
+        }
+
+        .footer-section p {
+            text-align: center;
+        }
+
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            color: #999;
+            font-size: 12px;
+        }
+
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 0 20px;
+            }
+
+            .container {
+                padding: 0 20px;
+            }
+
+            .nav-toggle {
+                display: flex;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .nav-menu.active {
+                display: flex;
+                position: absolute;
+                flex-direction: column;
+                top: 80px;
+                left: 0;
+                right: 0;
+                background: #1a1a1a;
+                padding: 20px;
+                gap: 15px;
+                border-bottom: 1px solid #333;
+            }
+
+            .header-phone {
+                display: none;
+            }
+
+            .booking-form {
+                padding: 20px;
+            }
+
+            .footer {
+                padding: 40px 20px;
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER STICKY -->
+    <header class="header">
+        <div class="header-container">
+            <div class="header-logo">
+                <div class="logo-placeholder">PR</div>
+                <span class="logo-text">Parrucchiere Rossi</span>
+            </div>
+            <div class="header-phone">
+                <a href="tel:+39011555124">☎️ +39 011 555 1234</a>
+            </div>
+            <nav class="header-nav">
+                <button class="nav-toggle" id="navToggle">
+                    <span></span><span></span><span></span>
+                </button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="#prenota">Prenota</a></li>
+                    <li><a href="#servizi">Servizi</a></li>
+                    <li><a href="#recensioni">Recensioni</a></li>
+                    <li><a href="#social">Seguici</a></li>
+                    <li><a href="#contatti">Contatti</a></li>
+                    <li><a href="#" onclick="showBookingAccess(); return false;" class="booking-access-btn">📋 Accedi alle tue prenotazioni</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero" style="background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%); min-height: 90vh; position: relative; overflow: hidden;">
+        <div class="hero-overlay" style="background: rgba(15, 15, 15, 0.4);"></div>
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1000 600%22><defs><linearGradient id=%22grad%22 x1=%220%25%22 y1=%220%25%22 x2=%22100%25%22 y2=%22100%25%22><stop offset=%220%25%22 style=%22stop-color:%23d4af37;stop-opacity:0.05%22 /><stop offset=%22100%25%22 style=%22stop-color:%23c0a080;stop-opacity:0.05%22 /></linearGradient></defs><rect width=%221000%22 height=%22600%22 fill=%22url(%23grad)%22/></svg>'); opacity: 0.5;"></div>
+        <div style="position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 90vh; text-align: center;">
+            <div style="animation: slideInLeft 1s ease-out;">
+                <h1 style="font-size: 72px; font-weight: 800; color: #f5f5f5; margin-bottom: 20px; letter-spacing: -2px; font-family: 'Playfair Display', serif;">Parrucchiere Rossi</h1>
+                <p style="font-size: 24px; color: #d4af37; font-weight: 600; margin-bottom: 10px; letter-spacing: 2px;">✨ ECCELLENZA NEL TAGLIO ✨</p>
+                <p style="font-size: 18px; color: #cccccc; max-width: 600px; margin: 0 auto 40px;">Tagli Professionali • 10 Anni di Esperienza • Prenota Online<br><span style="color: #d4af37; font-size: 16px;">Scelto da 847+ clienti soddisfatti</span></p>
+            </div>
+            <div class="hero-buttons" style="animation: fadeInUp 1.2s ease-out;">
+                <button class="btn btn-primary btn-large" onclick="document.querySelector('#prenota').scrollIntoView({behavior: 'smooth'})">📅 PRENOTA ORA</button>
+                <a href="tel:+39011555124" class="btn btn-secondary" style="padding: 18px 48px; font-size: 18px; font-weight: 700;">☎️ CHIAMA SUBITO</a>
+            </div>
+            <div style="margin-top: 60px; animation: fadeInUp 1.4s ease-out;">
+                <p style="color: #999999; font-size: 14px; margin-bottom: 15px;">⭐ 4.8/5 stelle | 847 prenotazioni | ✓ Pagamenti sicuri</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- BOOKING FORM SECTION -->
+    <section id="prenota" style="background: #1a1a1a; padding: 80px 64px;">
+        <div class="container">
+            <h2 style="color: #d4af37; font-size: 48px; margin-bottom: 50px; font-weight: 800; text-align: center;">Prenota il Tuo Appuntamento</h2>
+            <form class="booking-form" onsubmit="submitBooking(event)">
+                <!-- SERVICE SUMMARY -->
+                <div class="service-summary" id="serviceSummary">
+                    <h4>📋 Riassunto del Tuo Servizio</h4>
+                    <div class="service-summary-grid">
+                        <div class="summary-item">
+                            <div class="summary-label">✂️ Servizio</div>
+                            <div class="summary-value" id="summaryService">-</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-label">💰 Prezzo</div>
+                            <div class="summary-value" id="summaryPrice">-</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-label">⏱️ Durata</div>
+                            <div class="summary-value" id="summaryDuration">-</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-label">📅 Data</div>
+                            <div class="summary-value" id="summaryDate">-</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-label">⏰ Orario</div>
+                            <div class="summary-value" id="summaryTime">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FORM FIELDS - DATA E SERVIZIO -->
+                <div style="display: grid; grid-template-columns: 1fr 200px; gap: 20px; align-items: start; margin-bottom: 30px;">
+                    <!-- SERVIZIO A SINISTRA -->
+                    <div class="form-group">
+                        <label>✂️ Scegli il Servizio</label>
+                        <select id="bookingService" required onchange="updateServiceSummary(); updateAvailableTimes();">
+                            <option value="">-- Seleziona un servizio --</option>
+                        </select>
+                    </div>
+
+                    <!-- DATA A DESTRA - STILE UGUALE AGLI ALTRI CAMPI -->
+                    <div style="text-align: center;">
+                        <label style="color: #d4af37; font-weight: 700; display: block; margin-bottom: 8px;">📅 Data</label>
+                        <input type="date" id="bookingDate" required onchange="updateAvailableTimes()" style="background: #1a1a1a !important; color: #f5f5f5 !important; border: 1px solid #333 !important; padding: 12px 10px !important; font-weight: 600; text-align: center; width: 100%; font-size: 16px; cursor: pointer; border-radius: 4px;">
+                    </div>
+                </div>
+
+                <!-- ORARI DISPONIBILI -->
+                <div style="margin-top: 30px; padding-top: 30px; border-top: 1px solid rgba(212, 175, 55, 0.3); min-height: 80px;">
+                    <label style="color: #d4af37; font-weight: 700; display: block; margin-bottom: 15px;">⏰ Scegli l'Orario</label>
+                    <div class="orari-grid" id="orariGrid">
+                        <p style="color: #999; grid-column: 1/-1; text-align: center; padding: 20px;">Seleziona data e servizio per vedere gli orari disponibili</p>
+                    </div>
+                    <input type="hidden" id="bookingTime">
+                </div>
+
+                <div class="form-group">
+                    <label>👤 Nome</label>
+                    <input type="text" id="bookingName" placeholder="Es: Mario" required>
+                </div>
+
+                <div class="form-group">
+                    <label>👤 Cognome</label>
+                    <input type="text" id="bookingCognome" placeholder="Es: Rossi" required>
+                </div>
+
+                <div class="form-group">
+                    <label>📱 Numero di Telefono</label>
+                    <input type="tel" id="bookingPhone" placeholder="Es: 3201234567" required>
+                </div>
+
+                <button type="submit" class="form-submit" id="submitBtn" disabled>✅ Conferma Prenotazione</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- SERVIZI SECTION -->
+    <section id="servizi" style="background: #0f0f0f; padding: 80px 64px;">
+        <div class="container">
+            <h2 style="color: #d4af37; font-size: 48px; margin-bottom: 50px; font-weight: 800; text-align: center;">I Nostri Servizi ✂️</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;" id="servicesGrid"></div>
+        </div>
+    </section>
+
+    <!-- RECENSIONI SECTION -->
+    <section id="recensioni" style="background: #1a1a1a; padding: 80px 64px;">
+        <div class="container">
+            <h2 style="color: #d4af37; font-size: 48px; margin-bottom: 50px; font-weight: 800; text-align: center;">Cosa Dicono i Nostri Clienti ⭐</h2>
+            <div id="reviewsContainer" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px;">
+                <div style="background: #252525; padding: 24px; border-radius: 12px; border-left: 4px solid #d4af37;">
+                    <div style="color: #d4af37; font-weight: 700; margin-bottom: 5px;">Mario Rossi</div>
+                    <div style="color: #999; font-size: 12px; margin-bottom: 12px;">3 giorni fa</div>
+                    <div style="color: #d4af37; margin-bottom: 10px;">⭐⭐⭐⭐⭐</div>
+                    <div style="color: #ccc; font-size: 14px;">"Servizio impeccabile! Marco conosce il mio stile perfettamente. Torno sempre qui!"</div>
+                </div>
+                <div style="background: #252525; padding: 24px; border-radius: 12px; border-left: 4px solid #d4af37;">
+                    <div style="color: #d4af37; font-weight: 700; margin-bottom: 5px;">Giulia Conti</div>
+                    <div style="color: #999; font-size: 12px; margin-bottom: 12px;">1 settimana fa</div>
+                    <div style="color: #d4af37; margin-bottom: 10px;">⭐⭐⭐⭐⭐</div>
+                    <div style="color: #ccc; font-size: 14px;">"Francesca è bravissima con i colori! Sono rimasta completamente soddisfatta!"</div>
+                </div>
+                <div style="background: #252525; padding: 24px; border-radius: 12px; border-left: 4px solid #d4af37;">
+                    <div style="color: #d4af37; font-weight: 700; margin-bottom: 5px;">Anna Bianchi</div>
+                    <div style="color: #999; font-size: 12px; margin-bottom: 12px;">2 settimane fa</div>
+                    <div style="color: #d4af37; margin-bottom: 10px;">⭐⭐⭐⭐⭐</div>
+                    <div style="color: #ccc; font-size: 14px;">"Professionalità e cortesia. Il nuovo taglio è perfetto per me. Grazie!"</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEGUICI SUI SOCIAL SECTION -->
+    <section id="social" style="background: linear-gradient(135deg, #1a1a1a, #252525); padding: 30px 20px; border-top: 2px solid #d4af37; border-bottom: 2px solid #d4af37; scroll-margin-top: 82px;">
+        <div style="max-width: 1280px; margin: 0 auto; text-align: center;">
+            <h2 style="font-family: 'Playfair Display', serif; font-size: 42px; color: #d4af37; margin-bottom: 15px;">📱 Seguici sui Social</h2>
+            <p style="color: #cccccc; font-size: 16px; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                Rimani aggiornato con i nostri ultimi lavori, promozioni esclusive e novità dal nostro salone
+            </p>
+
+            <div style="display: flex; justify-content: space-evenly; align-items: flex-start; max-width: 100%; margin: 0 auto; gap: 40px;">
+                <!-- Facebook -->
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+                    <div id="socialFb" style="display: flex; align-items: center; justify-content: center; width: 150px; height: 150px; border-radius: 50%; text-decoration: none;">
+                        <img id="facebookLogoSite" src="" alt="Facebook" style="width: 135px; height: 135px; object-fit: contain;">
+                    </div>
+                    <a id="socialFb" href="https://facebook.com/parrucchiererossi" target="_blank" class="btn-seguici" style="background: #1877F2; color: white; padding: 10px 25px; border-radius: 6px; text-decoration: none; font-weight: 700; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 12px rgba(24, 119, 242, 0.3); cursor: pointer; display: inline-block; width: 120px; text-align: center;">
+                        Seguici
+                    </a>
+                </div>
+
+                <!-- Instagram -->
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+                    <div id="socialIg" style="display: flex; align-items: center; justify-content: center; width: 150px; height: 150px; border-radius: 50%; text-decoration: none;">
+                        <img id="instagramLogoSite" src="" alt="Instagram" style="width: 135px; height: 135px; object-fit: contain;">
+                    </div>
+                    <a id="socialIg" href="https://instagram.com/parrucchiererossi" target="_blank" class="btn-seguici" style="background: #d92e7f; color: white; padding: 10px 25px; border-radius: 6px; text-decoration: none; font-weight: 700; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 12px rgba(217, 51, 120, 0.3); cursor: pointer; display: inline-block; width: 120px; text-align: center;">
+                        Seguici
+                    </a>
+                </div>
+
+                <!-- TikTok -->
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+                    <div id="socialTk" style="display: flex; align-items: center; justify-content: center; width: 150px; height: 150px; border-radius: 50%; text-decoration: none;">
+                        <img id="tiktokLogoSite" src="" alt="TikTok" style="width: 135px; height: 135px; object-fit: contain;">
+                    </div>
+                    <a id="socialTk" href="https://tiktok.com/@parrucchiererossi" target="_blank" class="btn-seguici" style="background: #000; color: white; padding: 10px 25px; border-radius: 6px; text-decoration: none; font-weight: 700; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); cursor: pointer; display: inline-block; width: 120px; text-align: center;">
+                        Seguici
+                    </a>
+                </div>
+            </div>
+
+            <style>
+                /* Pulsante Seguici hover effects */
+                .btn-seguici:hover {
+                    transform: translateY(-4px) scale(1.05);
+                    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5) !important;
+                    filter: brightness(1.15);
+                }
+            </style>
+        </div>
+    </section>
+
+    <!-- CONTATTI SECTION -->
+    <section id="contatti" style="background: #0f0f0f; padding: 80px 64px;">
+        <div class="container">
+            <h2 style="color: #d4af37; font-size: 48px; margin-bottom: 20px; font-weight: 800;">Contattaci Oggi</h2>
+            <p style="color: #ccc; font-size: 16px; margin-bottom: 60px;">Siamo qui per aiutarti</p>
+
+            <!-- TOP: 3 CONTACT BOXES IN 1 ROW -->
+            <div style="display: flex; align-items: center; justify-content: space-around; margin-bottom: 80px; padding: 20px 0; border-bottom: 1px solid rgba(212, 175, 55, 0.2);">
+                <!-- PHONE -->
+                <div style="flex: 1; text-align: center; padding: 0 20px; border-right: 1px solid rgba(212, 175, 55, 0.3);">
+                    <div style="font-size: 24px; margin-bottom: 8px;">☎️</div>
+                    <a href="tel:+39011555124" style="color: #d4af37; text-decoration: none; font-weight: 600; font-size: 16px;">+39 011 555 1234</a>
+                </div>
+
+                <!-- EMAIL -->
+                <div style="flex: 1; text-align: center; padding: 0 20px; border-right: 1px solid rgba(212, 175, 55, 0.3);">
+                    <div style="font-size: 24px; margin-bottom: 8px;">📧</div>
+                    <a id="contactEmail" href="mailto:info@parrucchiererossi.it" style="color: #d4af37; text-decoration: none; font-weight: 600; font-size: 16px;">info@parrucchiererossi.it</a>
+                </div>
+
+                <!-- ADDRESS -->
+                <div style="flex: 1; text-align: center; padding: 0 20px;">
+                    <div style="font-size: 24px; margin-bottom: 8px;">📍</div>
+                    <div id="contactAddress" style="color: #d4af37; text-decoration: none; font-weight: 600; font-size: 16px;">Via Roma 15, Torino</div>
+                </div>
+            </div>
+
+            <!-- MIDDLE: MAP SECTION -->
+            <div style="margin-bottom: 80px;">
+                <iframe id="mapFrame" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2816.4447395948497!2d7.67447!3d45.073598!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4788a429f1d1d1d1%3A0x1d1d1d1d1d1d1d1d!2sVia%20Roma%2015%2C%2010122%20Torino!5e0!3m2!1sit!2sit!4v1234567890" width="100%" height="400" style="border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 12px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade;"></iframe>
+            </div>
+
+            <!-- BOTTOM: 3 COLUMN INFO -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px; margin-top: 120px;">
+
+                <!-- DOVE SIAMO -->
+                <div>
+                    <div style="color: #d4af37; font-weight: 700; font-size: 18px; margin-bottom: 20px;">📍 Dove Siamo</div>
+                    <div style="color: #f5f5f5; font-size: 14px; line-height: 1.8;">
+                        <div id="addressLine1" style="font-weight: 600; margin-bottom: 8px;">Via Roma 15</div>
+                        <div id="addressLine2" style="color: #ccc;"><span id="cityDisplay">Torino</span> (<span id="cityAbbrev">TO</span>)</div>
+                        <div style="color: #ccc;">Italia</div>
+                    </div>
+                </div>
+
+                <!-- ORARI -->
+                <div>
+                    <div style="color: #d4af37; font-weight: 700; font-size: 18px; margin-bottom: 20px;">⏰ Orari</div>
+                    <div style="color: #f5f5f5; font-size: 14px; line-height: 1.8;">
+                        <div style="margin-bottom: 12px;">
+                            <div style="color: #999; font-size: 12px; font-weight: 600; margin-bottom: 2px;">Lunedi-Venerdi</div>
+                            <div id="hoursMonFri" style="font-weight: 600;">09:00 - 18:00</div>
+                        </div>
+                        <div style="margin-bottom: 12px;">
+                            <div style="color: #999; font-size: 12px; font-weight: 600; margin-bottom: 2px;">Sabato</div>
+                            <div id="hoursSaturday" style="font-weight: 600;">09:00 - 14:00</div>
+                        </div>
+                        <div>
+                            <div style="color: #999; font-size: 12px; font-weight: 600; margin-bottom: 2px;">Domenica</div>
+                            <div id="hoursSunday" style="font-weight: 600; color: #d4af37;">Chiuso</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SCELTI DA -->
+                <div>
+                    <div style="color: #d4af37; font-weight: 700; font-size: 18px; margin-bottom: 20px;">⭐ Scelti da</div>
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        <div style="background: rgba(212, 175, 55, 0.1); padding: 15px; border-left: 4px solid #d4af37; border-radius: 8px;">
+                            <div style="color: #d4af37; font-size: 28px; font-weight: 700;">847</div>
+                            <div style="color: #ccc; font-size: 13px;">Prenotazioni</div>
+                        </div>
+                        <div style="background: rgba(212, 175, 55, 0.1); padding: 15px; border-left: 4px solid #d4af37; border-radius: 8px;">
+                            <div style="color: #d4af37; font-size: 18px;">⭐ ⭐ ⭐ ⭐ ⭐</div>
+                            <div style="color: #ccc; font-size: 13px;">4.8/5 stelle</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- RESPONSIVE CSS -->
+            <style>
+                @media (max-width: 1024px) {
+                    #contatti div[style*="grid-template-columns: 1fr 1fr 1fr"] {
+                        grid-template-columns: 1fr 1fr !important;
+                    }
+                }
+                @media (max-width: 768px) {
+                    #contatti div[style*="grid-template-columns: 1fr 1fr 1fr"] {
+                        grid-template-columns: 1fr !important;
+                    }
+                }
+            </style>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h4 id="footerSalonName">Parrucchiere Rossi</h4>
+                <p id="footerSalonDesc" style="color: #999; font-size: 14px;">Eccellenza nel taglio dal 2016</p>
+            </div>
+            <div class="footer-section" style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                <h4 style="color: #d4af37; margin: 0;">📱 Social Media</h4>
+                <ul style="display: flex; gap: 15px; justify-content: center; align-items: center; list-style: none; padding: 0;">
+                    <li><a href="https://facebook.com/parrucchiererossi" id="footerFb" target="_blank" style="display: inline-flex; align-items: center; justify-content: center; width: 50px; height: 50px; border-radius: 50%; color: #ccc; text-decoration: none;">
+                        <img src="images/social/facebook.png" alt="Facebook" style="width: 45px; height: 45px; object-fit: contain;">
+                    </a></li>
+                    <li><a href="https://instagram.com/parrucchiererossi" id="footerIg" target="_blank" style="display: inline-flex; align-items: center; justify-content: center; width: 50px; height: 50px; border-radius: 50%; color: #ccc; text-decoration: none;">
+                        <img src="images/social/instagram.png" alt="Instagram" style="width: 45px; height: 45px; object-fit: contain;">
+                    </a></li>
+                    <li><a href="https://tiktok.com/@parrucchiererossi" id="footerTk" target="_blank" style="display: inline-flex; align-items: center; justify-content: center; width: 50px; height: 50px; border-radius: 50%; color: #ccc; text-decoration: none;">
+                        <img src="images/social/tiktok.png" alt="TikTok" style="width: 45px; height: 45px; object-fit: contain;">
+                    </a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Legale</h4>
+                <a href="#" onclick="window.open('privacy.html', '_blank', 'width=900,height=700'); return false;" style="color: #ccc; text-decoration: none;">Privacy Policy</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Parrucchiere Rossi. Tutti i diritti riservati.</p>
+        </div>
+    </footer>
+
+
+    <!-- Firebase SDK (Compat - compatibile con script tag) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="firebase-database.js"></script>
+
+    <script>
+        // Servizi di default
+        const defaultServices = [
+            { id: 1, name: 'Taglio Uomo', price: 25, duration: 30 },
+            { id: 2, name: 'Taglio Donna', price: 35, duration: 45 },
+            { id: 3, name: 'Colore', price: 80, duration: 120 },
+            { id: 4, name: 'Trattamento', price: 40, duration: 20 }
+        ];
+
+        // Prenotazioni esistenti (mock)
+        let prenotazioni = [
+            { data: '2026-05-12', ora: '14:30', durata: 30 },
+            { data: '2026-05-13', ora: '10:00', durata: 45 },
+            { data: '2026-05-14', ora: '15:00', durata: 120 }
+        ];
+
+        function getServices() {
+            const stored = localStorage.getItem('services');
+            try {
+                let result = stored ? JSON.parse(stored) : defaultServices;
+                console.log('🔍 getServices() - source:', stored ? 'localStorage' : 'defaultServices', ', count:', result ? result.length : 0);
+
+                // Verifica che result sia un array valido
+                if (!result || !Array.isArray(result) || result.length === 0) {
+                    console.log('⚠️ getServices() - result non valido, fallback a defaultServices');
+                    result = defaultServices;
+                }
+                return result;
+            } catch (e) {
+                console.error('Errore nel parsing servizi:', e);
+                console.log('⚠️ getServices() - Fallback a defaultServices:', defaultServices.length);
+                return defaultServices;
+            }
+        }
+
+        // Carica servizi da Firebase all'avvio
+        async function loadServicesFromFirebase() {
+            try {
+                if (typeof DatabaseAdapter === 'undefined') {
+                    console.warn('DatabaseAdapter non disponibile, usando servizi locali');
+                    return;
+                }
+                const data = await DatabaseAdapter.load();
+                if (data && data.services && data.services.length > 0) {
+                    localStorage.setItem('services', JSON.stringify(data.services));
+                    console.log('✅ Servizi caricati da Firebase:', data.services.length);
+                } else {
+                    console.log('⚠️ Nessun servizio su Firebase, usando default');
+                }
+            } catch (e) {
+                console.warn('Errore caricamento servizi da Firebase:', e.message);
+            }
+        }
+
+        // Carica loghi social da Firebase
+        async function loadSocialLogosForSite() {
+            const platforms = ['facebook', 'instagram', 'tiktok'];
+
+            // Carica da localStorage per primo (veloce)
+            platforms.forEach(platform => {
+                let logoData = localStorage.getItem('social_logo_' + platform);
+                if (logoData) {
+                    try {
+                        const logo = JSON.parse(logoData);
+                        const imgElement = document.getElementById(platform + 'LogoSite');
+                        if (imgElement && logo.data) {
+                            imgElement.src = logo.data;
+                            console.log('✅ Logo ' + platform + ' caricato da localStorage');
+                        }
+                    } catch (e) {
+                        console.warn('Errore parsing logo ' + platform + ':', e);
+                    }
+                }
+            });
+
+            // Carica anche da Firebase per assicurarsi di avere i dati più recenti
+            // Percorsi loghi fissi nella cartella /images/social/
+            const logoPaths = {
+                facebook: 'images/social/facebook.png',
+                instagram: 'images/social/instagram.png',
+                tiktok: 'images/social/tiktok.png'
+            };
+
+            platforms.forEach(platform => {
+                if (logoPaths[platform]) {
+                    const imgElement = document.getElementById(platform + 'LogoSite');
+                    if (imgElement) {
+                        imgElement.src = logoPaths[platform];
+                        console.log('✅ Logo ' + platform + ' caricato dalla cartella');
+                    }
+                }
+            });
+        }
+
+        function getOpeningHours() {
+            const luVe = localStorage.getItem('salone_orari_luve') || '09:00 - 18:00';
+            return { luVe };
+        }
+
+        // Carica servizi nel form
+        function loadServices() {
+            const services = getServices();
+            console.log('📋 loadServices() - Servizi caricati:', services);
+            const select = document.getElementById('bookingService');
+            if (!select) {
+                console.error('Elemento bookingService non trovato');
+                return;
+            }
+            console.log('📋 loadServices() - Numero servizi:', services.length);
+            select.innerHTML = '<option value="">-- Seleziona un servizio --</option>';
+            services.forEach(s => {
+                const option = document.createElement('option');
+                option.value = s.id;
+                option.textContent = `${s.name} - ${s.price}€ (${s.duration} min)`;
+                select.appendChild(option);
+                console.log('✅ Aggiunto servizio:', s.name);
+            });
+
+            // Mostra servizi nella sezione
+            const servicesGrid = document.getElementById('servicesGrid');
+            if (!servicesGrid) {
+                console.error('Elemento servicesGrid non trovato');
+                return;
+            }
+            console.log('📋 Popolo servicesGrid con', services.length, 'servizi');
+            servicesGrid.innerHTML = services.map(s => `
+                <div style="background: linear-gradient(135deg, rgba(26, 26, 26, 0.9), rgba(37, 37, 37, 0.8)); padding: 28px; border-radius: 14px; border: 2px solid rgba(212, 175, 55, 0.1); cursor: pointer; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); position: relative; overflow: hidden;" onmouseover="this.style.borderColor='#d4af37'; this.style.boxShadow='0 15px 40px rgba(212, 175, 55, 0.25)'; this.style.transform='translateY(-6px) scale(1.02)'; this.style.background='linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(37, 37, 37, 0.9))'" onmouseout="this.style.borderColor='rgba(212, 175, 55, 0.1)'; this.style.boxShadow='0 4px 15px rgba(0, 0, 0, 0.3)'; this.style.transform='translateY(0) scale(1)'; this.style.background='linear-gradient(135deg, rgba(26, 26, 26, 0.9), rgba(37, 37, 37, 0.8))'">
+                    <div style="font-size: 40px; margin-bottom: 16px; transition: transform 0.3s ease;">✂️</div>
+                    <div style="color: #f5f5f5; font-size: 19px; font-weight: 700; margin-bottom: 12px; letter-spacing: 0.5px;">${s.name}</div>
+                    <div style="color: #999; font-size: 14px; margin-bottom: 15px; line-height: 1.5;">Durata: ${s.duration} minuti</div>
+                    <div style="color: #d4af37; font-size: 18px; font-weight: 700; letter-spacing: 1px;">${s.price}€</div>
+                </div>
+            `).join('');
+        }
+
+        function updateServiceSummary() {
+            const serviceId = document.getElementById('bookingService').value;
+            if (!serviceId) {
+                document.getElementById('serviceSummary').classList.remove('show');
+                return;
+            }
+
+            const services = getServices();
+            const service = services.find(s => s.id == serviceId);
+            if (service) {
+                document.getElementById('summaryService').textContent = service.name;
+                document.getElementById('summaryPrice').textContent = service.price + '€';
+                document.getElementById('summaryDuration').textContent = service.duration + ' min';
+                document.getElementById('serviceSummary').classList.add('show');
+            }
+        }
+
+        function updateAvailableTimes() {
+            const date = document.getElementById('bookingDate').value;
+            const serviceId = document.getElementById('bookingService').value;
+
+            if (!date || !serviceId) {
+                document.getElementById('orariGrid').innerHTML = '<p style="color: #999; grid-column: 1/-1;">Seleziona data e servizio</p>';
+                document.getElementById('submitBtn').disabled = true;
+                return;
+            }
+
+            const services = getServices();
+            const service = services.find(s => s.id == serviceId);
+            const duration = service.duration;
+
+            // Convert input date to Italian format for comparison
+            const dateObj = new Date(date + 'T00:00:00');
+            const dateStr = dateObj.toLocaleDateString('it-IT');
+
+            // Controllo giorni di chiusura (domenica = 0)
+            const dayOfWeek = dateObj.getDay();
+            const giorniChiusura = [0]; // 0 = domenica, 1 = lunedì, etc.
+            const nomiGiorni = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'];
+
+            if (giorniChiusura.includes(dayOfWeek)) {
+                const nomeGiorno = nomiGiorni[dayOfWeek];
+                document.getElementById('orariGrid').innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 30px 20px; background: rgba(231, 76, 60, 0.15); border-radius: 10px; border-left: 4px solid #e74c3c;">
+                        <div style="color: #e74c3c; font-weight: 700; font-size: 18px; margin-bottom: 10px;">🔴 ${nomeGiorno} - Chiuso</div>
+                        <div style="color: #ccc; font-size: 14px; margin-bottom: 15px;">Il nostro salone è chiuso il ${nomeGiorno}</div>
+                        <div style="color: #999; font-size: 13px;">Seleziona un'altra data (lunedì - sabato)</div>
+                    </div>
+                `;
+                document.getElementById('submitBtn').disabled = true;
+                return;
+            }
+
+            // Orari apertura
+            const hours = getOpeningHours();
+            const [openHour, closeHour] = hours.luVe.split(' - ').map(h => parseInt(h.split(':')[0]));
+
+            // Genera orari disponibili (30 minuti)
+            const orari = [];
+            for (let h = openHour; h < closeHour; h++) {
+                for (let m = 0; m < 60; m += 30) {
+                    orari.push(`${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`);
+                }
+            }
+
+            // Load all bookings from localStorage
+            const allBookings = loadAllBookings();
+
+            const grid = document.getElementById('orariGrid');
+            grid.innerHTML = orari.map(ora => {
+                const isOccupied = allBookings.some(p => p.data === dateStr && p.ora === ora);
+                const isDisabled = isOccupied;
+
+                return `
+                    <button type="button" class="orario-btn ${isDisabled ? 'disabled' : ''}"
+                            onclick="selectTime('${ora}', this); updateSummaryTime('${ora}')"
+                            ${isDisabled ? 'disabled' : ''}>
+                        ${ora}
+                    </button>
+                `;
+            }).join('');
+
+            updateServiceSummary();
+        }
+
+        function loadAllBookings() {
+            const bookings = [];
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key.startsWith('booking_')) {
+                    try {
+                        const booking = JSON.parse(localStorage.getItem(key));
+                        bookings.push(booking);
+                    } catch (e) {
+                        console.error('Error parsing booking:', e);
+                    }
+                }
+            }
+            return bookings;
+        }
+
+        function selectTime(time, element) {
+            document.querySelectorAll('.orario-btn').forEach(btn => btn.classList.remove('selected'));
+            if (!element.classList.contains('disabled')) {
+                element.classList.add('selected');
+                document.getElementById('bookingTime').value = time;
+                document.getElementById('submitBtn').disabled = false;
+            }
+        }
+
+        function updateSummaryTime(time) {
+            const date = document.getElementById('bookingDate').value;
+            if (date) {
+                const dateObj = new Date(date);
+                const dateStr = dateObj.toLocaleDateString('it-IT');
+                document.getElementById('summaryDate').textContent = dateStr;
+            }
+            document.getElementById('summaryTime').textContent = time;
+        }
+
+        async function submitBooking(e) {
+            e.preventDefault();
+            const date = document.getElementById('bookingDate').value;
+            const service = document.getElementById('bookingService').value;
+            const time = document.getElementById('bookingTime').value;
+            const name = document.getElementById('bookingName').value;
+            const cognome = document.getElementById('bookingCognome').value;
+            const phone = document.getElementById('bookingPhone').value;
+
+            if (date && service && time && name && cognome && phone) {
+                const services = getServices();
+                const svc = services.find(s => s.id == service);
+
+                // Convert date to Italian format
+                const dateObj = new Date(date + 'T00:00:00');
+                const dateStr = dateObj.toLocaleDateString('it-IT');
+
+                const booking = {
+                    id: 'booking_' + Date.now(),
+                    data: dateStr,
+                    ora: time,
+                    servizio: svc.name,
+                    cliente: name + ' ' + cognome,
+                    telefono: phone,
+                    durata: svc.duration,
+                    prezzo: svc.price,
+                    timestamp: new Date().toISOString(),
+                    status: 'Confermata'
+                };
+
+                // Salva in localStorage (fallback locale)
+                localStorage.setItem(booking.id, JSON.stringify(booking));
+                console.log('💾 Prenotazione salvata in localStorage:', booking.id);
+
+                // Salva in Firebase (cloud storage sicuro)
+                try {
+                    if (typeof DatabaseAdapter !== 'undefined') {
+                        const data = await DatabaseAdapter.load();
+                        const allBookings = data.bookings || [];
+                        allBookings.push(booking);
+                        data.bookings = allBookings;
+                        await DatabaseAdapter.save(data);
+                        console.log('🔥 Prenotazione sincronizzata con Firebase');
+                    }
+                } catch (err) {
+                    console.warn('⚠️ Sincronizzazione Firebase fallita, dati salvati in localStorage:', err.message);
+                }
+
+                // Aggiungi a prenotazioni locali
+                prenotazioni.push({ data: dateStr, ora: time, durata: svc.duration });
+
+                alert('✅ Prenotazione confermata!\n\nTi contatteremo al numero: ' + phone);
+                document.querySelector('form').reset();
+                document.getElementById('serviceSummary').classList.remove('show');
+                document.getElementById('submitBtn').disabled = true;
+                document.getElementById('orariGrid').innerHTML = '';
+            }
+        }
+
+        // Inizializza e salva social links in Firebase
+        async function initializeSocialLinksInFirebase() {
+            try {
+                if (typeof DatabaseAdapter === 'undefined') {
+                    throw new Error('DatabaseAdapter non disponibile');
+                }
+                const data = await DatabaseAdapter.load();
+
+                // Se i social links non sono presenti, li salvo con i valori di default
+                if (!data.socialLinks || Object.keys(data.socialLinks).length === 0) {
+                    const defaultSocialLinks = {
+                        facebook: 'https://facebook.com/parrucchiererossi',
+                        instagram: 'https://instagram.com/parrucchiererossi',
+                        tiktok: 'https://tiktok.com/@parrucchiererossi'
+                    };
+
+                    data.socialLinks = defaultSocialLinks;
+                    await DatabaseAdapter.save(data);
+                    console.log('🔥 Social links salvati in Firebase con valori di default');
+                }
+            } catch (e) {
+                console.warn('Errore inizializzazione social links in Firebase:', e.message);
+            }
+        }
+
+        // Inizializza e salva dati di contatto in Firebase
+        async function initializeContactDataInFirebase() {
+            try {
+                if (typeof DatabaseAdapter === 'undefined') {
+                    throw new Error('DatabaseAdapter non disponibile');
+                }
+                const data = await DatabaseAdapter.load();
+
+                // Se settings non esistono o incompleti, li salvo con i valori di default
+                if (!data.settings || !data.settings.phone) {
+                    const defaultSettings = data.settings || {};
+                    defaultSettings.name = defaultSettings.name || 'Parrucchiere Rossi';
+                    defaultSettings.phone = defaultSettings.phone || '+39 011 555 1234';
+                    defaultSettings.email = defaultSettings.email || 'info@parrucchiererossi.it';
+                    defaultSettings.address = defaultSettings.address || 'Via Roma 15, Torino';
+                    defaultSettings.hoursLuVe = defaultSettings.hoursLuVe || '09:00 - 18:00';
+                    defaultSettings.hoursSat = defaultSettings.hoursSat || '09:00 - 14:00';
+
+                    data.settings = defaultSettings;
+                    await DatabaseAdapter.save(data);
+                    console.log('🔥 Dati di contatto salvati in Firebase');
+                }
+            } catch (e) {
+                console.warn('Errore inizializzazione dati contatto in Firebase:', e.message);
+            }
+        }
+
+        // Carica social links
+        function loadSocialLinks() {
+            // Carica da Firebase con fallback a localStorage
+            (async () => {
+                try {
+                    if (typeof DatabaseAdapter === 'undefined') {
+                        throw new Error('DatabaseAdapter non disponibile');
+                    }
+                    const data = await DatabaseAdapter.load();
+                    const socialLinks = data.socialLinks || {};
+
+                    const fb = socialLinks.facebook || localStorage.getItem('parrucchiere_facebook') || 'https://facebook.com/parrucchiererossi';
+                    const ig = socialLinks.instagram || localStorage.getItem('parrucchiere_instagram') || 'https://instagram.com/parrucchiererossi';
+                    const tk = socialLinks.tiktok || localStorage.getItem('parrucchiere_tiktok') || 'https://tiktok.com/@parrucchiererossi';
+
+                    if (document.getElementById('footerFb')) document.getElementById('footerFb').href = fb;
+                    if (document.getElementById('footerIg')) document.getElementById('footerIg').href = ig;
+                    if (document.getElementById('footerTk')) document.getElementById('footerTk').href = tk;
+
+                    // Update social section links
+                    if (document.getElementById('socialFb')) document.getElementById('socialFb').href = fb;
+                    if (document.getElementById('socialIg')) document.getElementById('socialIg').href = ig;
+                    if (document.getElementById('socialTk')) document.getElementById('socialTk').href = tk;
+
+                    console.log('✅ Link social caricati da Firebase');
+                } catch (e) {
+                    console.warn('Errore caricamento link social da Firebase, usando localStorage:', e.message);
+                    const fb = localStorage.getItem('parrucchiere_facebook') || 'https://facebook.com/parrucchiererossi';
+                    const ig = localStorage.getItem('parrucchiere_instagram') || 'https://instagram.com/parrucchiererossi';
+                    const tk = localStorage.getItem('parrucchiere_tiktok') || 'https://tiktok.com/@parrucchiererossi';
+
+                    if (document.getElementById('footerFb')) document.getElementById('footerFb').href = fb;
+                    if (document.getElementById('footerIg')) document.getElementById('footerIg').href = ig;
+                    if (document.getElementById('footerTk')) document.getElementById('footerTk').href = tk;
+
+                    // Update social section links
+                    if (document.getElementById('socialFb')) document.getElementById('socialFb').href = fb;
+                    if (document.getElementById('socialIg')) document.getElementById('socialIg').href = ig;
+                    if (document.getElementById('socialTk')) document.getElementById('socialTk').href = tk;
+                }
+            })();
+        }
+
+        // Aggiorna la mappa con il nuovo indirizzo
+        function updateMapFromAddress(address, city) {
+            try {
+                const mapFrame = document.getElementById('mapFrame');
+                if (!mapFrame) {
+                    console.warn('⚠️ Elemento mappa non trovato');
+                    return;
+                }
+
+                // Costruisci l'indirizzo completo per la mappa
+                const fullAddress = `${address}, ${city}, Italia`;
+
+                // Codifica l'indirizzo per l'URL
+                const encodedAddress = encodeURIComponent(fullAddress);
+
+                // Crea l'URL di Google Maps Embed (con ricerca per indirizzo)
+                const mapUrl = `https://www.google.com/maps/embed/v1/place?q=${encodedAddress}&key=AIzaSyDummyKey`;
+
+                // Metodo alternativo: usa la ricerca di Google Maps
+                const alternativeUrl = `https://www.google.com/maps?q=${encodedAddress}&output=embed`;
+
+                // Aggiorna l'iframe src
+                mapFrame.src = alternativeUrl;
+
+                console.log('✅ Mappa aggiornata:', fullAddress);
+            } catch (e) {
+                console.warn('⚠️ Errore aggiornamento mappa:', e.message);
+            }
+        }
+
+        // Carica dati del salone da Firebase
+        function loadSalonData() {
+            (async () => {
+                try {
+                    if (typeof DatabaseAdapter === 'undefined') {
+                        console.warn('DatabaseAdapter non disponibile, usando dati locali');
+                        return;
+                    }
+                    const data = await DatabaseAdapter.load();
+                    const settings = data.settings || {};
+
+                    const salonName = settings.name || 'Parrucchiere Rossi';
+                    const salonPhone = settings.phone || '+39 011 555 1234';
+                    const hoursLuVe = settings.hoursLuVe || '09:00 - 18:00';
+                    const hoursSat = settings.hoursSat || '09:00 - 14:00';
+
+                    // Aggiorna il logo text
+                    const logoText = document.querySelector('.logo-text');
+                    if (logoText) logoText.textContent = salonName;
+
+                    // Carica e aggiorna il logo se disponibile
+                    try {
+                        if (data.logo && data.logo.data) {
+                            const logoPlaceholder = document.querySelector('.logo-placeholder');
+                            if (logoPlaceholder) {
+                                logoPlaceholder.innerHTML = `<img src="${data.logo.data}" style="width: 100%; height: 100%; border-radius: 10px; object-fit: cover;" alt="Logo">`;
+                                localStorage.setItem('salone_logo', JSON.stringify(data.logo));
+                            }
+                        } else {
+                            // Se Firebase non ha il logo, carica da localStorage
+                            const logoDataLocal = localStorage.getItem('salone_logo');
+                            if (logoDataLocal) {
+                                try {
+                                    const logo = JSON.parse(logoDataLocal);
+                                    const logoPlaceholder = document.querySelector('.logo-placeholder');
+                                    if (logoPlaceholder && logo.data) {
+                                        logoPlaceholder.innerHTML = `<img src="${logo.data}" style="width: 100%; height: 100%; border-radius: 10px; object-fit: cover;" alt="Logo">`;
+                                    }
+                                } catch (e) {
+                                    console.warn('Errore parsing logo da localStorage:', e.message);
+                                }
+                            }
+                        }
+                    } catch (e) {
+                        console.warn('Errore caricamento logo:', e.message);
+                    }
+
+                    // Aggiorna il numero di telefono nell'header
+                    const headerPhone = document.querySelector('.header-phone a');
+                    if (headerPhone) {
+                        headerPhone.textContent = '☎️ ' + salonPhone;
+                        headerPhone.href = 'tel:' + salonPhone.replace(/\s/g, '');
+                    }
+
+                    // Aggiorna il titolo hero
+                    const heroTitle = document.querySelector('h1[style*="72px"]');
+                    if (heroTitle) heroTitle.textContent = salonName;
+
+                    // Aggiorna il telefono nella sezione hero
+                    const heroPhone = document.querySelector('a[href^="tel:+39011555124"]');
+                    if (heroPhone) {
+                        heroPhone.textContent = salonPhone;
+                        heroPhone.href = 'tel:' + salonPhone.replace(/\s/g, '');
+                    }
+
+                    // Aggiorna il footer
+                    const footerTitle = document.getElementById('footerSalonName');
+                    if (footerTitle) footerTitle.textContent = salonName;
+
+                    const footerCopy = document.querySelector('.footer-bottom p');
+                    if (footerCopy) footerCopy.textContent = '© 2026 ' + salonName + '. Tutti i diritti riservati.';
+
+                    // Aggiorna gli orari
+                    const hoursMonFri = document.getElementById('hoursMonFri');
+                    if (hoursMonFri) hoursMonFri.textContent = hoursLuVe;
+
+                    const hoursSaturday = document.getElementById('hoursSaturday');
+                    if (hoursSaturday) hoursSaturday.textContent = hoursSat;
+
+                    // Aggiorna email e indirizzo di contatto
+                    const salonEmail = settings.email || 'info@parrucchiererossi.it';
+                    const salonAddress = settings.address || 'Via Roma 15';
+
+                    const contactEmail = document.getElementById('contactEmail');
+                    if (contactEmail) {
+                        contactEmail.textContent = salonEmail;
+                        contactEmail.href = 'mailto:' + salonEmail;
+                    }
+
+                    const contactAddress = document.getElementById('contactAddress');
+                    if (contactAddress) contactAddress.textContent = salonAddress;
+
+                    const addressLine1 = document.getElementById('addressLine1');
+                    if (addressLine1) addressLine1.textContent = salonAddress;
+
+                    const salonCity = settings.city || 'Torino';
+                    const cityDisplay = document.getElementById('cityDisplay');
+                    if (cityDisplay) cityDisplay.textContent = salonCity;
+
+                    // Aggiorna abbreviazione città dinamicamente
+                    const cityAbbreviations = {
+                        'Torino': 'TO',
+                        'Turin': 'TO',
+                        'Milano': 'MI',
+                        'Milan': 'MI',
+                        'Roma': 'RM',
+                        'Rome': 'RM',
+                        'Firenze': 'FI',
+                        'Florence': 'FI',
+                        'Napoli': 'NA',
+                        'Naples': 'NA',
+                        'Venezia': 'VE',
+                        'Venice': 'VE',
+                        'Genova': 'GE',
+                        'Genoa': 'GE',
+                        'Bologna': 'BO',
+                        'Palermo': 'PA',
+                        'Verona': 'VR',
+                        'Catania': 'CT'
+                    };
+                    const cityAbbrev = document.getElementById('cityAbbrev');
+                    if (cityAbbrev) {
+                        cityAbbrev.textContent = cityAbbreviations[salonCity] || salonCity.substring(0, 2).toUpperCase();
+                    }
+
+                    // Aggiorna la mappa con il nuovo indirizzo
+                    updateMapFromAddress(salonAddress, salonCity);
+
+                    console.log('✅ Dati salone caricati da Firebase:', { salonName, salonPhone, hoursLuVe, hoursSat, salonEmail, salonAddress, salonCity });
+                } catch (e) {
+                    console.warn('Errore caricamento dati salone da Firebase:', e.message);
+                }
+            })();
+        }
+
+        // Carica recensioni da Firebase
+        function loadReviews() {
+            (async () => {
+                try {
+                    if (typeof DatabaseAdapter === 'undefined') {
+                        console.warn('DatabaseAdapter non disponibile, usando recensioni di default');
+                        return;
+                    }
+                    const data = await DatabaseAdapter.load();
+                    let reviews = data.reviews || [];
+
+                    if (reviews.length === 0) {
+                        console.log('⚠️ Nessuna recensione su Firebase, usando default');
+                        return;
+                    }
+
+                    // Limita a massimo 3 recensioni
+                    reviews = reviews.slice(0, 3);
+
+                    const reviewsContainer = document.getElementById('reviewsContainer');
+                    if (!reviewsContainer) return;
+
+                    const reviewsHtml = reviews.map(r => `
+                        <div style="background: #252525; padding: 24px; border-radius: 12px; border-left: 4px solid #d4af37;">
+                            <div style="color: #d4af37; font-weight: 700; margin-bottom: 5px;">${r.name}</div>
+                            <div style="color: #999; font-size: 12px; margin-bottom: 12px;">${r.date}</div>
+                            <div style="color: #d4af37; margin-bottom: 10px;">${'⭐'.repeat(r.stars)}</div>
+                            <div style="color: #ccc; font-size: 14px;">"${r.text}"</div>
+                        </div>
+                    `).join('');
+
+                    reviewsContainer.innerHTML = reviewsHtml;
+                    console.log('✅ Recensioni caricate da Firebase:', reviews.length);
+                } catch (e) {
+                    console.warn('Errore caricamento recensioni da Firebase:', e.message);
+                }
+            })();
+        }
+
+        function showBookingAccess() {
+            window.location.href = 'cliente-prenotazioni.html';
+        }
+
+        // Menu toggle
+        document.getElementById('navToggle')?.addEventListener('click', function() {
+            this.classList.toggle('active');
+            document.getElementById('nav-menu').classList.toggle('active');
+        });
+
+        // Smooth scroll navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href === '#' || href === '#prenota' || href === '#servizi' || href === '#recensioni' || href === '#contatti') {
+                    e.preventDefault();
+
+                    // Close mobile menu if open
+                    const navMenu = document.getElementById('nav-menu');
+                    const navToggle = document.getElementById('navToggle');
+                    if (navMenu?.classList.contains('active')) {
+                        navMenu.classList.remove('active');
+                        navToggle?.classList.remove('active');
+                    }
+
+                    // Scroll to section
+                    if (href !== '#') {
+                        const target = document.querySelector(href);
+                        if (target) {
+                            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    }
+                }
+            });
+        });
+
+        // Validation: Verify critical elements exist
+        function validatePageElements() {
+            const requiredElements = [
+                'bookingService', 'bookingDate', 'orariGrid',
+                'socialFb', 'socialIg', 'socialTk',
+                'submitBtn', 'serviceSummary'
+            ];
+            const missingElements = requiredElements.filter(id => !document.getElementById(id));
+            if (missingElements.length > 0) {
+                console.error('❌ ERRORE: Elementi mancanti nel DOM:', missingElements);
+                return false;
+            }
+            return true;
+        }
+
+        // Load logo from localStorage quickly
+        function loadLogoFromStorage() {
+            try {
+                const logoData = localStorage.getItem('salone_logo');
+                if (logoData) {
+                    const logo = JSON.parse(logoData);
+                    const logoPlaceholder = document.querySelector('.logo-placeholder');
+                    if (logoPlaceholder && logo.data) {
+                        logoPlaceholder.innerHTML = `<img src="${logo.data}" style="width: 100%; height: 100%; border-radius: 10px; object-fit: cover;" alt="Logo">`;
+                    }
+                }
+            } catch (e) {
+                console.warn('Errore caricamento logo da localStorage:', e.message);
+            }
+        }
+
+        // Update page title with salon name from localStorage/Firebase
+        function updatePageTitle() {
+            const salonName = localStorage.getItem('salone_name') || 'Parrucchiere Rossi';
+            document.title = salonName;
+        }
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', function() {
+            loadLogoFromStorage();
+            updatePageTitle();
+
+            if (!validatePageElements()) {
+                console.error('❌ Errore durante l\'inizializzazione della pagina');
+                return;
+            }
+            // Carica dati da Firebase
+            loadSalonData();
+            loadReviews();
+            (async () => {
+                await loadServicesFromFirebase();
+                loadServices();
+
+                // Inizializza e salva social links in Firebase
+                await initializeSocialLinksInFirebase();
+                loadSocialLinks();
+                loadSocialLogosForSite();
+
+                // Inizializza e salva dati di contatto in Firebase
+                await initializeContactDataInFirebase();
+
+                // Load salon name from Firebase
+                try {
+                    if (typeof DatabaseAdapter !== 'undefined') {
+                        const data = await DatabaseAdapter.load();
+                        if (data && data.settings && data.settings.name) {
+                            document.title = data.settings.name;
+                            localStorage.setItem('salone_name', data.settings.name);
+                        }
+                    }
+                } catch (e) {
+                    console.warn('Errore caricamento nome salone da Firebase:', e.message);
+                }
+            })();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Services</title>
+    <style>
+        body { background: #1a1a1a; color: #f5f5f5; font-family: Arial; padding: 20px; }
+        .log { background: #2a2a2a; padding: 10px; margin: 5px 0; border-radius: 5px; }
+        .error { color: #e74c3c; }
+        .success { color: #27ae60; }
+    </style>
+</head>
+<body>
+    <h1>Debug: Services Loading</h1>
+    <div id="output"></div>
+    
+    <script>
+        const output = document.getElementById('output');
+        
+        function log(msg, type = 'info') {
+            const div = document.createElement('div');
+            div.className = 'log ' + (type === 'error' ? 'error' : type === 'success' ? 'success' : '');
+            div.textContent = msg;
+            output.appendChild(div);
+            console.log(msg);
+        }
+        
+        // Test 1: Check if defaultServices would be defined
+        const defaultServices = [
+            { id: 1, name: 'Taglio Uomo', price: 25, duration: 30 },
+            { id: 2, name: 'Taglio Donna', price: 35, duration: 45 },
+            { id: 3, name: 'Colore', price: 80, duration: 120 },
+            { id: 4, name: 'Trattamento', price: 40, duration: 20 }
+        ];
+        
+        log('✅ defaultServices definito: ' + defaultServices.length + ' servizi', 'success');
+        
+        // Test 2: Check localStorage
+        const stored = localStorage.getItem('services');
+        log('localStorage.services: ' + (stored ? 'TROVATO (' + JSON.parse(stored).length + ' servizi)' : 'NON TROVATO'), stored ? 'success' : 'info');
+        
+        // Test 3: Simulate getServices()
+        function getServices() {
+            const stored = localStorage.getItem('services');
+            try {
+                const result = stored ? JSON.parse(stored) : defaultServices;
+                console.log('🔍 getServices() - source:', stored ? 'localStorage' : 'defaultServices', ', count:', result ? result.length : 0);
+                return result;
+            } catch (e) {
+                console.error('Errore nel parsing servizi:', e);
+                console.log('⚠️ getServices() - Fallback a defaultServices:', defaultServices.length);
+                return defaultServices;
+            }
+        }
+        
+        const services = getServices();
+        log('🔍 getServices() torna: ' + services.length + ' servizi', services.length > 0 ? 'success' : 'error');
+        
+        // Test 4: List services
+        if (services && services.length > 0) {
+            services.forEach(s => {
+                log('  📌 ' + s.name + ' - ' + s.price + '€ (' + s.duration + 'min)', 'success');
+            });
+        } else {
+            log('❌ ERRORE: Nessun servizio caricato!', 'error');
+        }
+        
+        // Test 5: Check if validatePageElements passes
+        const requiredElements = [
+            'bookingService', 'bookingDate', 'orariGrid',
+            'socialFb', 'socialIg', 'socialTk',
+            'submitBtn', 'serviceSummary'
+        ];
+        
+        const missingElements = requiredElements.filter(id => {
+            const el = document.getElementById(id);
+            if (!el) log('❌ Elemento mancante: ' + id, 'error');
+            return !el;
+        });
+        
+        if (missingElements.length === 0) {
+            log('✅ Tutti gli elementi richiesti sarebbero trovati (ma non in questa pagina di debug)', 'success');
+        }
+    </script>
+</body>
+</html>
