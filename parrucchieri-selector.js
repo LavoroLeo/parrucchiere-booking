@@ -104,6 +104,19 @@ const ParrucchieriSelector = {
         parrucchieriDiv.appendChild(select);
         parrucchieriDiv.appendChild(infoDiv);
 
+        // Crea un input nascosto per il parrucchiereId
+        const hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.id = 'parrucchiereId';
+        hiddenInput.name = 'parrucchiereId';
+        hiddenInput.value = '';
+        bookingForm.appendChild(hiddenInput);
+
+        // Aggiorna l'input nascosto quando cambia la selezione
+        select.addEventListener('change', (e) => {
+            hiddenInput.value = e.target.value;
+        });
+
         // Inserisci prima del resto del form
         const firstFormElement = bookingForm.querySelector('input, select, textarea, button');
         if (firstFormElement) {
@@ -112,7 +125,44 @@ const ParrucchieriSelector = {
             bookingForm.appendChild(parrucchieriDiv);
         }
 
+        // Intercetta il salvataggio della prenotazione
+        this.interceptBookingSave();
+
         console.log('✅ Parrucchieri Selector caricato');
+    },
+
+    // Intercetta il salvataggio della prenotazione per aggiungere parrucchiereId
+    interceptBookingSave() {
+        // Trova il bottone di submit
+        const submitBtn = document.getElementById('submitBtn');
+        if (!submitBtn) return;
+
+        const originalOnclick = submitBtn.onclick;
+
+        submitBtn.addEventListener('click', () => {
+            // Assicura che parrucchiereId sia impostato
+            if (!document.getElementById('parrucchiereId').value) {
+                alert('Per favore seleziona un parrucchiere!');
+                return;
+            }
+
+            // Se esiste una funzione confermaPrenotazione, intercettala
+            if (window.confermaPrenotazione) {
+                // Sovrascrivi temporaneamente la funzione
+                const originalConfirm = window.confermaPrenotazione;
+                window.confermaPrenotazione = () => {
+                    // Aggiungi parrucchiereId ai dati
+                    const parrucchiereId = document.getElementById('parrucchiereId').value;
+                    console.log('👨‍💼 Prenotazione con parrucchiere:', parrucchiereId);
+
+                    // Salva in una variabile globale
+                    window.currentParrucchiereId = parrucchiereId;
+
+                    // Chiama la funzione originale
+                    originalConfirm();
+                };
+            }
+        });
     },
 
     // Aggiorna gli orari disponibili in base al parrucchiere

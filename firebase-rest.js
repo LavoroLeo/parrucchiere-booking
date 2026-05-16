@@ -342,6 +342,11 @@ const script2 = document.createElement('script');
 script2.src = 'parrucchieri-selector.js';
 document.head.appendChild(script2);
 
+// Carica il booking interceptor (aggiunge parrucchiereId)
+const script3 = document.createElement('script');
+script3.src = 'booking-interceptor.js';
+document.head.appendChild(script3);
+
 // Avvia il monitoraggio delle prenotazioni
 async function startBookingMonitoring() {
     console.log('👁️ Avvio monitoraggio prenotazioni...');
