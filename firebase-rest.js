@@ -203,3 +203,58 @@ window.initializeDatabase = initializeDatabase;
 console.log('%c✅ SISTEMA IBRIDO PRONTO', 'color: #00ff00; font-size: 14px; font-weight: bold');
 console.log('📊 localStorage (Primary) ✅ SEMPRE DISPONIBILE');
 console.log('🔥 Firebase (Secondary) ✅ BACKUP/SYNC OPZIONALE');
+
+// ============================================
+// NOTIFICATION SYSTEM - MONITORAGGIO PRENOTAZIONI
+// ============================================
+
+// Carica il notification handler
+const script = document.createElement('script');
+script.src = 'notification-handler.js';
+document.head.appendChild(script);
+
+// Avvia il monitoraggio delle prenotazioni
+async function startBookingMonitoring() {
+    console.log('👁️ Avvio monitoraggio prenotazioni...');
+
+    let lastBookingStates = {};
+
+    // Monitora ogni 5 secondi le prenotazioni
+    setInterval(async () => {
+        try {
+            const data = await DatabaseAdapter.load();
+            if (!data || !data.bookings) return;
+
+            data.bookings.forEach(booking => {
+                const bookingKey = booking.id;
+                const currentStatus = booking.status;
+                const lastStatus = lastBookingStates[bookingKey];
+
+                // Se lo stato cambia a "completata"
+                if (lastStatus !== 'completata' && currentStatus === 'completata') {
+                    console.log('🎉 Prenotazione completata:', booking.clientName, bookingKey);
+
+                    // Mostra notifica al cliente
+                    if (window.NotificationSystem) {
+                        window.NotificationSystem.showNotification(
+                            '✂️ Prenotazione Completata!',
+                            `La tua prenotazione con ${booking.service} è terminata. Grazie per aver scelto Parrucchiere Rossi!`,
+                            booking.token,
+                            booking.id
+                        );
+                    }
+                }
+
+                // Aggiorna lo stato
+                lastBookingStates[bookingKey] = currentStatus;
+            });
+        } catch (error) {
+            console.log('⚠️ Errore monitoraggio prenotazioni:', error.message);
+        }
+    }, 5000); // Controlla ogni 5 secondi
+}
+
+// Avvia il monitoraggio quando il database è pronto
+setTimeout(() => {
+    startBookingMonitoring();
+}, 2000);
