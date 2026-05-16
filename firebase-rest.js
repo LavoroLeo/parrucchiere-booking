@@ -231,8 +231,9 @@ function getAvailableSlots(parrucchiereId, date) {
 
     if (!parrucchiere) return [];
 
-    // Determina gli orari di lavoro
-    const dayOfWeek = new Date(date).getDay(); // 0=domenica, 6=sabato
+    // FIX BUG: Usa local date, non UTC
+    const dateObj = new Date(date + 'T00:00:00');
+    const dayOfWeek = dateObj.getDay(); // 0=domenica, 6=sabato
     const isSaturday = dayOfWeek === 6;
     const hoursStart = isSaturday ? parrucchiere.satStart : parrucchiere.hoursStart;
     const hoursEnd = isSaturday ? parrucchiere.satEnd : parrucchiere.hoursEnd;
@@ -242,8 +243,13 @@ function getAvailableSlots(parrucchiereId, date) {
     const [startH, startM] = hoursStart.split(':').map(Number);
     const [endH, endM] = hoursEnd.split(':').map(Number);
 
-    for (let h = startH; h < endH; h++) {
+    // FIX BUG: Includi l'ultima ora
+    for (let h = startH; h <= endH; h++) {
         for (let m = 0; m < 60; m += 30) {
+            // Non aggiungere slot dopo l'orario di fine
+            if (h === endH && m > 0) break;
+            if (h > endH) break;
+
             const timeStr = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
 
             // Controlla se è già occupato
@@ -277,6 +283,12 @@ function addParrucchiere(parrucchiere) {
 
     data.parrucchieri.push(parrucchiere);
     LocalStorage.save(data);
+
+    // BUG FIX: Sincronizza immediatamente con Firebase
+    (async () => {
+        await FirebaseSync.save(data);
+        console.log('🔥 Parrucchiere sincronizzato con Firebase:', parrucchiere.id);
+    })();
 
     console.log('✅ Parrucchiere aggiunto:', parrucchiere.name, parrucchiere.id);
     return parrucchiere;

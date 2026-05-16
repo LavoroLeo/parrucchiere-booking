@@ -83,9 +83,9 @@ const DashboardColumns = {
                     return; // Già aggiunto
                 }
 
-                // Estrai parrucchiereId dai dati della riga
-                const parrucchiereId = row.dataset.parrucchiereId ||
-                    this.extractParrucchiereId(row);
+                // BUG FIX: Estrai parrucchiereId dai dati localStorage
+                const parrucchiereId = this.getParrucchiereIdForRow(row) ||
+                    row.dataset.parrucchiereId;
 
                 const td = document.createElement('td');
                 td.dataset.field = 'parrucchiere';
@@ -104,6 +104,11 @@ const DashboardColumns = {
                     td.textContent = '-';
                 }
 
+                // BUG FIX: Salva parrucchiereId come data attribute
+                if (parrucchiereId) {
+                    row.dataset.parrucchiereId = parrucchiereId;
+                }
+
                 // Inserisci prima della colonna azioni
                 const azioneTd = row.querySelector('td:last-child');
                 if (azioneTd && azioneTd.textContent.toLowerCase().includes('modifica')) {
@@ -115,18 +120,32 @@ const DashboardColumns = {
         });
     },
 
-    extractParrucchiereId(row) {
-        // Prova a estrarre parrucchiereId dai dati della riga
-        const rowData = row.textContent.toLowerCase();
+    getParrucchiereIdForRow(row) {
+        // Estrae il parrucchiereId dalla prenotazione nel database
+        try {
+            const data = window.LocalStorage ? window.LocalStorage.load() : JSON.parse(localStorage.getItem('bookingDB') || '{}');
 
-        // Cerca ID della prenotazione e trova il parrucchiere nel database
-        const cells = row.querySelectorAll('td');
-        if (cells.length > 0) {
-            // Il parrucchiereId potrebbe essere immagazzinato in un data attribute
-            return row.dataset.parrucchiereId || '';
+            // Cerca di trovare il booking ID dalla riga (es: nella prima colonna)
+            const cells = row.querySelectorAll('td');
+            if (cells.length === 0) return null;
+
+            // Il primo cell potrebbe contenere l'ID o il nome del cliente
+            // Cerca nella lista dei booking
+            for (const booking of (data.bookings || [])) {
+                // Verifica se questa riga corrisponde a questa prenotazione
+                const rowText = row.textContent.toLowerCase();
+
+                if (rowText.includes(booking.clientName?.toLowerCase()) &&
+                    rowText.includes(booking.date) &&
+                    rowText.includes(booking.time)) {
+                    return booking.parrucchiereId || 'p1'; // Default a p1 se non trovato
+                }
+            }
+        } catch (e) {
+            console.log('⚠️ Errore estraendo parrucchiereId:', e.message);
         }
 
-        return '';
+        return null;
     }
 };
 

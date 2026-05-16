@@ -117,6 +117,17 @@ const ParrucchieriSelector = {
             hiddenInput.value = e.target.value;
         });
 
+        // BUG FIX: Monitora il cambio di data e aggiorna orari
+        const dateInput = document.getElementById('newBookingDate') ||
+            bookingForm.querySelector('input[type="date"]');
+        if (dateInput) {
+            dateInput.addEventListener('change', (e) => {
+                if (this.selectedParrucchiereId) {
+                    this.onDateChange(e.target.value);
+                }
+            });
+        }
+
         // Inserisci prima del resto del form
         const firstFormElement = bookingForm.querySelector('input, select, textarea, button');
         if (firstFormElement) {
