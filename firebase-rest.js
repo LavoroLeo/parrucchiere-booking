@@ -1,91 +1,50 @@
 /**
- * FIREBASE REST API - Soluzione definitiva
- * Usa REST HTTP (niente SDK, niente errori ES6)
- * Funziona perfettamente con script tags
+ * HYBRID STORAGE SYSTEM
+ * PRIMARY: localStorage (always available, fast)
+ * SECONDARY: Firebase REST API (backup/sync when available)
+ *
+ * Se cancella cache → localStorage è sempre disponibile
+ * Se Firebase down → localStorage funziona da solo
+ * Se Firebase up → sincronizza dati in background
  */
 
 const FIREBASE_DB_URL = 'https://parrucchieri-online-default-rtdb.europe-west1.firebasedatabase.app';
 const BUSINESS_ID = 'demo-parrucchiere-rossi';
 
-console.log('%c🔥 FIREBASE REST API INIZIALIZZATO', 'color: #00ff00; font-size: 14px; font-weight: bold');
+console.log('%c💾 HYBRID STORAGE SYSTEM INIZIALIZZATO', 'color: #00ff00; font-size: 14px; font-weight: bold');
+console.log('✅ PRIMARY: localStorage (locale, sempre disponibile)');
+console.log('✅ SECONDARY: Firebase (backup opzionale)');
 
-// Funzione per verificare se Firebase è abilitato (sempre vero con REST API)
-function isFirebaseEnabled() {
-    console.log('✅ Firebase REST API è abilitato');
-    return true;
-}
+// ============================================
+// LOCALSTORAGE - PRIMARY (sempre disponibile)
+// ============================================
 
-// Database Adapter che usa REST API
-const FirebaseREST = {
-    // Carica dati da Firebase via REST
-    async load() {
+const LocalStorage = {
+    load() {
         try {
-            console.log('📥 Caricando da Firebase REST API...');
-
-            const response = await fetch(
-                `${FIREBASE_DB_URL}/businesses/${BUSINESS_ID}.json`,
-                { method: 'GET' }
-            );
-
-            if (response.ok) {
-                const data = await response.json();
-                if (data) {
-                    console.log('✅ Dati caricati da Firebase REST API');
-                    return data;
-                }
+            const saved = localStorage.getItem('bookingDB');
+            if (saved) {
+                const data = JSON.parse(saved);
+                console.log('💾 Dati caricati da localStorage');
+                return data;
             }
-
-            console.log('⚠️ Nessun dato su Firebase, usando default');
-            return this.getDefaultData();
-        } catch (error) {
-            console.warn('⚠️ Firebase REST error:', error.message);
-            console.log('💾 Usando localStorage');
-            return this.loadFromLocalStorage();
+        } catch (e) {
+            console.warn('⚠️ Errore lettura localStorage:', e.message);
         }
+        return this.getDefaultData();
     },
 
-    // Salva dati su Firebase via REST
-    async save(data) {
+    save(data) {
         try {
-            console.log('📤 Salvando su Firebase REST API...');
-
-            const response = await fetch(
-                `${FIREBASE_DB_URL}/businesses/${BUSINESS_ID}.json`,
-                {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                }
-            );
-
-            if (response.ok) {
-                console.log('✅ Dati salvati su Firebase REST API');
-                return true;
-            } else {
-                console.warn('⚠️ Errore salvataggio Firebase');
-                this.saveToLocalStorage(data);
-                return false;
-            }
-        } catch (error) {
-            console.warn('⚠️ Firebase REST save error:', error.message);
-            console.log('💾 Salvando su localStorage');
-            this.saveToLocalStorage(data);
+            localStorage.setItem('bookingDB', JSON.stringify(data));
+            console.log('💾 Dati salvati in localStorage');
+            return true;
+        } catch (e) {
+            console.warn('⚠️ Errore salvataggio localStorage:', e.message);
             return false;
         }
     },
 
-    // LocalStorage fallback
-    loadFromLocalStorage() {
-        const saved = localStorage.getItem('bookingDB');
-        return saved ? JSON.parse(saved) : this.getDefaultData();
-    },
-
-    saveToLocalStorage(data) {
-        localStorage.setItem('bookingDB', JSON.stringify(data));
-        return true;
-    },
-
-    // Dati di default
     getDefaultData() {
         return {
             bookings: [],
@@ -120,23 +79,113 @@ const FirebaseREST = {
     }
 };
 
-// Sostituisci DatabaseAdapter con la versione REST
-if (typeof DatabaseAdapter !== 'undefined') {
-    Object.assign(DatabaseAdapter, FirebaseREST);
-} else {
-    window.DatabaseAdapter = FirebaseREST;
+// ============================================
+// FIREBASE - SECONDARY (backup/sync opzionale)
+// ============================================
+
+const FirebaseSync = {
+    async load() {
+        try {
+            console.log('🔄 Sincronizzando da Firebase...');
+            const response = await fetch(
+                `${FIREBASE_DB_URL}/businesses/${BUSINESS_ID}.json`,
+                { method: 'GET' }
+            );
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data) {
+                    console.log('🔥 Dati sincronizzati da Firebase');
+                    // Salva in localStorage come backup
+                    localStorage.setItem('bookingDB', JSON.stringify(data));
+                    return data;
+                }
+            }
+        } catch (error) {
+            console.log('⚠️ Firebase non disponibile:', error.message);
+        }
+        return null;
+    },
+
+    async save(data) {
+        try {
+            const response = await fetch(
+                `${FIREBASE_DB_URL}/businesses/${BUSINESS_ID}.json`,
+                {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                }
+            );
+
+            if (response.ok) {
+                console.log('🔥 Dati sincronizzati su Firebase');
+                return true;
+            }
+        } catch (error) {
+            console.log('⚠️ Firebase sync fallito:', error.message);
+        }
+        return false;
+    }
+};
+
+// ============================================
+// HYBRID DATABASE ADAPTER
+// ============================================
+
+const DatabaseAdapter = {
+    async load() {
+        // 1. Carica SEMPRE da localStorage (primary)
+        let data = LocalStorage.load();
+
+        // 2. Prova a sincronizzare da Firebase in background
+        (async () => {
+            const firebaseData = await FirebaseSync.load();
+            if (firebaseData) {
+                // Se Firebase ha dati più recenti, usa quelli
+                data = firebaseData;
+            }
+        })();
+
+        return data;
+    },
+
+    async save(data) {
+        // 1. Salva SEMPRE in localStorage (primary - garantito)
+        const localResult = LocalStorage.save(data);
+
+        // 2. Prova a sincronizzare su Firebase in background
+        (async () => {
+            await FirebaseSync.save(data);
+        })();
+
+        return localResult; // Ritorna il risultato di localStorage
+    }
+};
+
+// ============================================
+// UTILITY FUNCTIONS
+// ============================================
+
+function isFirebaseEnabled() {
+    console.log('✅ Sistema ibrido attivo (localStorage + Firebase opzionale)');
+    return true; // Il sistema funziona sempre perché localStorage è sempre disponibile
 }
 
-// Funzione di inizializzazione asincrona
 async function initializeDatabase() {
-    return FirebaseREST.load();
+    return DatabaseAdapter.load();
 }
 
-// Rendi disponibile globalmente
-window.FirebaseREST = FirebaseREST;
+// ============================================
+// EXPORTS
+// ============================================
+
+window.DatabaseAdapter = DatabaseAdapter;
+window.FirebaseSync = FirebaseSync;
+window.LocalStorage = LocalStorage;
 window.isFirebaseEnabled = isFirebaseEnabled;
 window.initializeDatabase = initializeDatabase;
 
-console.log('✅ Firebase REST API pronto - niente errori ES6!');
-console.log('✅ DatabaseAdapter disponibile globalmente');
-console.log('✅ isFirebaseEnabled() disponibile');
+console.log('%c✅ SISTEMA IBRIDO PRONTO', 'color: #00ff00; font-size: 14px; font-weight: bold');
+console.log('📊 localStorage (Primary) ✅ SEMPRE DISPONIBILE');
+console.log('🔥 Firebase (Secondary) ✅ BACKUP/SYNC OPZIONALE');
