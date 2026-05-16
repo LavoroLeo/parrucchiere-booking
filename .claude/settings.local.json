@@ -83,7 +83,8 @@
       "Bash(sed -i 's|https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js|https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js|g' index.html cliente-prenotazioni.html login-parrucchiere.html parrucchiere-login.html privacy.html)",
       "Bash(npm init *)",
       "Bash(npm run *)",
-      "Bash(cd \"C:\\\\Users\\\\Utente\\\\Desktop\\\\Artigiani\" && rm -rf public/firebase-bundle.js* && npm run build)"
+      "Bash(cd \"C:\\\\Users\\\\Utente\\\\Desktop\\\\Artigiani\" && rm -rf public/firebase-bundle.js* && npm run build)",
+      "Bash(curl -s https://parrucchiere-booking.vercel.app)"
     ]
   }
 }
