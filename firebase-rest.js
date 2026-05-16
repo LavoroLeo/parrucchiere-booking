@@ -9,6 +9,12 @@ const BUSINESS_ID = 'demo-parrucchiere-rossi';
 
 console.log('%c🔥 FIREBASE REST API INIZIALIZZATO', 'color: #00ff00; font-size: 14px; font-weight: bold');
 
+// Funzione per verificare se Firebase è abilitato (sempre vero con REST API)
+function isFirebaseEnabled() {
+    console.log('✅ Firebase REST API è abilitato');
+    return true;
+}
+
 // Database Adapter che usa REST API
 const FirebaseREST = {
     // Carica dati da Firebase via REST
@@ -121,4 +127,16 @@ if (typeof DatabaseAdapter !== 'undefined') {
     window.DatabaseAdapter = FirebaseREST;
 }
 
+// Funzione di inizializzazione asincrona
+async function initializeDatabase() {
+    return FirebaseREST.load();
+}
+
+// Rendi disponibile globalmente
+window.FirebaseREST = FirebaseREST;
+window.isFirebaseEnabled = isFirebaseEnabled;
+window.initializeDatabase = initializeDatabase;
+
 console.log('✅ Firebase REST API pronto - niente errori ES6!');
+console.log('✅ DatabaseAdapter disponibile globalmente');
+console.log('✅ isFirebaseEnabled() disponibile');
