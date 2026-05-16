@@ -240,6 +240,13 @@ function getAvailableSlots(parrucchiereId, date) {
 
     // Genera gli slot disponibili (ogni 30 minuti)
     const slots = [];
+
+    // BUG FIX: Null check per orari
+    if (!hoursStart || !hoursEnd) {
+        console.warn('⚠️ Orari non configurati per parrucchiere:', parrucchiereId);
+        return [];
+    }
+
     const [startH, startM] = hoursStart.split(':').map(Number);
     const [endH, endM] = hoursEnd.split(':').map(Number);
 
@@ -296,15 +303,29 @@ function addParrucchiere(parrucchiere) {
 
 function updateParrucchiere(parrucchiereId, updates) {
     const data = LocalStorage.load();
+
+    // BUG FIX: Null check per parrucchieri array
+    if (!data.parrucchieri || data.parrucchieri.length === 0) {
+        console.warn('⚠️ Nessun parrucchiere trovato');
+        return null;
+    }
+
     const index = data.parrucchieri.findIndex(p => p.id === parrucchiereId);
 
     if (index !== -1) {
         data.parrucchieri[index] = { ...data.parrucchieri[index], ...updates };
         LocalStorage.save(data);
+
+        // BUG FIX: Sincronizza con Firebase
+        (async () => {
+            await FirebaseSync.save(data);
+        })();
+
         console.log('✅ Parrucchiere aggiornato:', parrucchiereId);
         return data.parrucchieri[index];
     }
 
+    console.warn('⚠️ Parrucchiere non trovato:', parrucchiereId);
     return null;
 }
 

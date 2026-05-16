@@ -56,12 +56,18 @@ const ParrucchieriSelector = {
         // Popola con i parrucchieri
         const parrucchieri = window.getParrucchieri ? window.getParrucchieri() : [];
         parrucchieri.forEach(p => {
+            // BUG FIX: Null check per specializations
+            if (!p || !p.id || !p.name) {
+                console.warn('⚠️ Parrucchiere incompleto:', p);
+                return;
+            }
+
             const option = document.createElement('option');
             option.value = p.id;
-            option.dataset.name = p.name;
-            option.dataset.surname = p.surname;
-            option.dataset.specializations = p.specializations.join(', ');
-            option.textContent = `${p.name} ${p.surname}`;
+            option.dataset.name = p.name || '';
+            option.dataset.surname = p.surname || '';
+            option.dataset.specializations = (p.specializations || []).join(', ');
+            option.textContent = `${p.name} ${p.surname || ''}`;
             select.appendChild(option);
         });
 
