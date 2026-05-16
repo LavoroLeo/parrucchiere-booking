@@ -113,37 +113,8 @@
         </div>
     </div>
 
-    <!-- Firebase SDK (NPM Bundle - Fully Functional) -->
-    <script src="public/firebase-bundle.js"></script>
     <script src="firebase-rest.js"></script>
-    <script src="firebase-database.js"></script>
-    <script src="firebase-sync.js"></script>
-    <script src="firebase-autosave.js"></script>
-    <script>
-        // Update page title with salon name
-        function updatePageTitle() {
-            const salonName = localStorage.getItem('salone_name') || 'Parrucchiere Rossi';
-            document.title = salonName + ' - Privacy';
-        }
-
-        window.addEventListener('DOMContentLoaded', function() {
-            updatePageTitle();
-
-            // Load salon name from Firebase
-            (async () => {
-                try {
-                    if (typeof DatabaseAdapter !== 'undefined') {
-                        const data = await DatabaseAdapter.load();
-                        if (data && data.settings && data.settings.name) {
-                            document.title = data.settings.name + ' - Privacy';
-                            localStorage.setItem('salone_name', data.settings.name);
-                        }
-                    }
-                } catch (e) {
-                    console.warn('Errore caricamento nome salone da Firebase:', e.message);
-                }
-            })();
-        });
-    </script>
+    <!-- Firebase REST API - Soluzione Definitiva -->
+    <script src="firebase-rest.js"></script>
 </body>
 </html>
