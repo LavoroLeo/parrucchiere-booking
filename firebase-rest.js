@@ -53,7 +53,8 @@ const LocalStorage = {
                 { id: 1, name: 'Taglio Uomo', description: 'Taglio classico', price: 25, duration: 30, icon: '✂️' },
                 { id: 2, name: 'Taglio Donna', description: 'Taglio e styling', price: 35, duration: 45, icon: '💇' },
                 { id: 3, name: 'Trattamento', description: 'Barba o viso', price: 20, duration: 20, icon: '🧖' },
-                { id: 4, name: 'Colore', description: 'Colorazione completa', price: 80, duration: 120, icon: '💇‍♀️' }
+                { id: 4, name: 'Colore', description: 'Colorazione completa', price: 80, duration: 120, icon: '💇‍♀️' },
+                { id: 5, name: 'pedicure', description: 'rtghyjug', price: 30, duration: 40, icon: '✨' }
             ],
             reviews: [],
             settings: {
@@ -71,9 +72,42 @@ const LocalStorage = {
                 instagram: 'https://instagram.com/parrucchiererossi',
                 tiktok: 'https://tiktok.com/@parrucchiererossi'
             },
-            parrucchiere: [
-                { email: 'demo@parrucchiererossi.it', password: 'demo2026', name: 'Demo Admin' },
-                { email: 'parrucchiere@parrucchiererossi.it', password: '123456', name: 'Parrucchiere Rossi' }
+            parrucchieri: [
+                {
+                    id: 'p1',
+                    name: 'Marco',
+                    surname: 'Rossi',
+                    email: 'demo@parrucchiererossi.it',
+                    password: 'demo2026',
+                    isOwner: true,
+                    specializations: ['Taglio Uomo', 'Taglio Donna', 'Colore', 'Barba'],
+                    hoursStart: '09:00',
+                    hoursEnd: '18:00',
+                    satStart: '09:00',
+                    satEnd: '14:00',
+                    phone: '+39 011 555 1234',
+                    photo: '',
+                    socialLinks: {
+                        facebook: 'https://facebook.com/parrucchiererossi',
+                        instagram: 'https://instagram.com/parrucchiererossi',
+                        tiktok: 'https://tiktok.com/@parrucchiererossi'
+                    }
+                },
+                {
+                    id: 'p2',
+                    name: 'Anna',
+                    surname: 'Bianchi',
+                    email: 'parrucchiere@parrucchiererossi.it',
+                    password: '123456',
+                    isOwner: false,
+                    specializations: ['Taglio Donna', 'Styling', 'Colore'],
+                    hoursStart: '10:00',
+                    hoursEnd: '17:00',
+                    satStart: '09:00',
+                    satEnd: '14:00',
+                    phone: '+39 333 444 555',
+                    photo: ''
+                }
             ]
         };
     }
@@ -178,7 +212,92 @@ const DatabaseAdapter = {
 };
 
 // ============================================
-// UTILITY FUNCTIONS
+// UTILITY FUNCTIONS - PARRUCCHIERI
+// ============================================
+
+function getParrucchieri() {
+    const data = LocalStorage.load();
+    return data.parrucchieri || [];
+}
+
+function getParrucchiereById(parrucchiereId) {
+    const parrucchieri = getParrucchieri();
+    return parrucchieri.find(p => p.id === parrucchiereId);
+}
+
+function getAvailableSlots(parrucchiereId, date) {
+    const data = LocalStorage.load();
+    const parrucchiere = getParrucchiereById(parrucchiereId);
+
+    if (!parrucchiere) return [];
+
+    // Determina gli orari di lavoro
+    const dayOfWeek = new Date(date).getDay(); // 0=domenica, 6=sabato
+    const isSaturday = dayOfWeek === 6;
+    const hoursStart = isSaturday ? parrucchiere.satStart : parrucchiere.hoursStart;
+    const hoursEnd = isSaturday ? parrucchiere.satEnd : parrucchiere.hoursEnd;
+
+    // Genera gli slot disponibili (ogni 30 minuti)
+    const slots = [];
+    const [startH, startM] = hoursStart.split(':').map(Number);
+    const [endH, endM] = hoursEnd.split(':').map(Number);
+
+    for (let h = startH; h < endH; h++) {
+        for (let m = 0; m < 60; m += 30) {
+            const timeStr = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+
+            // Controlla se è già occupato
+            const isOccupied = data.bookings.some(b =>
+                b.parrucchiereId === parrucchiereId &&
+                b.date === date &&
+                b.time === timeStr &&
+                b.status !== 'cancelled'
+            );
+
+            slots.push({
+                time: timeStr,
+                available: !isOccupied
+            });
+        }
+    }
+
+    return slots;
+}
+
+function addParrucchiere(parrucchiere) {
+    const data = LocalStorage.load();
+
+    // Genera ID univoco
+    parrucchiere.id = 'p' + Date.now();
+    parrucchiere.isOwner = false;
+
+    if (!data.parrucchieri) {
+        data.parrucchieri = [];
+    }
+
+    data.parrucchieri.push(parrucchiere);
+    LocalStorage.save(data);
+
+    console.log('✅ Parrucchiere aggiunto:', parrucchiere.name, parrucchiere.id);
+    return parrucchiere;
+}
+
+function updateParrucchiere(parrucchiereId, updates) {
+    const data = LocalStorage.load();
+    const index = data.parrucchieri.findIndex(p => p.id === parrucchiereId);
+
+    if (index !== -1) {
+        data.parrucchieri[index] = { ...data.parrucchieri[index], ...updates };
+        LocalStorage.save(data);
+        console.log('✅ Parrucchiere aggiornato:', parrucchiereId);
+        return data.parrucchieri[index];
+    }
+
+    return null;
+}
+
+// ============================================
+// UTILITY FUNCTIONS - GENERALI
 // ============================================
 
 function isFirebaseEnabled() {
@@ -199,6 +318,11 @@ window.FirebaseSync = FirebaseSync;
 window.LocalStorage = LocalStorage;
 window.isFirebaseEnabled = isFirebaseEnabled;
 window.initializeDatabase = initializeDatabase;
+window.getParrucchieri = getParrucchieri;
+window.getParrucchiereById = getParrucchiereById;
+window.getAvailableSlots = getAvailableSlots;
+window.addParrucchiere = addParrucchiere;
+window.updateParrucchiere = updateParrucchiere;
 
 console.log('%c✅ SISTEMA IBRIDO PRONTO', 'color: #00ff00; font-size: 14px; font-weight: bold');
 console.log('📊 localStorage (Primary) ✅ SEMPRE DISPONIBILE');
@@ -209,9 +333,14 @@ console.log('🔥 Firebase (Secondary) ✅ BACKUP/SYNC OPZIONALE');
 // ============================================
 
 // Carica il notification handler
-const script = document.createElement('script');
-script.src = 'notification-handler.js';
-document.head.appendChild(script);
+const script1 = document.createElement('script');
+script1.src = 'notification-handler.js';
+document.head.appendChild(script1);
+
+// Carica il parrucchieri selector
+const script2 = document.createElement('script');
+script2.src = 'parrucchieri-selector.js';
+document.head.appendChild(script2);
 
 // Avvia il monitoraggio delle prenotazioni
 async function startBookingMonitoring() {
