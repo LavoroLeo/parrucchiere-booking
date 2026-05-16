@@ -1,5 +1,35 @@
 {
   "dependencies": {
-    "docx": "^9.6.1"
+    "docx": "^9.6.1",
+    "firebase": "^12.13.0"
+  },
+  "name": "artigiani",
+  "version": "1.0.0",
+  "description": "Un **sito web completo** per gestire prenotazioni online senza registrazione, con dashboard cliente e area parrucchiere.",
+  "main": "codici-sicurezza.js",
+  "scripts": {
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LavoroLeo/parrucchiere-booking.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LavoroLeo/parrucchiere-booking/issues"
+  },
+  "homepage": "https://github.com/LavoroLeo/parrucchiere-booking#readme",
+  "devDependencies": {
+    "@babel/core": "^7.29.0",
+    "@babel/preset-env": "^7.29.5",
+    "babel-loader": "^10.1.1",
+    "buffer": "^6.0.3",
+    "stream-browserify": "^3.0.0",
+    "util": "^0.12.5",
+    "webpack": "^5.106.2",
+    "webpack-cli": "^7.0.2"
   }
 }

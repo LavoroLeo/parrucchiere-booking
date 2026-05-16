@@ -1,56 +1,7 @@
-# Dependencies (not needed - pure HTML/CSS/JS)
 node_modules/
-package-lock.json
-yarn.lock
-
-# Environment variables
+dist/
 .env
 .env.local
-.env.*.local
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-.DS_Store
-
-# OS
-Thumbs.db
-.DS_Store
-
-# Build outputs
-dist/
-build/
-
-# Logs
 *.log
-npm-debug.log*
-yarn-debug.log*
-
-# Testing
-coverage/
-.nyc_output/
-
-# Documentation files (local only - not needed in deployment)
-DEPLOYMENT_VERCEL.md
-DESIGN-PROMPT-MODERN.md
-DESIGN-IMPROVEMENTS.md
-FIREBASE_SETUP_RAPIDO.md
-CHECKLIST_FINAL.md
-CONTATTI_CLIENTI.md
-FINAL-SUMMARY.txt
-PIANO_VENDITA.md
-SESSION_SUMMARY.md
-SETUP_COMPLETE.md
-SETUP_GUIDE.md
-TEMA-DESIGN-PROMPT.md
-VERIFICA_FUNZIONAMENTO.md
-
-# Local testing files
-.claude/
-*.tmp
-temp/
-
-.vercel
+.DS_Store
+package-lock.json
