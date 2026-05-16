@@ -135,15 +135,29 @@ const FirebaseSync = {
 
 const DatabaseAdapter = {
     async load() {
-        // 1. Carica SEMPRE da localStorage (primary)
+        // 1. Carica da localStorage (primary)
         let data = LocalStorage.load();
 
-        // 2. Prova a sincronizzare da Firebase in background
+        // 2. SE localStorage è vuoto (cache cancellata) → carica da Firebase
+        if (!data || (data.bookings && data.bookings.length === 0 && data.clients && data.clients.length === 0)) {
+            console.log('⚠️ localStorage vuoto, ripristino da Firebase...');
+            const firebaseData = await FirebaseSync.load();
+            if (firebaseData) {
+                data = firebaseData;
+                // Salva immediatamente in localStorage per future sessioni
+                LocalStorage.save(data);
+                console.log('✅ Dati ripristinati da Firebase e salvati in localStorage');
+            }
+        }
+
+        // 3. In background, sincronizza sempre con Firebase per dati più recenti
         (async () => {
             const firebaseData = await FirebaseSync.load();
             if (firebaseData) {
-                // Se Firebase ha dati più recenti, usa quelli
+                // Se Firebase ha dati, assicura che localStorage sia aggiornato
                 data = firebaseData;
+                LocalStorage.save(data);
+                console.log('🔄 Sincronizzazione completata con Firebase');
             }
         })();
 
@@ -151,7 +165,7 @@ const DatabaseAdapter = {
     },
 
     async save(data) {
-        // 1. Salva SEMPRE in localStorage (primary - garantito)
+        // 1. Salva SEMPRE in localStorage (primary - garantito e immediato)
         const localResult = LocalStorage.save(data);
 
         // 2. Prova a sincronizzare su Firebase in background
@@ -159,7 +173,7 @@ const DatabaseAdapter = {
             await FirebaseSync.save(data);
         })();
 
-        return localResult; // Ritorna il risultato di localStorage
+        return localResult; // Ritorna il risultato di localStorage (la sola che importa)
     }
 };
 
