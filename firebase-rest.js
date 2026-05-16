@@ -352,6 +352,16 @@ const script4 = document.createElement('script');
 script4.src = 'dashboard-columns.js';
 document.head.appendChild(script4);
 
+// Carica il create collega modal
+const script5 = document.createElement('script');
+script5.src = 'create-collega-modal.js';
+document.head.appendChild(script5);
+
+// Carica il collega dashboard (filtra prenotazioni per collega)
+const script6 = document.createElement('script');
+script6.src = 'collega-dashboard.js';
+document.head.appendChild(script6);
+
 // Avvia il monitoraggio delle prenotazioni
 async function startBookingMonitoring() {
     console.log('👁️ Avvio monitoraggio prenotazioni...');
