@@ -347,6 +347,11 @@ const script3 = document.createElement('script');
 script3.src = 'booking-interceptor.js';
 document.head.appendChild(script3);
 
+// Carica il dashboard columns modifier (aggiunge colonna parrucchiere)
+const script4 = document.createElement('script');
+script4.src = 'dashboard-columns.js';
+document.head.appendChild(script4);
+
 // Avvia il monitoraggio delle prenotazioni
 async function startBookingMonitoring() {
     console.log('👁️ Avvio monitoraggio prenotazioni...');
