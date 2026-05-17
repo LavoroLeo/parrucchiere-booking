@@ -84,7 +84,11 @@
       "Bash(npm init *)",
       "Bash(npm run *)",
       "Bash(cd \"C:\\\\Users\\\\Utente\\\\Desktop\\\\Artigiani\" && rm -rf public/firebase-bundle.js* && npm run build)",
-      "Bash(curl -s https://parrucchiere-booking.vercel.app)"
+      "Bash(curl -s https://parrucchiere-booking.vercel.app)",
+      "Bash(vercel --version)",
+      "Bash(vercel --prod --yes)",
+      "Bash(curl -s \"https://parrucchieri-online-default-rtdb.europe-west1.firebasedatabase.app/businesses/demo-parrucchiere-rossi.json\")",
+      "Bash(grep -n \"button\\\\|div.*+\" /c/Users/Utente/Desktop\\\\Artigiani/index.html | tail -50)"
     ]
   }
 }

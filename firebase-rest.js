@@ -11,6 +11,10 @@
 const FIREBASE_DB_URL = 'https://parrucchieri-online-default-rtdb.europe-west1.firebasedatabase.app';
 const BUSINESS_ID = 'demo-parrucchiere-rossi';
 
+// 🔐 CODICI DI ACCESSO PARRUCCHIERE (20 cifre + 20 lettere)
+const ACCESS_CODE_NUMBERS = '82947365019284756301';  // 20 cifre
+const ACCESS_CODE_LETTERS = 'KXMQPVLZNRWHJDGFCBYA';  // 20 lettere
+
 console.log('%c💾 HYBRID STORAGE SYSTEM INIZIALIZZATO', 'color: #00ff00; font-size: 14px; font-weight: bold');
 console.log('✅ PRIMARY: localStorage (locale, sempre disponibile)');
 console.log('✅ SECONDARY: Firebase (backup opzionale)');
@@ -77,8 +81,8 @@ const LocalStorage = {
                     id: 'p1',
                     name: 'Marco',
                     surname: 'Rossi',
-                    email: 'demo@parrucchiererossi.it',
-                    password: 'demo2026',
+                    email: 'admin@salone.it',
+                    password: 'DemoPass123!',
                     isOwner: true,
                     specializations: ['Taglio Uomo', 'Taglio Donna', 'Colore', 'Barba'],
                     hoursStart: '09:00',
@@ -97,8 +101,8 @@ const LocalStorage = {
                     id: 'p2',
                     name: 'Anna',
                     surname: 'Bianchi',
-                    email: 'parrucchiere@parrucchiererossi.it',
-                    password: '123456',
+                    email: 'parrucchiere1@salone.it',
+                    password: 'DemoPass456!',
                     isOwner: false,
                     specializations: ['Taglio Donna', 'Styling', 'Colore'],
                     hoursStart: '10:00',
@@ -108,7 +112,12 @@ const LocalStorage = {
                     phone: '+39 333 444 555',
                     photo: ''
                 }
-            ]
+            ],
+            securityCodes: {
+                accessCode1: '82947365019284756301',
+                accessCode2: 'KXMQPVLZNRWHJDGFCBYA',
+                description: 'Codici di accesso per la pagina di login parrucchiere'
+            }
         };
     }
 };
@@ -330,6 +339,47 @@ function updateParrucchiere(parrucchiereId, updates) {
 }
 
 // ============================================
+// UTILITY FUNCTIONS - CODICI ACCESSO
+// ============================================
+
+function updateSecurityCodes(newAccessCode1, newAccessCode2) {
+    const data = LocalStorage.load();
+
+    if (!data.securityCodes) {
+        data.securityCodes = {};
+    }
+
+    data.securityCodes.accessCode1 = newAccessCode1;
+    data.securityCodes.accessCode2 = newAccessCode2;
+    data.securityCodes.description = 'Codici di accesso per la pagina di login parrucchiere';
+
+    // Salva in localStorage
+    LocalStorage.save(data);
+    console.log('💾 Security codes salvati in localStorage');
+
+    // Sincronizza immediatamente con Firebase
+    (async () => {
+        const result = await FirebaseSync.save(data);
+        if (result) {
+            console.log('🔥 Security codes sincronizzati con Firebase');
+        } else {
+            console.warn('⚠️ Errore sincronizzazione security codes con Firebase');
+        }
+    })();
+
+    console.log('✅ Security codes aggiornati:');
+    console.log('   Code1 (20 cifre):', newAccessCode1);
+    console.log('   Code2 (20 lettere):', newAccessCode2);
+
+    return data.securityCodes;
+}
+
+function getSecurityCodes() {
+    const data = LocalStorage.load();
+    return data.securityCodes || null;
+}
+
+// ============================================
 // UTILITY FUNCTIONS - GENERALI
 // ============================================
 
@@ -356,6 +406,8 @@ window.getParrucchiereById = getParrucchiereById;
 window.getAvailableSlots = getAvailableSlots;
 window.addParrucchiere = addParrucchiere;
 window.updateParrucchiere = updateParrucchiere;
+window.updateSecurityCodes = updateSecurityCodes;
+window.getSecurityCodes = getSecurityCodes;
 
 console.log('%c✅ SISTEMA IBRIDO PRONTO', 'color: #00ff00; font-size: 14px; font-weight: bold');
 console.log('📊 localStorage (Primary) ✅ SEMPRE DISPONIBILE');

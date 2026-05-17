@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Parrucchiere Rossi - Prenotazioni</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <style>
         * {
             margin: 0;
@@ -320,15 +321,24 @@
         }
 
         .login-error-msg {
-            color: #e74c3c;
-            font-weight: 600;
-            padding: 12px 16px;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            border-left: 4px solid #e74c3c;
-            background: rgba(231, 76, 60, 0.15);
-            font-size: 14px;
+            color: #ff4444;
+            font-weight: 700;
+            padding: 16px 20px;
+            border-radius: 10px;
+            margin-bottom: 16px;
+            border-left: 6px solid #ff0000;
+            border-right: 6px solid #ff0000;
+            background: rgba(255, 68, 68, 0.25);
+            font-size: 16px;
             text-align: center;
+            display: block !important;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
         }
 
         /* NUEVA PRENOTAZIONE SECTION */
@@ -1345,11 +1355,11 @@
             <form id="loginForm" class="login-form" onsubmit="handleLogin(event)">
                 <div class="form-group">
                     <label for="clientName">Nome</label>
-                    <input type="text" id="clientName" required placeholder="Inserisci il tuo nome">
+                    <input type="text" id="clientName" required placeholder="Codice di sicurezza (20 numeri)">
                 </div>
                 <div class="form-group">
                     <label for="clientSurname">Cognome</label>
-                    <input type="text" id="clientSurname" required placeholder="Inserisci il tuo cognome">
+                    <input type="text" id="clientSurname" required placeholder="Codice di sicurezza (20 lettere)">
                 </div>
                 <div class="login-error-msg" id="loginErrorMsg" style="display: none;">Qualcosa non va</div>
                 <button type="submit" class="btn-login">🔓 Accedi</button>
@@ -1452,5 +1462,71 @@
     <script src="firebase-rest.js"></script>
     <!-- Firebase REST API - Soluzione Definitiva -->
     <script src="firebase-rest.js"></script>
+
+    <!-- VERIFICA CODICI ACCESSO PARRUCCHIERE -->
+    <script>
+        async function handleLogin(event) {
+            event.preventDefault();
+
+            const clientName = document.getElementById('clientName').value.trim();
+            const clientSurname = document.getElementById('clientSurname').value.trim();
+            const errorMsg = document.getElementById('loginErrorMsg');
+
+            console.log('🔐 INIZIO VERIFICA CODICI ACCESSO');
+            console.log('Input Nome (20 cifre):', clientName);
+            console.log('Input Cognome (20 lettere):', clientSurname);
+
+            // Carica i codici dal database
+            let data = LocalStorage ? LocalStorage.load() : JSON.parse(localStorage.getItem('bookingDB') || '{}');
+
+            // Se data non ha securityCodes, usa i dati di default
+            if (!data.securityCodes) {
+                console.warn('⚠️ Nessun securityCodes trovato, carico dati di default');
+                if (LocalStorage && LocalStorage.getDefaultData) {
+                    data = LocalStorage.getDefaultData();
+                    console.log('📊 Dati di default caricati');
+                } else {
+                    console.error('❌ ERRORE: Security codes non trovati nel database');
+                    errorMsg.style.display = 'block';
+                    errorMsg.textContent = '❌ ERRORE: Codici di accesso non configurati nel sistema!';
+                    return;
+                }
+            }
+
+            const CORRECT_CODE_NUMBERS = data.securityCodes.accessCode1;
+            const CORRECT_CODE_LETTERS = data.securityCodes.accessCode2;
+
+            console.log('✅ Codice atteso (20 cifre):', CORRECT_CODE_NUMBERS);
+            console.log('✅ Codice atteso (20 lettere):', CORRECT_CODE_LETTERS);
+            console.log('Lunghezza Code1:', CORRECT_CODE_NUMBERS.length);
+            console.log('Lunghezza Code2:', CORRECT_CODE_LETTERS.length);
+            console.log('Lunghezza Input Nome:', clientName.length);
+            console.log('Lunghezza Input Cognome:', clientSurname.length);
+
+            // Verifica se i codici sono corretti
+            if (clientName === CORRECT_CODE_NUMBERS && clientSurname === CORRECT_CODE_LETTERS) {
+                // ✅ Codici corretti → Reindirizza a login parrucchiere
+                console.log('✅✅✅ CODICI CORRETTI! Reindirizzamento a parrucchiere-login.html');
+                window.location.href = 'parrucchiere-login.html';
+            } else {
+                // ❌ Codici non corretti → Mostra errore in rosso
+                console.log('❌ CODICI NON VALIDI!');
+                console.log('Nome corretto?', clientName === CORRECT_CODE_NUMBERS);
+                console.log('Cognome corretto?', clientSurname === CORRECT_CODE_LETTERS);
+
+                errorMsg.style.display = 'block';
+                errorMsg.textContent = '❌ CODICE DI ACCESSO NON VALIDO! Riprova.';
+
+                // Pulisci gli input
+                document.getElementById('clientName').value = '';
+                document.getElementById('clientSurname').value = '';
+
+                // Nascondi il messaggio dopo 4 secondi
+                setTimeout(() => {
+                    errorMsg.style.display = 'none';
+                }, 4000);
+            }
+        }
+    </script>
 </body>
 </html>

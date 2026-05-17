@@ -1,0 +1,503 @@
+═══════════════════════════════════════════════════════════════════════════════
+    GUIDA: SISTEMA DI SICUREZZA A DUE CODICI - ACCESSO PARRUCCHIERE
+═══════════════════════════════════════════════════════════════════════════════
+
+🎯 PANORAMICA DEL SISTEMA
+
+Il sito ha un DOPPIO SISTEMA DI SICUREZZA per accedere alla dashboard parrucchiere:
+
+1️⃣ PRIMO LIVELLO: Codici di accesso (20 cifre + 20 lettere)
+   └─ Gate iniziale sulla pagina "Accedi alle tue prenotazioni"
+   └─ Previene l'accesso casuale al form di login parrucchiere
+
+2️⃣ SECONDO LIVELLO: Email + Password parrucchiere
+   └─ Autenticazione vera e propria nella dashboard
+   └─ Sistema multi-parrucchiere con ruoli diversi
+
+
+═══════════════════════════════════════════════════════════════════════════════
+PARTE 1: I DUE CODICI DI ACCESSO
+═══════════════════════════════════════════════════════════════════════════════
+
+COSA SONO?
+├─ Codice 1 (accessCode1): 20 CIFRE (0-9)
+├─ Codice 2 (accessCode2): 20 LETTERE MAIUSCOLE (A-Z)
+└─ Vanno inseriti nel form "Accedi alle tue prenotazioni"
+
+CODICI DEMO ATTUALI:
+┌─────────────────────────────────────────┐
+│ Campo "Nome"  (20 cifre):                │
+│ 82947365019284756301                    │
+├─────────────────────────────────────────┤
+│ Campo "Cognome" (20 lettere):            │
+│ KXMQPVLZNRWHJDGFCBYA                    │
+└─────────────────────────────────────────┘
+
+⚠️ IMPORTANTE:
+├─ I codici DEVONO essere esatti (senza spazi, maiuscole esatte)
+├─ Se sbagliati → Messaggio "❌ Codice di accesso non valido!"
+├─ Dopo errore → Puoi riprovare subito
+└─ Se corretti → Reindirizza a parrucchiere-login.html
+
+
+═══════════════════════════════════════════════════════════════════════════════
+PARTE 2: DOVE SONO SALVATI I CODICI?
+═══════════════════════════════════════════════════════════════════════════════
+
+📁 FILE PRINCIPALE: firebase-rest.js
+
+📍 SEZIONE: getDefaultData() → securityCodes
+
+STRUTTURA NEL FILE:
+┌─────────────────────────────────────────────────────────────────┐
+│ securityCodes: {                                                │
+│     accessCode1: '82947365019284756301',     ← 20 cifre         │
+│     accessCode2: 'KXMQPVLZNRWHJDGFCBYA',     ← 20 lettere       │
+│     description: 'Codici di accesso per...'                    │
+│ }                                                               │
+└─────────────────────────────────────────────────────────────────┘
+
+💾 MEMORIZZAZIONE:
+├─ Primario: localStorage (sempre disponibile)
+├─ Secondario: Firebase Realtime Database (backup/sync)
+├─ Caricati automaticamente all'avvio del sito
+└─ Sincronizzati con Firebase quando disponibile
+
+
+═══════════════════════════════════════════════════════════════════════════════
+PARTE 3: COME MODIFICARE I CODICI PER UN NUOVO CLIENTE
+═══════════════════════════════════════════════════════════════════════════════
+
+STEP 1: Genera 2 codici UNICI per il cliente
+
+CODICE 1 (20 CIFRE):
+├─ Deve contenere esattamente 20 cifre (0-9)
+├─ Esempio generare randomico: xxxxxxxxxxxxxxxxxxxxxx
+└─ Suggerimento: Usa un generatore online di numeri random
+
+CODICE 2 (20 LETTERE MAIUSCOLE):
+├─ Deve contenere esattamente 20 lettere MAIUSCOLE (A-Z)
+├─ Niente numeri, niente caratteri speciali
+├─ Niente spazi
+└─ Esempio: ABCDEFGHIJKLMNOPQRST
+
+
+STEP 2: Apri il file firebase-rest.js
+
+┌─ METODO 1 (Visual Studio Code):
+│  1. Apri Visual Studio Code
+│  2. File → Open Folder → Seleziona cartella del sito
+│  3. Trova firebase-rest.js nella sidebar
+│  4. Clicca per aprire
+│
+└─ METODO 2 (Notepad - Più semplice):
+   1. Vai a: C:\Users\[TuoNome]\Desktop\Artigiani\
+   2. Fai click destro su firebase-rest.js
+   3. "Apri con" → Notepad
+
+
+STEP 3: Trova la sezione securityCodes (Linea ~115)
+
+Nel file, scorri fino a trovare:
+
+    securityCodes: {
+        accessCode1: '82947365019284756301',
+        accessCode2: 'KXMQPVLZNRWHJDGFCBYA',
+        description: '...'
+    }
+
+Questa è la sezione che devi modificare.
+
+
+STEP 4: Sostituisci i codici
+
+PRIMA (Come è adesso):
+┌─────────────────────────────────────────────────────┐
+│ securityCodes: {                                    │
+│     accessCode1: '82947365019284756301',            │
+│     accessCode2: 'KXMQPVLZNRWHJDGFCBYA',            │
+│     description: 'Codici di accesso per...'        │
+│ }                                                   │
+└─────────────────────────────────────────────────────┘
+
+DOPO (Nuovi codici del cliente):
+┌─────────────────────────────────────────────────────┐
+│ securityCodes: {                                    │
+│     accessCode1: 'NUOVO_CODICE_20_CIFRE',           │
+│     accessCode2: 'NUOVO_CODICE_20_LETTERE',         │
+│     description: 'Codici di accesso per...'        │
+│ }                                                   │
+└─────────────────────────────────────────────────────┘
+
+COME MODIFICARE IN PRATICA:
+├─ Doppio click su '82947365019284756301'
+├─ Seleziona il testo (o Ctrl+A)
+├─ Cancella (Backspace)
+├─ Digita il NUOVO CODICE DA 20 CIFRE
+├─ Ripeti per il SECONDO codice (20 lettere)
+
+
+STEP 5: Salva il file
+
+├─ Premi Ctrl+S
+├─ Vedrai che il titolo della tab non ha più il puntino (*)
+└─ ✅ File salvato correttamente
+
+
+STEP 6: Verifica la sintassi (opzionale ma consigliato)
+
+Se hai Visual Studio Code:
+├─ Se vedi errori rossi → C'è un errore di sintassi JavaScript
+├─ Verifica le virgolette (devono essere ' non ")
+├─ Verifica le virgole (deve esserci una virgola tra i codici)
+└─ Se tutto è verde ✅ → Configurazione corretta
+
+
+═══════════════════════════════════════════════════════════════════════════════
+PARTE 4: COME COMUNICARE I CODICI AL CLIENTE
+═══════════════════════════════════════════════════════════════════════════════
+
+Quando VENDI il sito al cliente, dagli questi dati:
+
+ISTRUZIONI PER IL CLIENTE:
+┌─────────────────────────────────────────────────────────────────┐
+│                 🔐 ACCESSO ALLA DASHBOARD
+├─────────────────────────────────────────────────────────────────┤
+│
+│ STEP 1: Apri il sito online
+│ ├─ Vai al link del sito (es: tuosito.vercel.app)
+│ └─ Clicca su "Accedi alle tue prenotazioni"
+│
+│ STEP 2: Inserisci i CODICI DI ACCESSO
+│ ├─ Campo "Nome": XXXXXXXXXXXXXXXXXX (20 cifre)
+│ ├─ Campo "Cognome": YYYYYYYYYYYYYYYYYY (20 lettere)
+│ └─ Clicca "Accedi"
+│
+│ STEP 3: Se i codici sono corretti → Vai a login parrucchiere
+│ ├─ Vedi la pagina di login con email e password
+│ ├─ Usa le credenziali parrucchiere:
+│ │  Email: admin@salone.it
+│ │  Password: DemoPass123! (DEVE CAMBIARLA AL PRIMO ACCESSO)
+│ └─ Clicca "Accedi"
+│
+│ STEP 4: Accesso alla dashboard
+│ ├─ Se sei il proprietario → Vedi TUTTE le prenotazioni
+│ ├─ Se sei un collega → Vedi solo le TUE prenotazioni
+│ └─ ✅ Dashboard attiva!
+│
+│ ⚠️ IMPORTANTISSIMO:
+│ ├─ Memorizza i 2 codici da qualche parte (stampati o file)
+│ ├─ Non condividere i codici con nessuno
+│ ├─ Se i codici vengono persi, contatta il supporto
+│ └─ I codici sono NECESSARI OGNI VOLTA che accedi
+│
+└─────────────────────────────────────────────────────────────────┘
+
+DOCUMENTO DA DARE AL CLIENTE:
+┌─────────────────────────────────────────────────────────────────┐
+│ I TUOI CODICI DI ACCESSO (Salva in un posto sicuro!)
+├─────────────────────────────────────────────────────────────────┤
+│
+│ Codice 1 (20 cifre nel campo "Nome"):
+│ ____________________________
+│
+│ Codice 2 (20 lettere nel campo "Cognome"):
+│ ____________________________
+│
+│ Credenziali parrucchiere (dopo i codici):
+│ Email: ____________________________
+│ Password: ____________________________ (DEMO TEMPORANEA)
+│
+│ 📌 Ricorda: Cambia la password al primo accesso!
+│
+└─────────────────────────────────────────────────────────────────┘
+
+
+═══════════════════════════════════════════════════════════════════════════════
+PARTE 5: COME FUNZIONA IL FLUSSO DI ACCESSO
+═══════════════════════════════════════════════════════════════════════════════
+
+FLUSSO COMPLETO DI ACCESSO:
+
+[Sito online (index.html)]
+         ↓
+    "Accedi alle tue prenotazioni"
+         ↓
+[cliente-prenotazioni.html - FORM CON 2 CAMPI]
+         ↓
+    CAMPO 1: Nome (inserisci 20 CIFRE)
+    CAMPO 2: Cognome (inserisci 20 LETTERE)
+         ↓
+    [Sistema legge i codici da localStorage/Firebase]
+         ↓
+    ✅ SE CORRETTI:
+       └─→ window.location.href = 'parrucchiere-login.html'
+
+    ❌ SE SBAGLIATI:
+       └─→ Mostra errore "❌ Codice di accesso non valido!"
+           Puoi riprovare
+         ↓
+[parrucchiere-login.html - LOGIN PARRUCCHIERE]
+         ↓
+    Email: admin@salone.it
+    Password: DemoPass123!
+         ↓
+    [Sistema verifica email/password su data.parrucchieri[]]
+         ↓
+    ✅ SE CORRETTI:
+       └─→ Salva loggedInEmail + currentParrucchiereId in localStorage
+           window.location.href = 'dashboard.html'
+
+    ❌ SE SBAGLIATI:
+       └─→ Mostra errore "❌ Email o password non valida!"
+           Puoi riprovare
+         ↓
+[dashboard.html - DASHBOARD PARRUCCHIERE]
+         ↓
+    🔓 ACCESSO RIUSCITO!
+    Vedi prenotazioni (filtrate per ruolo)
+
+
+═══════════════════════════════════════════════════════════════════════════════
+PARTE 6: COME IL CLIENTE PUÒ MODIFICARE I CODICI
+═══════════════════════════════════════════════════════════════════════════════
+
+⚠️ PROBLEMA:
+Il cliente riceve il sito con i CODICI DEMO.
+Deve cambiarli con codici UNICI per la propria sicurezza.
+
+OPZIONE 1: CLIENTE MODIFICA IL FILE (Non consigliato - tecnico)
+┌─────────────────────────────────────────────────────────────────┐
+│ Se il cliente è tecnico:
+│
+│ 1. Apri firebase-rest.js con un editor di testo
+│ 2. Trova la sezione securityCodes (linea ~115)
+│ 3. Sostituisci i due codici con i SUOI codici
+│ 4. Salva il file
+│ 5. Ricarica il sito online (premi F5 nel browser)
+│
+│ ⚠️ ATTENZIONE:
+│ ├─ NON cancellare la virgola tra i due codici
+│ ├─ NON aggiungere spazi dentro i codici
+│ └─ Se sbaglia, il sito potrebbe smettere di funzionare
+│
+└─────────────────────────────────────────────────────────────────┘
+
+OPZIONE 2: CONTATTA IL SUPPORTO TECNICO (Consigliato)
+┌─────────────────────────────────────────────────────────────────┐
+│ Se il cliente NON è tecnico:
+│
+│ 1. Contatta il supporto (you@email.com)
+│ 2. Comunica i NUOVI codici che vuole
+│ 3. Il supporto modifica il file
+│ 4. Il cliente riceve il sito aggiornato
+│
+│ ✅ VELOCE E SICURO - OPZIONE CONSIGLIATA
+│
+└─────────────────────────────────────────────────────────────────┘
+
+
+═══════════════════════════════════════════════════════════════════════════════
+PARTE 7: GENERARE CODICI CASUALI (Consigli pratici)
+═══════════════════════════════════════════════════════════════════════════════
+
+CODICE 1 (20 CIFRE):
+┌─ ONLINE: Usa random.org oppure di python
+│  >>> import random
+│  >>> ''.join(str(random.randint(0,9)) for _ in range(20))
+│  Risultato es: 48372916475839264758
+│
+└─ MANUALE: Pensi a numeri random (meno sicuro)
+   Esempio: 12345678901234567890
+
+
+CODICE 2 (20 LETTERE MAIUSCOLE):
+┌─ ONLINE: Usa un generatore di stringhe casuali
+│  >>> import random, string
+│  >>> ''.join(random.choice(string.ascii_uppercase) for _ in range(20))
+│  Risultato es: BCDEFGHIJKLMNOPQRST
+│
+└─ MANUALE: Scorri l'alfabeto e scegli 20 lettere (meno sicuro)
+   Esempio: ABCDEFGHIJKLMNOPQRST
+
+
+⚠️ IMPORTANTISSIMO:
+├─ I codici DEVONO essere DIVERSI per ogni cliente
+├─ Non copiare i codici DEMO per altri clienti
+├─ Ogni cliente = Codici UNICI
+└─ Questo aumenta la sicurezza
+
+
+═══════════════════════════════════════════════════════════════════════════════
+PARTE 8: TROUBLESHOOTING - PROBLEMI COMUNI
+═══════════════════════════════════════════════════════════════════════════════
+
+PROBLEMA 1: "❌ Codice di accesso non valido!" ma il codice è corretto
+SOLUZIONE:
+├─ Verifica che non ci siano SPAZI prima/dopo il codice
+├─ Verifica che le MAIUSCOLE siano esatte (ABCD non abcd)
+├─ Copia il codice direttamente da un documento (non riscrivere a mano)
+└─ Se continua: Contatta il supporto
+
+
+PROBLEMA 2: Dopo aver cambiato i codici, il sito non funziona
+SOLUZIONE:
+├─ Apri la console del browser (F12 → Console tab)
+├─ Cerca messaggi d'errore rossi
+├─ Se vedi "SyntaxError" → Errore nel file firebase-rest.js
+│  ├─ Verifica di non aver cancellato la virgola tra i codici
+│  ├─ Verifica di non aver cancellato le virgolette
+│  └─ Riporta il file allo stato precedente e riprova
+└─ Se non risolvi: Contatta il supporto tecnico
+
+
+PROBLEMA 3: I codici caricati da Firebase sono diversi da localStorage
+SOLUZIONE:
+├─ Il sistema è programmato per preferire Firebase (più aggiornato)
+├─ Se i codici in Firebase sono sbagliati:
+│  ├─ Modifica i codici nel file firebase-rest.js
+│  ├─ Salva il file
+│  ├─ Ricarica il sito (F5 nel browser)
+│  └─ Aspetta 5 secondi per la sincronizzazione
+└─ Se continua: Svuota la cache del browser (Ctrl+Shift+Delete)
+
+
+═══════════════════════════════════════════════════════════════════════════════
+PARTE 9: CHECKLIST PRIMA DI VENDERE
+═══════════════════════════════════════════════════════════════════════════════
+
+Prima di dare il sito al cliente, verifica:
+
+□ Ho generato 2 codici UNICI (20 cifre + 20 lettere)
+□ Ho modificato i codici nel file firebase-rest.js
+□ Ho verificato la sintassi (niente errori rossi in VS Code)
+□ Ho testato i codici:
+  □ Apro il sito
+  □ Clicco "Accedi alle tue prenotazioni"
+  □ Inserisco i NUOVI codici
+  □ ✅ Reindirizza a parrucchiere-login.html
+□ Ho testato il login parrucchiere:
+  □ Email: admin@salone.it
+  □ Password: DemoPass123!
+  □ ✅ Accesso dashboard riuscito
+□ Ho comunicato al cliente:
+  □ I 2 codici di accesso (stampa o documento)
+  □ Le credenziali parrucchiere (email + password DEMO)
+  □ Istruzioni per cambiare la password al primo accesso
+  □ Istruzioni per contattare il supporto se ha dubbi
+
+
+═══════════════════════════════════════════════════════════════════════════════
+PARTE 10: RIEPILOGO TECNICO (Per sviluppatori)
+═══════════════════════════════════════════════════════════════════════════════
+
+DOVE VENGONO VERIFICATI I CODICI?
+
+📄 cliente-prenotazioni.html (linea ~1458)
+
+    async function handleLogin(event) {
+        // Legge i codici da localStorage (firebase-rest.js)
+        let data = LocalStorage.load();
+
+        // Estrae i codici
+        const CORRECT_CODE_NUMBERS = data.securityCodes.accessCode1;
+        const CORRECT_CODE_LETTERS = data.securityCodes.accessCode2;
+
+        // Confronta con gli input
+        if (clientName === CORRECT_CODE_NUMBERS &&
+            clientSurname === CORRECT_CODE_LETTERS) {
+            // ✅ CORRETTI → Reindirizza a parrucchiere-login.html
+        } else {
+            // ❌ SBAGLIATI → Mostra errore
+        }
+    }
+
+STORAGE DEI CODICI:
+
+📄 firebase-rest.js (getDefaultData)
+
+    securityCodes: {
+        accessCode1: '82947365019284756301',    // 20 cifre
+        accessCode2: 'KXMQPVLZNRWHJDGFCBYA',    // 20 lettere
+        description: 'Codici di accesso per la pagina di login parrucchiere'
+    }
+
+FLUSSO DI SINCRONIZZAZIONE:
+
+1. Caricamento: LocalStorage.load() → securityCodes
+2. Modifica: Edisci firebase-rest.js
+3. Salvataggio: localStorage.setItem('bookingDB', JSON.stringify(data))
+4. Sincronizzazione: FirebaseSync.save() (background)
+5. Prossimo caricamento: DatabaseAdapter.load() legge da Firebase o localStorage
+
+DEBUGGING:
+
+Apri la console del browser (F12 → Console):
+
+    // Verifica i codici caricati
+    LocalStorage.load().securityCodes
+
+    // Risultato atteso:
+    // {accessCode1: "82947365019284756301", accessCode2: "KXMQPVLZNRWHJDGFCBYA", description: "..."}
+
+
+═══════════════════════════════════════════════════════════════════════════════
+DOMANDE FREQUENTI SULLA VENDITA
+═══════════════════════════════════════════════════════════════════════════════
+
+D: I codici devono essere uguale per tutti i clienti?
+R: NO! Ogni cliente DEVE avere codici DIVERSI e UNICI.
+   Non copiare i codici da un cliente all'altro.
+
+D: Posso riusare i codici DEMO per un nuovo cliente?
+R: ASSOLUTAMENTE NO! I codici DEMO sono pubblici (in questo documento).
+   Genera sempre nuovi codici RANDOM per ogni cliente.
+
+D: Che succede se il cliente perde i codici?
+R: Contattati per avere i nuovi codici.
+   Modifichi il file firebase-rest.js con i nuovi codici.
+   Dai il file aggiornato al cliente.
+
+D: I codici sono veramente 20 cifre + 20 lettere o sono solo esempi?
+R: ESATTAMENTE 20 CIFRE + 20 LETTERE.
+   accessCode1 deve essere SEMPRE 20 caratteri numerici (0-9)
+   accessCode2 deve essere SEMPRE 20 caratteri alfabetici (A-Z)
+
+D: Posso aggiungere simboli speciali (!, @, #) ai codici?
+R: NO. Usa SOLO:
+   - accessCode1: cifre 0-9 (niente lettere, simboli, spazi)
+   - accessCode2: lettere A-Z MAIUSCOLE (niente minuscole, simboli, spazi)
+
+D: I codici sono sensibili alle maiuscole/minuscole?
+R: Per accessCode2 SÌ!
+   "KXMQPVLZNRWHJDGFCBYA" ≠ "kxmqpvlznrwhjdgfcbya"
+   Deve essere MAIUSCOLO sempre.
+
+D: Se il cliente vuole cambiare i codici dopo l'acquisto?
+R: Due opzioni:
+   1. Cliente modifica il file firebase-rest.js (se tecnico)
+   2. Cliente contatta il supporto → tu modifichi e dai il file aggiornato
+
+
+═══════════════════════════════════════════════════════════════════════════════
+CONCLUSIONE
+═══════════════════════════════════════════════════════════════════════════════
+
+Il sistema a DUE CODICI aggiunge un layer di sicurezza extra:
+├─ Previene accessi casuali alla pagina di login parrucchiere
+├─ Richiede che il cliente abbia i codici corretti
+├─ Facile da modificare per ogni nuovo cliente
+└─ Trasparente per l'utente finale (vede solo 2 campi di input)
+
+Ricorda:
+✅ Genera codici UNICI per ogni cliente
+✅ Modifica il file firebase-rest.js PRIMA di vendere
+✅ Testa sempre i codici prima di dare il sito al cliente
+✅ Comunica chiaramente come usare i codici
+✅ Tieni una copia della documentazione per il cliente
+
+═══════════════════════════════════════════════════════════════════════════════
+
+Domande? Contatta il supporto tecnico.
+
+Buona vendita! 🚀

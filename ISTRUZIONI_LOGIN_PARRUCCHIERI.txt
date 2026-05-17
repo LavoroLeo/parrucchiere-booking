@@ -1,0 +1,544 @@
+═══════════════════════════════════════════════════════════════════════════════
+    GUIDA: COME MODIFICARE EMAIL E PASSWORD PARRUCCHIERI PER LA VENDITA
+═══════════════════════════════════════════════════════════════════════════════
+
+🎯 QUANDO VENDI IL SITO: Devi personalizzare email e password per ogni parrucchiere
+
+QUESTO FILE SPIEGA:
+├─ 1. Dove sono salvate le credenziali (file)
+├─ 2. Come modificarle
+├─ 3. Email/Password DEMO da usare
+└─ 4. Come il cliente le cambia dopo l'acquisto
+
+
+═══════════════════════════════════════════════════════════════════════════════
+PARTE 1: DOVE SONO LE CREDENZIALI?
+═══════════════════════════════════════════════════════════════════════════════
+
+Le credenziali parrucchieri sono salvate in:
+
+📁 PERCORSO FILE: firebase-rest.js
+📍 LINEA: 75-110 (sezione "parrucchieri:")
+
+CONTENUTO ATTUALE (DEMO):
+┌─────────────────────────────────────────────────────────────────┐
+│ parrucchieri: [                                                 │
+│   {                                                             │
+│     id: 'p1',                                                   │
+│     name: 'Marco',                                              │
+│     surname: 'Rossi',                                           │
+│     email: 'demo@parrucchiererossi.it',          ← EMAIL        │
+│     password: 'demo2026',                         ← PASSWORD    │
+│     isOwner: true,                                              │
+│     specializations: [...],                                     │
+│     ...                                                         │
+│   },                                                            │
+│   {                                                             │
+│     id: 'p2',                                                   │
+│     name: 'Anna',                                               │
+│     surname: 'Bianchi',                                         │
+│     email: 'parrucchiere@parrucchiererossi.it',  ← EMAIL        │
+│     password: '123456',                          ← PASSWORD    │
+│     isOwner: false,                                             │
+│     ...                                                         │
+│   }                                                             │
+│ ]                                                               │
+└─────────────────────────────────────────────────────────────────┘
+
+
+═══════════════════════════════════════════════════════════════════════════════
+PARTE 2: EMAIL E PASSWORD DEMO (DA DARE AL CLIENTE)
+═══════════════════════════════════════════════════════════════════════════════
+
+Quando VENDI il sito, usa queste credenziali DEMO:
+
+┌─────────────────────────────────────────────────────────────────┐
+│              CREDENZIALI DEMO PER IL CLIENTE
+├─────────────────────────────────────────────────────────────────┤
+│
+│ PROPRIETARIO (p1 - Owner):
+│ ├─ Email: admin@salone.it
+│ ├─ Password: DemoPass123!
+│ └─ isOwner: true
+│
+│ COLLEGA 1 (p2 - Staff):
+│ ├─ Email: parrucchiere1@salone.it
+│ ├─ Password: DemoPass456!
+│ └─ isOwner: false
+│
+│ COLLEGA 2 (p3 - Staff):  [Opzionale - aggiungi se il cliente ha +1 collega]
+│ ├─ Email: parrucchiere2@salone.it
+│ ├─ Password: DemoPass789!
+│ └─ isOwner: false
+│
+└─────────────────────────────────────────────────────────────────┘
+
+⚠️ IMPORTANTE:
+├─ Tutte le password DEMO iniziano con "DemoPass"
+├─ Numero progressivo (123, 456, 789, ecc.)
+├─ Simbolo "!" alla fine (es: DemoPass123!)
+├─ Facili da ricordare per il cliente
+└─ DEVE CAMBIARLE AL PRIMO ACCESSO!
+
+
+═══════════════════════════════════════════════════════════════════════════════
+PARTE 3: COME MODIFICARE LE CREDENZIALI NEL FILE
+═══════════════════════════════════════════════════════════════════════════════
+
+STEP 1: Apri il file firebase-rest.js
+
+┌─ USANDO VISUAL STUDIO CODE:
+│  1. Apri Visual Studio Code
+│  2. File → Open Folder
+│  3. Seleziona la cartella del sito
+│  4. Nella sidebar, trova: firebase-rest.js
+│  5. Clicca per aprire
+│
+└─ USANDO NOTEPAD (Metodo semplice):
+   1. Vai su C:\Users\[TuoNome]\Desktop\Artigiani\
+   2. Fai click destro su firebase-rest.js
+   3. "Apri con" → Notepad
+   4. Si apre il file
+
+
+STEP 2: Trova la sezione parrucchieri (Linea ~75)
+
+Nel file, scorri fino a trovare:
+
+    parrucchieri: [
+        {
+            id: 'p1',
+            name: 'Marco',
+            ...
+
+È la sezione dei parrucchieri.
+
+
+STEP 3: Modifica il PROPRIETARIO (p1)
+
+PRIMA (Come è adesso):
+┌────────────────────────────────────────┐
+│ {                                      │
+│   id: 'p1',                            │
+│   name: 'Marco',                       │
+│   surname: 'Rossi',                    │
+│   email: 'demo@parrucchiererossi.it',  │
+│   password: 'demo2026',                │
+│   isOwner: true,                       │
+│   ...                                  │
+│ }                                      │
+└────────────────────────────────────────┘
+
+DOPO (Cosa metti):
+┌────────────────────────────────────────┐
+│ {                                      │
+│   id: 'p1',                            │
+│   name: 'Marco',                       │ ← Puoi cambiare il nome
+│   surname: 'Rossi',                    │ ← Puoi cambiare il cognome
+│   email: 'admin@salone.it',            │ ← EMAIL NUOVA
+│   password: 'DemoPass123!',            │ ← PASSWORD NUOVA
+│   isOwner: true,                       │ ← SEMPRE true per proprietario
+│   ...                                  │
+│ }                                      │
+└────────────────────────────────────────┘
+
+COME MODIFICARE IN PRATICA:
+├─ Clicca su 'demo@parrucchiererossi.it'
+├─ Seleziona tutto il testo
+├─ Cancella (Ctrl+X)
+├─ Digita: admin@salone.it
+├─ Ripeti per password
+
+
+STEP 4: Modifica i COLLEGHI (p2, p3, ecc.)
+
+PRIMA (p2 - Come è adesso):
+┌────────────────────────────────────────────┐
+│ {                                          │
+│   id: 'p2',                                │
+│   name: 'Anna',                            │
+│   surname: 'Bianchi',                      │
+│   email: 'parrucchiere@parrucchiererossi.│
+│   password: '123456',                      │
+│   isOwner: false,                          │
+│   ...                                      │
+│ }                                          │
+└────────────────────────────────────────────┘
+
+DOPO (p2 - Cosa metti):
+┌────────────────────────────────────────────┐
+│ {                                          │
+│   id: 'p2',                                │
+│   name: 'Anna',                            │ ← Cambia se vuoi
+│   surname: 'Bianchi',                      │ ← Cambia se vuoi
+│   email: 'parrucchiere1@salone.it',        │ ← EMAIL NUOVA
+│   password: 'DemoPass456!',                │ ← PASSWORD NUOVA
+│   isOwner: false,                          │ ← SEMPRE false per collega
+│   ...                                      │
+│ }                                          │
+└────────────────────────────────────────────┘
+
+
+STEP 5: Salva il file
+
+├─ Premi: Ctrl+S
+├─ Vedrai che il titolo della tab non ha più il puntino
+└─ ✅ File salvato
+
+
+═══════════════════════════════════════════════════════════════════════════════
+PARTE 4: COME IL CLIENTE CAMBIA LA PASSWORD
+═══════════════════════════════════════════════════════════════════════════════
+
+Quando il cliente accede per la prima volta, deve cambiare la password DEMO.
+
+ISTRUZIONI PER IL CLIENTE:
+┌─────────────────────────────────────────────────────────────────┐
+│ COME CAMBIARE LA PASSWORD (Per il Cliente)
+├─────────────────────────────────────────────────────────────────┤
+│
+│ STEP 1: Accedi al sito
+│ ├─ Apri il sito online (es: parrucchiere-booking.vercel.app)
+│ ├─ Clicca su "🔒 Accedi alla Dashboard"
+│ ├─ Inserisci email: admin@salone.it
+│ ├─ Inserisci password: DemoPass123!
+│ └─ Clicca "Accedi"
+│
+│ STEP 2: Vai alle Impostazioni
+│ ├─ Dentro il dashboard, cerca "⚙️ Impostazioni"
+│ ├─ Clicca su "Impostazioni"
+│ └─ Scorri fino a "Sicurezza" o "Cambia Password"
+│
+│ STEP 3: Cambia la Password
+│ ├─ Clicca "Cambia Password"
+│ ├─ Inserisci password DEMO: DemoPass123!
+│ ├─ Inserisci NUOVA password (scelta da te):
+│ │  Suggerimento: Min 8 caratteri, con lettere e numeri
+│ │  Es: MiaPwd2026! oppure Salone123Torino
+│ ├─ Confermale la nuova password (digitala 2 volte)
+│ └─ Clicca "Salva"
+│
+│ ✅ PRONTO! Adesso puoi accedere con la TUA password!
+│    Nessun altro la conosce.
+│
+│ ⚠️ IMPORTANTE:
+│ ├─ Scrivi la nuova password su carta (o password manager)
+│ ├─ Non condividere con nessuno
+│ └─ Se la perdi, contatta il supporto
+│
+└─────────────────────────────────────────────────────────────────┘
+
+
+═══════════════════════════════════════════════════════════════════════════════
+PARTE 5: COME COLLEGARE IL SITO A FIREBASE (Per il Cliente)
+═══════════════════════════════════════════════════════════════════════════════
+
+⚠️ PRIMA DI DARE IL SITO AL CLIENTE:
+Devi avvertirlo che DEVE collegare il sito al suo Firebase personale!
+
+SPIEGAZIONE RAPIDA PER IL CLIENTE:
+┌─────────────────────────────────────────────────────────────────┐
+│ PERCHÉ DEVO COLLEGARE FIREBASE?
+├─────────────────────────────────────────────────────────────────┤
+│
+│ Il sito salva i dati (prenotazioni, clienti, ecc.) su Firebase.
+│
+│ Tu devi avere un tuo PROGETTO FIREBASE personale.
+│ (Diverso da quello mio)
+│
+│ MOTIVI:
+│ ├─ I tuoi dati rimangono TUOI, non miei
+│ ├─ Paghi solo quello che usi (gratuito fino a 100 oper/giorno)
+│ ├─ Pieno controllo sui tuoi dati
+│ └─ Sicurezza migliore
+│
+│ COME FARLO:
+│ ├─ 1. Crea account Google (se non ne hai)
+│ ├─ 2. Vai su https://firebase.google.com/
+│ ├─ 3. Clicca "Inizia adesso" (Console)
+│ ├─ 4. Crea un nuovo progetto:
+│ │    Nome: "Prenotazioni Salone" (o quello che preferisci)
+│ ├─ 5. Abilita "Realtime Database"
+│ ├─ 6. Prendi le credenziali (apiKey, projectId, ecc.)
+│ ├─ 7. Apri il file firebase-rest.js nel tuo sito
+│ ├─ 8. Sostituisci le credenziali demo con le tue
+│ └─ 9. Salva il file
+│
+│ ✅ Pronto! I tuoi dati vanno nel TUO Firebase!
+│
+└─────────────────────────────────────────────────────────────────┘
+
+
+═══════════════════════════════════════════════════════════════════════════════
+PARTE 6: COME AGGIUNGERE ALTRI PARRUCCHIERI (Colleghi)
+═══════════════════════════════════════════════════════════════════════════════
+
+Se il cliente vuole aggiungere altri colleghi dopo l'acquisto:
+
+OPZIONE 1: TRAMITE DASHBOARD (Consigliato per il cliente)
+┌─────────────────────────────────────────────────────────────────┐
+│ IL CLIENTE PUÒ USARE IL BOTTONE "➕ Crea Collega"
+├─────────────────────────────────────────────────────────────────┤
+│
+│ 1. Accedi al dashboard (come proprietario)
+│ 2. Cerca il bottone "➕ Crea Collega Parrucchiere" (in alto)
+│ 3. Clicca per aprire la modale
+│ 4. Compila il form:
+│    ├─ Nome: es. "Carlo"
+│    ├─ Cognome: es. "Verdi"
+│    ├─ Email: es. "carlo@miosalone.it"
+│    ├─ Password: es. "CarloPass2026!"
+│    ├─ Specialità: es. "Taglio Uomo, Barba, Styling"
+│    ├─ Orario inizio: es. 10:00
+│    └─ Orario fine: es. 17:00
+│ 5. Clicca "Crea Collega"
+│
+│ ✅ Il collega è creato! Può accedere subito con
+│    email: carlo@miosalone.it
+│    password: CarloPass2026!
+│
+└─────────────────────────────────────────────────────────────────┘
+
+OPZIONE 2: MODIFICARE IL FILE (Se dashboard non è pronto)
+┌─────────────────────────────────────────────────────────────────┐
+│ AGGIUNGERE MANUALMENTE UN COLLEGA
+├─────────────────────────────────────────────────────────────────┤
+│
+│ 1. Apri firebase-rest.js
+│ 2. Trova la sezione parrucchieri:
+│
+│    parrucchieri: [
+│      { id: 'p1', ... }, ← proprietario
+│      { id: 'p2', ... }, ← collega 1
+│      {                  ← AGGIUNGI QUI IL COLLEGA 2
+│        id: 'p3',
+│        name: 'Carlo',
+│        surname: 'Verdi',
+│        email: 'carlo@miosalone.it',
+│        password: 'CarloPass2026!',
+│        isOwner: false,
+│        specializations: ['Taglio Uomo', 'Barba'],
+│        hoursStart: '10:00',
+│        hoursEnd: '17:00',
+│        satStart: '09:00',
+│        satEnd: '14:00',
+│        phone: '+39 000 000 0000',
+│        photo: ''
+│      }
+│    ]
+│
+│ 3. Salva il file
+│ 4. Il collega può accedere con:
+│    Email: carlo@miosalone.it
+│    Password: CarloPass2026!
+│
+└─────────────────────────────────────────────────────────────────┘
+
+
+═══════════════════════════════════════════════════════════════════════════════
+PARTE 7: SISTEMA DI SICUREZZA - CHI VEDE COSA?
+═══════════════════════════════════════════════════════════════════════════════
+
+Dopo il login, il sistema filtra automaticamente le prenotazioni:
+
+┌─────────────────────────────────────────────────────────────────┐
+│ IL PROPRIETARIO (isOwner: true)
+├─────────────────────────────────────────────────────────────────┤
+│ ✅ Vede TUTTE le prenotazioni (tutti i colleghi)
+│ ✅ Vede le impostazioni del salone
+│ ✅ Può creare nuovi colleghi
+│ ✅ Può modificare i dati del salone
+│ ✅ Accede a tutte le funzioni admin
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│ I COLLEGHI (isOwner: false)
+├─────────────────────────────────────────────────────────────────┤
+│ ✅ Vedono SOLO le LORO prenotazioni
+│ ✅ Possono marcare come "completata" le loro prenotazioni
+│ ❌ NON vedono le prenotazioni degli altri colleghi
+│ ❌ NON possono creare colleghi
+│ ❌ NON possono modificare impostazioni salone
+│ ❌ NON possono vedere i guadagni totali
+│
+│ COME FUNZIONA:
+│ ├─ Quando il collega accede, il sistema legge la sua email
+│ ├─ Trova il suo ID parrucchiere (es: p2, p3, ecc.)
+│ ├─ Filtra le prenotazioni: mostra solo quelle con parrucchiereId = suo ID
+│ ├─ Nasconde il bottone "Crea Collega"
+│ ├─ Nasconde le impostazioni
+│ └─ Mostra un banner: "Stai visualizzando solo le tue prenotazioni"
+│
+└─────────────────────────────────────────────────────────────────┘
+
+
+═══════════════════════════════════════════════════════════════════════════════
+PARTE 8: CHECKLIST PER LA VENDITA
+═══════════════════════════════════════════════════════════════════════════════
+
+Prima di dare il sito al cliente, verifica:
+
+□ Ho copiato il sito in una nuova cartella
+□ Ho modificato le email nei parrucchieri
+□ Ho modificato le password demo
+□ Ho salvato firebase-rest.js
+□ Ho testato il login con le nuove credenziali
+□ Il proprietario accede e vede TUTTE le prenotazioni
+□ Il collega accede e vede SOLO le sue prenotazioni
+□ Ho comunicato al cliente:
+  □ Email proprietario
+  □ Password DEMO proprietario (deve cambiarla)
+  □ Email collega (se ce n'è uno)
+  □ Password DEMO collega (deve cambiarla)
+  □ Istruzioni per cambiare la password
+  □ Istruzioni per collegare Firebase personale
+□ Ho dato il link al sito online (Vercel/Firebase)
+
+
+═══════════════════════════════════════════════════════════════════════════════
+PARTE 9: ESEMPI COMPLETI DI CONFIGURAZIONE
+═══════════════════════════════════════════════════════════════════════════════
+
+ESEMPIO 1: PARRUCCHIERE SOLO (1 proprietario, 0 colleghi)
+┌─────────────────────────────────────────────────────────────────┐
+│ parrucchieri: [
+│   {
+│     id: 'p1',
+│     name: 'Marco',
+│     surname: 'Rossi',
+│     email: 'marco.rossi@salone.it',
+│     password: 'DemoPass123!',
+│     isOwner: true,
+│     specializations: ['Taglio Uomo', 'Barba', 'Colore'],
+│     hoursStart: '09:00',
+│     hoursEnd: '18:00',
+│     satStart: '09:00',
+│     satEnd: '14:00',
+│     phone: '+39 011 555 1234',
+│     photo: ''
+│   }
+│ ]
+└─────────────────────────────────────────────────────────────────┘
+
+
+ESEMPIO 2: SALONE CON 2 PARRUCCHIERI (1 proprietario + 1 collega)
+┌─────────────────────────────────────────────────────────────────┐
+│ parrucchieri: [
+│   {
+│     id: 'p1',
+│     name: 'Marco',
+│     surname: 'Rossi',
+│     email: 'marco@salonerossi.it',
+│     password: 'DemoPass123!',
+│     isOwner: true,
+│     specializations: ['Taglio Uomo', 'Barba'],
+│     hoursStart: '09:00',
+│     hoursEnd: '18:00',
+│     satStart: '09:00',
+│     satEnd: '14:00',
+│     phone: '+39 011 555 1234',
+│     photo: ''
+│   },
+│   {
+│     id: 'p2',
+│     name: 'Anna',
+│     surname: 'Bianchi',
+│     email: 'anna@salonerossi.it',
+│     password: 'DemoPass456!',
+│     isOwner: false,
+│     specializations: ['Taglio Donna', 'Colore', 'Styling'],
+│     hoursStart: '10:00',
+│     hoursEnd: '17:00',
+│     satStart: '09:00',
+│     satEnd: '14:00',
+│     phone: '+39 333 444 555',
+│     photo: ''
+│   }
+│ ]
+└─────────────────────────────────────────────────────────────────┘
+
+
+ESEMPIO 3: SALONE CON 3 PARRUCCHIERI (1 proprietario + 2 colleghi)
+┌─────────────────────────────────────────────────────────────────┐
+│ parrucchieri: [
+│   {
+│     id: 'p1',
+│     name: 'Marco',
+│     surname: 'Rossi',
+│     email: 'owner@salonerossi.it',
+│     password: 'DemoPass123!',
+│     isOwner: true,
+│     ...
+│   },
+│   {
+│     id: 'p2',
+│     name: 'Anna',
+│     surname: 'Bianchi',
+│     email: 'anna@salonerossi.it',
+│     password: 'DemoPass456!',
+│     isOwner: false,
+│     ...
+│   },
+│   {
+│     id: 'p3',
+│     name: 'Carlo',
+│     surname: 'Verdi',
+│     email: 'carlo@salonerossi.it',
+│     password: 'DemoPass789!',
+│     isOwner: false,
+│     ...
+│   }
+│ ]
+└─────────────────────────────────────────────────────────────────┘
+
+
+═══════════════════════════════════════════════════════════════════════════════
+PARTE 10: DOMANDE FREQUENTI
+═══════════════════════════════════════════════════════════════════════════════
+
+D: Devo mettere le credenziali reali nel file, o demo?
+R: DEMO! Metti credenziali demo temporanee.
+   Il cliente le cambia al primo accesso nel dashboard.
+
+D: Cosa succede se due parrucchieri hanno lo stesso email?
+R: ERRORE! Ogni email deve essere UNICA!
+   Se due hanno lo stesso email, il login non funziona.
+
+D: Posso usare DemoPass123! per tutti i parrucchieri?
+R: NO! Ogni parrucchiere deve avere una password DIVERSA!
+   p1: DemoPass123!
+   p2: DemoPass456!
+   p3: DemoPass789!
+
+D: Che differenza c'è tra admin e collega?
+R: isOwner: true = Vede tutto, può creare colleghi
+   isOwner: false = Vede solo le sue prenotazioni
+
+D: Se il cliente perde la password, cosa faccio?
+R: Puoi cambiarla nel file firebase-rest.js
+   e mandargli la nuova password DEMO.
+
+D: Il cliente può cambiare il suo email?
+R: Sì, se modifichi il file firebase-rest.js
+   Oppure una volta che implementi la funzione "Modifica Profilo"
+   nel dashboard (non ancora disponibile).
+
+D: Quando il cliente logga, il sistema sa chi è?
+R: Sì! Il sistema legge l'email dall'input di login
+   Cerca il parrucchiere corrispondente
+   Legge il suo ID e le sue autorizzazioni
+   Filtra tutto automaticamente
+
+═══════════════════════════════════════════════════════════════════════════════
+
+✅ TUTTO PRONTO PER LA VENDITA!
+
+Usa questa guida per:
+1. Modificare le credenziali per ogni nuovo cliente
+2. Spiegare come cambiare la password
+3. Assicurarti che il filtraggio funzioni correttamente
+4. Risolvere problemi di login
+
+Buona vendita! 🚀
+
+═══════════════════════════════════════════════════════════════════════════════
