@@ -244,13 +244,15 @@ const CreateCollegaModal = {
             <div style="display: flex; gap: 10px; margin-top: 30px;">
                 <button onclick="CreateCollegaModal.closeModal()" style="
                     flex: 1;
-                    padding: 12px;
-                    background: #eee;
-                    border: none;
+                    padding: 14px;
+                    background: transparent;
+                    border: 2px solid #d4af37;
+                    color: #d4af37;
                     border-radius: 6px;
                     cursor: pointer;
-                    font-weight: bold;
-                ">Annulla</button>
+                    font-weight: 700;
+                    transition: all 0.3s;
+                " onmouseover="this.style.background='rgba(212, 175, 55, 0.15)'" onmouseout="this.style.background='transparent'">Annulla</button>
                 <button onclick="CreateCollegaModal.saveCollega()" style="
                     flex: 1;
                     padding: 14px;
