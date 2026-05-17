@@ -103,23 +103,6 @@ const CollegaDashboard = {
             settingsSection.style.display = 'none';
         }
 
-        // Mostra un banner che dice "Stai visualizzando solo le tue prenotazioni"
-        const banner = document.createElement('div');
-        banner.style.cssText = `
-            background: #e3f2fd;
-            border-left: 4px solid #2196F3;
-            padding: 12px 16px;
-            margin-bottom: 20px;
-            border-radius: 4px;
-            color: #1976d2;
-            font-weight: 500;
-        `;
-        banner.textContent = '👤 Stai visualizzando solo le tue prenotazioni';
-
-        const mainContent = document.querySelector('[id*="content"], [class*="content"], .container');
-        if (mainContent && mainContent.firstChild) {
-            mainContent.insertBefore(banner, mainContent.firstChild);
-        }
 
         // Aggiungi sezione "Impostazioni Collega" (SOLO Cambia Email/Password)
         this.addCollegaSettingsPanel();
