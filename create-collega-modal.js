@@ -47,28 +47,29 @@ const CreateCollegaModal = {
         const btn = document.createElement('button');
         btn.id = 'create-collega-btn';
         btn.className = 'btn-crea-collega';
-        btn.innerHTML = '➕ Crea Collega Parrucchiere';
+        btn.innerHTML = '➕ Crea Collega';
         btn.style.cssText = `
-            padding: 12px 24px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            padding: 14px 32px;
+            background: linear-gradient(135deg, #d4af37, #ffd700);
+            color: #000;
             border: none;
             border-radius: 8px;
-            font-size: 14px;
-            font-weight: bold;
+            font-size: 15px;
+            font-weight: 700;
             cursor: pointer;
             margin: 20px 0;
             transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.25);
         `;
 
         btn.addEventListener('mouseover', () => {
-            btn.style.transform = 'translateY(-2px)';
-            btn.style.boxShadow = '0 4px 12px rgba(102, 126, 234, 0.4)';
+            btn.style.transform = 'translateY(-3px) scale(1.02)';
+            btn.style.boxShadow = '0 12px 35px rgba(212, 175, 55, 0.4)';
         });
 
         btn.addEventListener('mouseout', () => {
-            btn.style.transform = 'translateY(0)';
-            btn.style.boxShadow = 'none';
+            btn.style.transform = 'translateY(0) scale(1)';
+            btn.style.boxShadow = '0 4px 15px rgba(212, 175, 55, 0.25)';
         });
 
         btn.addEventListener('click', () => this.openModal());
@@ -101,21 +102,24 @@ const CreateCollegaModal = {
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: linear-gradient(135deg, #d4af37, #ffd700);
+            color: #000;
             border: none;
-            font-size: 24px;
+            font-size: 28px;
+            font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            transition: all 0.2s;
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         `;
 
         buttonEl.addEventListener('click', () => this.openModal());
         buttonEl.addEventListener('mouseover', () => {
             buttonEl.style.transform = 'scale(1.1)';
+            buttonEl.style.boxShadow = '0 12px 35px rgba(212, 175, 55, 0.6)';
         });
         buttonEl.addEventListener('mouseout', () => {
             buttonEl.style.transform = 'scale(1)';
+            buttonEl.style.boxShadow = '0 8px 25px rgba(212, 175, 55, 0.4)';
         });
 
         btn.appendChild(buttonEl);
@@ -148,115 +152,148 @@ const CreateCollegaModal = {
 
         const form = document.createElement('div');
         form.style.cssText = `
-            background: white;
+            background: linear-gradient(135deg, #1a1a1a, #252525);
             padding: 40px;
             border-radius: 16px;
             max-width: 500px;
             width: 90%;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.2);
             animation: slideUp 0.3s ease;
         `;
 
         form.innerHTML = `
-            <h2 style="margin: 0 0 30px 0; color: #333;">➕ Crea Collega Parrucchiere</h2>
+            <h2 style="margin: 0 0 30px 0; color: #d4af37; font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700;">➕ Crea Collega Parrucchiere</h2>
 
             <div style="margin-bottom: 20px;">
-                <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #333;">Nome:</label>
+                <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #d4af37;">Nome:</label>
                 <input type="text" id="collega-name" placeholder="Es: Anna" style="
                     width: 100%;
-                    padding: 10px;
-                    border: 1px solid #ddd;
+                    padding: 12px;
+                    background: rgba(15, 15, 15, 0.8);
+                    border: 2px solid #333;
+                    color: #f5f5f5;
                     border-radius: 6px;
                     box-sizing: border-box;
+                    font-size: 14px;
+                    transition: all 0.3s;
                 " required>
             </div>
 
             <div style="margin-bottom: 20px;">
-                <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #333;">Cognome:</label>
+                <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #d4af37;">Cognome:</label>
                 <input type="text" id="collega-surname" placeholder="Es: Bianchi" style="
                     width: 100%;
-                    padding: 10px;
-                    border: 1px solid #ddd;
+                    padding: 12px;
+                    background: rgba(15, 15, 15, 0.8);
+                    border: 2px solid #333;
+                    color: #f5f5f5;
                     border-radius: 6px;
                     box-sizing: border-box;
+                    font-size: 14px;
+                    transition: all 0.3s;
                 " required>
             </div>
 
             <div style="margin-bottom: 20px;">
-                <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #333;">Email:</label>
+                <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #d4af37;">Email:</label>
                 <input type="email" id="collega-email" placeholder="collega@parrucchiererossi.it" style="
                     width: 100%;
-                    padding: 10px;
-                    border: 1px solid #ddd;
+                    padding: 12px;
+                    background: rgba(15, 15, 15, 0.8);
+                    border: 2px solid #333;
+                    color: #f5f5f5;
                     border-radius: 6px;
                     box-sizing: border-box;
+                    font-size: 14px;
+                    transition: all 0.3s;
                 " required>
             </div>
 
             <div style="margin-bottom: 20px;">
-                <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #333;">Password:</label>
+                <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #d4af37;">Password:</label>
                 <input type="password" id="collega-password" placeholder="Password provvisoria" style="
                     width: 100%;
-                    padding: 10px;
-                    border: 1px solid #ddd;
+                    padding: 12px;
+                    background: rgba(15, 15, 15, 0.8);
+                    border: 2px solid #333;
+                    color: #f5f5f5;
                     border-radius: 6px;
                     box-sizing: border-box;
+                    font-size: 14px;
+                    transition: all 0.3s;
                 " required>
             </div>
 
             <div style="margin-bottom: 20px;">
-                <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #333;">Specialità (separare con virgola):</label>
+                <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #d4af37;">Specialità (separare con virgola):</label>
                 <input type="text" id="collega-specializations" placeholder="Es: Taglio Donna, Colore, Styling" style="
                     width: 100%;
-                    padding: 10px;
-                    border: 1px solid #ddd;
+                    padding: 12px;
+                    background: rgba(15, 15, 15, 0.8);
+                    border: 2px solid #333;
+                    color: #f5f5f5;
                     border-radius: 6px;
                     box-sizing: border-box;
+                    font-size: 14px;
+                    transition: all 0.3s;
                 " required>
             </div>
 
             <div style="margin-bottom: 20px;">
-                <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #333;">Orario Inizio:</label>
+                <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #d4af37;">Orario Inizio:</label>
                 <input type="time" id="collega-hoursStart" value="10:00" style="
                     width: 100%;
-                    padding: 10px;
-                    border: 1px solid #ddd;
+                    padding: 12px;
+                    background: rgba(15, 15, 15, 0.8);
+                    border: 2px solid #333;
+                    color: #f5f5f5;
                     border-radius: 6px;
                     box-sizing: border-box;
+                    font-size: 14px;
+                    transition: all 0.3s;
                 " required>
             </div>
 
             <div style="margin-bottom: 20px;">
-                <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #333;">Orario Fine:</label>
+                <label style="display: block; margin-bottom: 8px; font-weight: bold; color: #d4af37;">Orario Fine:</label>
                 <input type="time" id="collega-hoursEnd" value="17:00" style="
                     width: 100%;
-                    padding: 10px;
-                    border: 1px solid #ddd;
+                    padding: 12px;
+                    background: rgba(15, 15, 15, 0.8);
+                    border: 2px solid #333;
+                    color: #f5f5f5;
                     border-radius: 6px;
                     box-sizing: border-box;
+                    font-size: 14px;
+                    transition: all 0.3s;
                 " required>
             </div>
 
             <div style="display: flex; gap: 10px; margin-top: 30px;">
                 <button onclick="CreateCollegaModal.closeModal()" style="
                     flex: 1;
-                    padding: 12px;
-                    background: #eee;
-                    border: none;
+                    padding: 14px;
+                    background: rgba(212, 175, 55, 0.15);
+                    border: 2px solid #d4af37;
+                    color: #d4af37;
                     border-radius: 6px;
                     cursor: pointer;
-                    font-weight: bold;
-                ">Annulla</button>
+                    font-weight: 700;
+                    transition: all 0.3s;
+                " onmouseover="this.style.background='rgba(212, 175, 55, 0.25)'" onmouseout="this.style.background='rgba(212, 175, 55, 0.15)'">Annulla</button>
                 <button onclick="CreateCollegaModal.saveCollega()" style="
                     flex: 1;
-                    padding: 12px;
-                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                    color: white;
+                    padding: 14px;
+                    background: linear-gradient(135deg, #d4af37, #ffd700);
+                    color: #000;
                     border: none;
                     border-radius: 6px;
                     cursor: pointer;
-                    font-weight: bold;
-                ">Crea Collega</button>
+                    font-weight: 700;
+                    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.25);
+                    transition: all 0.3s;
+                " onmouseover="this.style.boxShadow='0 12px 35px rgba(212, 175, 55, 0.4)'" onmouseout="this.style.boxShadow='0 4px 15px rgba(212, 175, 55, 0.25)'">✅ Crea Collega</button>
             </div>
 
             <style>
