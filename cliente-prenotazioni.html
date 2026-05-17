@@ -1506,7 +1506,60 @@
             console.log('Lunghezza Input Nome:', clientName.length);
             console.log('Lunghezza Input Cognome:', clientSurname.length);
 
-            // Verifica se i codici sono corretti
+            // ✅ VALIDAZIONE DI LUNGHEZZA E FORMATO
+            if (clientName.length !== 20 || clientSurname.length !== 20) {
+                // ❌ Lunghezza non corretta
+                console.log('❌ LUNGHEZZA NON VALIDA!');
+                errorMsg.style.display = 'block';
+                errorMsg.textContent = '⚠️ Controlla i campi e riprova.';
+
+                // Pulisci gli input
+                document.getElementById('clientName').value = '';
+                document.getElementById('clientSurname').value = '';
+
+                // Nascondi il messaggio dopo 4 secondi
+                setTimeout(() => {
+                    errorMsg.style.display = 'none';
+                }, 4000);
+                return;
+            }
+
+            // ✅ VALIDAZIONE DEL TIPO DI CARATTERI
+            if (!/^\d{20}$/.test(clientName)) {
+                // ❌ Nome non contiene 20 numeri
+                console.log('❌ NOME NON È UN CODICE NUMERICO VALIDO!');
+                errorMsg.style.display = 'block';
+                errorMsg.textContent = '⚠️ Controlla i campi e riprova.';
+
+                // Pulisci gli input
+                document.getElementById('clientName').value = '';
+                document.getElementById('clientSurname').value = '';
+
+                // Nascondi il messaggio dopo 4 secondi
+                setTimeout(() => {
+                    errorMsg.style.display = 'none';
+                }, 4000);
+                return;
+            }
+
+            if (!/^[A-Za-z]{20}$/.test(clientSurname)) {
+                // ❌ Cognome non contiene 20 lettere
+                console.log('❌ COGNOME NON È UN CODICE LETTERALE VALIDO!');
+                errorMsg.style.display = 'block';
+                errorMsg.textContent = '⚠️ Controlla i campi e riprova.';
+
+                // Pulisci gli input
+                document.getElementById('clientName').value = '';
+                document.getElementById('clientSurname').value = '';
+
+                // Nascondi il messaggio dopo 4 secondi
+                setTimeout(() => {
+                    errorMsg.style.display = 'none';
+                }, 4000);
+                return;
+            }
+
+            // ✅ SE PASSA TUTTE LE VALIDAZIONI, VERIFICA I CODICI ESATTI
             if (clientName === CORRECT_CODE_NUMBERS && clientSurname === CORRECT_CODE_LETTERS) {
                 // ✅ Codici corretti → Reindirizza a login parrucchiere
                 console.log('✅✅✅ CODICI CORRETTI! Reindirizzamento a parrucchiere-login.html');
