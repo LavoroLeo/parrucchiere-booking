@@ -949,6 +949,39 @@
     <script src="create-collega-modal.js"></script>
     <script src="collega-dashboard.js"></script>
 
+    <!-- Rimuovi banner e pulsante + se non loggato come parrucchiere -->
+    <script>
+        (function() {
+            const isOwner = localStorage.getItem('isOwner') === 'true';
+            const isLoggedIn = !!localStorage.getItem('loggedInEmail');
+
+            // Nasconde pulsante + se non loggato come proprietario
+            function cleanUpUnauthorized() {
+                // Rimuovi qualsiasi banner con testo "prenotazioni"
+                document.querySelectorAll('div, p, span').forEach(el => {
+                    if (el.textContent.includes('Stai visualizzando solo')) {
+                        el.remove();
+                    }
+                });
+
+                // Nascondi pulsante + se non owner
+                if (!isOwner) {
+                    const btn = document.getElementById('create-collega-btn');
+                    if (btn) btn.remove();
+                    const container = document.getElementById('create-collega-container');
+                    if (container) container.remove();
+                }
+            }
+
+            // Esegui subito e con observer per catturare elementi aggiunti dinamicamente
+            document.addEventListener('DOMContentLoaded', cleanUpUnauthorized);
+            const observer = new MutationObserver(cleanUpUnauthorized);
+            document.addEventListener('DOMContentLoaded', () => {
+                observer.observe(document.body, { childList: true, subtree: true });
+            });
+        })();
+    </script>
+
     <script>
         // Servizi di default
         const defaultServices = [
