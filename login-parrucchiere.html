@@ -230,7 +230,56 @@
     </div>
 
     <script src="firebase-rest.js"></script>
-    <!-- Firebase REST API - Soluzione Definitiva -->
-    <script src="firebase-rest.js"></script>
+
+    <script>
+        function handleLogin(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const errorMsg = document.getElementById('errorMsg');
+
+            console.log('🔐 Login parrucchiere - Email:', email, 'Password:', password);
+
+            // Carica i dati dal database
+            let data = LocalStorage ? LocalStorage.load() : JSON.parse(localStorage.getItem('bookingDB') || '{}');
+
+            if (!data.parrucchieri || data.parrucchieri.length === 0) {
+                if (LocalStorage && LocalStorage.getDefaultData) {
+                    data = LocalStorage.getDefaultData();
+                } else {
+                    errorMsg.textContent = '❌ Errore: Nessun parrucchiere configurato nel sistema';
+                    errorMsg.classList.add('show');
+                    return;
+                }
+            }
+
+            // Cerca il parrucchiere con email/password corretti
+            const parrucchiere = data.parrucchieri.find(p => p.email === email && p.password === password);
+
+            if (parrucchiere) {
+                // ✅ Login riuscito
+                console.log('✅ Login riuscito per:', parrucchiere.name);
+                localStorage.setItem('loggedInEmail', email);
+                localStorage.setItem('currentParrucchiereId', parrucchiere.id);
+                localStorage.setItem('isOwner', parrucchiere.isOwner ? 'true' : 'false');
+                window.location.href = '/index.html';
+            } else {
+                // ❌ Login fallito
+                console.log('❌ Email o password non corretti');
+                errorMsg.textContent = '❌ Email o password non corretti. Riprova.';
+                errorMsg.classList.add('show');
+
+                // Pulisci i campi
+                document.getElementById('email').value = '';
+                document.getElementById('password').value = '';
+
+                // Nascondi il messaggio dopo 4 secondi
+                setTimeout(() => {
+                    errorMsg.classList.remove('show');
+                }, 4000);
+            }
+        }
+    </script>
 </body>
 </html>

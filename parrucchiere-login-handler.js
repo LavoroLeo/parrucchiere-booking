@@ -51,9 +51,13 @@ const ParrucchiereLoginHandler = {
                           form.querySelector('input[name="email"]');
         const passwordInput = form.querySelector('input[type="password"]') ||
                              form.querySelector('input[name="password"]');
+        const errorDiv = document.getElementById('error-message');
 
         if (!emailInput || !passwordInput) {
-            alert('❌ Form non completato correttamente');
+            if (errorDiv) {
+                errorDiv.textContent = '❌ Errore nel form';
+                errorDiv.style.display = 'block';
+            }
             console.error('⚠️ Input non trovati nel form');
             return;
         }
@@ -63,15 +67,24 @@ const ParrucchiereLoginHandler = {
 
         // Valida
         if (!email || !password) {
-            alert('❌ Inserisci email e password!');
+            if (errorDiv) {
+                errorDiv.textContent = '❌ Inserisci email e password!';
+                errorDiv.style.display = 'block';
+            }
             return;
         }
 
         // Cerca il parrucchiere nei dati
-        this.verifyLogin(email, password);
+        this.verifyLogin(email, password, form);
     },
 
-    verifyLogin(email, password) {
+    verifyLogin(email, password, form) {
+        const errorDiv = document.getElementById('error-message');
+        const emailInput = form.querySelector('input[type="email"]') ||
+                          form.querySelector('input[name="email"]');
+        const passwordInput = form.querySelector('input[type="password"]') ||
+                             form.querySelector('input[name="password"]');
+
         // Carica i parrucchieri da localStorage (firebase-rest.js)
         let data = LocalStorage ? LocalStorage.load() :
                     JSON.parse(localStorage.getItem('bookingDB') || '{}');
@@ -86,7 +99,10 @@ const ParrucchiereLoginHandler = {
                     LocalStorage.save(data);
                 }
             } else {
-                alert('❌ Nessun parrucchiere configurato nel sistema');
+                if (errorDiv) {
+                    errorDiv.textContent = '❌ Errore: Nessun parrucchiere configurato nel sistema';
+                    errorDiv.style.display = 'block';
+                }
                 console.error('⚠️ Dati parrucchieri non trovati');
                 return;
             }
@@ -98,8 +114,22 @@ const ParrucchiereLoginHandler = {
         );
 
         if (!parrucchiere) {
-            alert('❌ Email o password non valida!');
+            if (errorDiv) {
+                errorDiv.textContent = '❌ Email o password non corretti. Riprova.';
+                errorDiv.style.display = 'block';
+            }
             console.warn('⚠️ Login fallito per email:', email);
+
+            // Pulisci i campi
+            if (emailInput) emailInput.value = '';
+            if (passwordInput) passwordInput.value = '';
+
+            // Nascondi il messaggio dopo 4 secondi
+            setTimeout(() => {
+                if (errorDiv) {
+                    errorDiv.style.display = 'none';
+                }
+            }, 4000);
             return;
         }
 
