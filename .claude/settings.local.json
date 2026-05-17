@@ -91,7 +91,9 @@
       "Bash(grep -n \"button\\\\|div.*+\" /c/Users/Utente/Desktop\\\\Artigiani/index.html | tail -50)",
       "Bash(vercel deploy *)",
       "Bash(grep -rn \"Stai visualizzando\" public/)",
-      "Bash(ls public/)"
+      "Bash(ls public/)",
+      "Bash(git revert *)",
+      "Bash(grep -E \"\\\\.html$\")"
     ]
   }
 }

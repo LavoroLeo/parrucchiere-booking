@@ -1084,8 +1084,9 @@
                 if (logoPaths[platform]) {
                     const imgElement = document.getElementById(platform + 'LogoSite');
                     if (imgElement) {
-                        imgElement.src = logoPaths[platform];
-                        console.log('✅ Logo ' + platform + ' caricato dalla cartella');
+                        // Aggiungi timestamp per forzare il caricamento della versione nuova (bypass cache)
+                        imgElement.src = logoPaths[platform] + '?v=' + Date.now();
+                        console.log('✅ Logo ' + platform + ' caricato dalla cartella (cache bypass)');
                     }
                 }
             });
