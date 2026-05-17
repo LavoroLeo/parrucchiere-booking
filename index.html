@@ -648,8 +648,6 @@
         </div>
     </section>
 
-    <!-- DIVIDER -->
-    <div style="height: 3px; background: #d4af37; width: 100vw; margin-left: calc(-50vw + 50%); box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);"></div>
 
     <!-- BOOKING FORM SECTION -->
     <section id="prenota" style="background: #1a1a1a; padding: 80px 64px;">
@@ -729,8 +727,6 @@
         </div>
     </section>
 
-    <!-- DIVIDER -->
-    <div style="height: 3px; background: #d4af37; width: 100vw; margin-left: calc(-50vw + 50%); box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);"></div>
 
     <!-- SERVIZI SECTION -->
     <section id="servizi" style="background: #0f0f0f; padding: 80px 64px;">
@@ -740,8 +736,6 @@
         </div>
     </section>
 
-    <!-- DIVIDER -->
-    <div style="height: 3px; background: #d4af37; width: 100vw; margin-left: calc(-50vw + 50%); box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);"></div>
 
     <!-- RECENSIONI SECTION -->
     <section id="recensioni" style="background: #1a1a1a; padding: 80px 64px;">
@@ -770,8 +764,6 @@
         </div>
     </section>
 
-    <!-- DIVIDER -->
-    <div style="height: 3px; background: #d4af37; width: 100vw; margin-left: calc(-50vw + 50%); box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);"></div>
 
     <!-- SEGUICI SUI SOCIAL SECTION -->
     <section id="social" style="background: linear-gradient(135deg, #1a1a1a, #252525); padding: 30px 20px; scroll-margin-top: 82px;">
@@ -824,8 +816,6 @@
         </div>
     </section>
 
-    <!-- DIVIDER -->
-    <div style="height: 3px; background: #d4af37; width: 100vw; margin-left: calc(-50vw + 50%); box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);"></div>
 
     <!-- CONTATTI SECTION -->
     <section id="contatti" style="background: #0f0f0f; padding: 80px 64px;">
@@ -1700,6 +1690,58 @@
             document.title = salonName;
         }
 
+        // Generate section dividers from Firebase configuration
+        function generateSectionDividers() {
+            try {
+                const data = LocalStorage.load();
+                if (!data.settings || !data.settings.dividers || !data.settings.dividers.enabled) {
+                    console.log('⚠️ Dividers disabilitati o non configurati');
+                    return;
+                }
+
+                const dividerConfig = data.settings.dividers;
+                const color = dividerConfig.color || '#d4af37';
+                const height = dividerConfig.height || 3;
+                const glowIntensity = dividerConfig.glowIntensity || 0.6;
+
+                // Sezioni dove aggiungere i dividers
+                const sectionSelector = [
+                    { target: '#hero', insertAfter: true, id: 'divider-hero-prenota' },
+                    { target: '#prenota', insertAfter: true, id: 'divider-prenota-servizi' },
+                    { target: '#services', insertAfter: true, id: 'divider-servizi-recensioni' },
+                    { target: '#reviews', insertAfter: true, id: 'divider-recensioni-social' },
+                    { target: '#socialMedia', insertAfter: true, id: 'divider-social-contatti' }
+                ];
+
+                sectionSelector.forEach(selector => {
+                    const targetSection = document.querySelector(selector.target);
+                    if (!targetSection) return;
+
+                    // Crea il divider
+                    const divider = document.createElement('div');
+                    divider.id = selector.id;
+                    divider.style.cssText = `
+                        height: ${height}px;
+                        background: ${color};
+                        width: 100vw;
+                        margin-left: calc(-50vw + 50%);
+                        box-shadow: 0 0 ${15 * glowIntensity}px ${color};
+                        display: block;
+                        z-index: 1;
+                    `;
+
+                    // Inserisci dopo la sezione
+                    if (selector.insertAfter) {
+                        targetSection.parentNode.insertBefore(divider, targetSection.nextSibling);
+                    }
+                });
+
+                console.log('✅ Dividers generati da Firebase');
+            } catch (e) {
+                console.warn('⚠️ Errore generazione dividers:', e.message);
+            }
+        }
+
         // Initialize
         window.addEventListener('DOMContentLoaded', function() {
             loadLogoFromStorage();
@@ -1712,6 +1754,10 @@
             // Carica dati da Firebase
             loadSalonData();
             loadReviews();
+
+            // Genera dividers da Firebase
+            generateSectionDividers();
+
             (async () => {
                 await loadServicesFromFirebase();
                 loadServices();

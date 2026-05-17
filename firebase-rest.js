@@ -70,7 +70,14 @@ const LocalStorage = {
                 hoursEnd: '18:00',
                 satStart: '09:00',
                 satEnd: '14:00',
-                logo: null  // Logo caricato dal parrucchiere (base64 o URL)
+                logo: null,  // Logo caricato dal parrucchiere (base64 o URL)
+                dividers: {
+                    enabled: true,
+                    color: '#d4af37',
+                    height: 3,
+                    glowIntensity: 0.6,
+                    sections: ['hero-prenota', 'prenota-servizi', 'servizi-recensioni', 'recensioni-social', 'social-contatti']
+                }
             },
             socialLinks: {
                 facebook: 'https://facebook.com/parrucchiererossi',
