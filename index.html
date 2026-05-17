@@ -649,7 +649,7 @@
     </section>
 
     <!-- DIVIDER (FALLBACK FROM HTML) -->
-    <div style="height: 3px; background: #d4af37; width: 100vw; margin-left: calc(-50vw + 50%); box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);"></div>
+    <div style="height: 4px; background: #d4af37; width: 100vw; margin-left: calc(-50vw + 50%); box-shadow: 0 0 20px rgba(212, 175, 55, 0.8), 0 0 40px rgba(212, 175, 55, 0.4); z-index: 10;"></div>
 
     <!-- BOOKING FORM SECTION -->
     <section id="prenota" style="background: #1a1a1a; padding: 80px 64px;">
@@ -730,7 +730,7 @@
     </section>
 
     <!-- DIVIDER (FALLBACK FROM HTML) -->
-    <div style="height: 3px; background: #d4af37; width: 100vw; margin-left: calc(-50vw + 50%); box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);"></div>
+    <div style="height: 4px; background: #d4af37; width: 100vw; margin-left: calc(-50vw + 50%); box-shadow: 0 0 20px rgba(212, 175, 55, 0.8), 0 0 40px rgba(212, 175, 55, 0.4); z-index: 10;"></div>
 
     <!-- SERVIZI SECTION -->
     <section id="servizi" style="background: #0f0f0f; padding: 80px 64px;">
@@ -741,7 +741,7 @@
     </section>
 
     <!-- DIVIDER (FALLBACK FROM HTML) -->
-    <div style="height: 3px; background: #d4af37; width: 100vw; margin-left: calc(-50vw + 50%); box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);"></div>
+    <div style="height: 4px; background: #d4af37; width: 100vw; margin-left: calc(-50vw + 50%); box-shadow: 0 0 20px rgba(212, 175, 55, 0.8), 0 0 40px rgba(212, 175, 55, 0.4); z-index: 10;"></div>
 
     <!-- RECENSIONI SECTION -->
     <section id="recensioni" style="background: #1a1a1a; padding: 80px 64px;">
@@ -771,7 +771,7 @@
     </section>
 
     <!-- DIVIDER (FALLBACK FROM HTML) -->
-    <div style="height: 3px; background: #d4af37; width: 100vw; margin-left: calc(-50vw + 50%); box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);"></div>
+    <div style="height: 4px; background: #d4af37; width: 100vw; margin-left: calc(-50vw + 50%); box-shadow: 0 0 20px rgba(212, 175, 55, 0.8), 0 0 40px rgba(212, 175, 55, 0.4); z-index: 10;"></div>
 
     <!-- SEGUICI SUI SOCIAL SECTION -->
     <section id="social" style="background: linear-gradient(135deg, #1a1a1a, #252525); padding: 30px 20px; scroll-margin-top: 82px;">
@@ -825,7 +825,7 @@
     </section>
 
     <!-- DIVIDER (FALLBACK FROM HTML) -->
-    <div style="height: 3px; background: #d4af37; width: 100vw; margin-left: calc(-50vw + 50%); box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);"></div>
+    <div style="height: 4px; background: #d4af37; width: 100vw; margin-left: calc(-50vw + 50%); box-shadow: 0 0 20px rgba(212, 175, 55, 0.8), 0 0 40px rgba(212, 175, 55, 0.4); z-index: 10;"></div>
 
     <!-- CONTATTI SECTION -->
     <section id="contatti" style="background: #0f0f0f; padding: 80px 64px;">
@@ -1731,13 +1731,13 @@
                     const divider = document.createElement('div');
                     divider.id = selector.id;
                     divider.style.cssText = `
-                        height: ${height}px;
+                        height: ${height + 1}px;
                         background: ${color};
                         width: 100vw;
                         margin-left: calc(-50vw + 50%);
-                        box-shadow: 0 0 ${15 * glowIntensity}px ${color};
+                        box-shadow: 0 0 ${20 * glowIntensity}px ${color}, 0 0 ${40 * glowIntensity}px rgba(212, 175, 55, 0.4);
                         display: block;
-                        z-index: 1;
+                        z-index: 10;
                     `;
 
                     // Inserisci dopo la sezione
