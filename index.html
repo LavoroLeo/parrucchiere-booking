@@ -1055,38 +1055,21 @@
         async function loadSocialLogosForSite() {
             const platforms = ['facebook', 'instagram', 'tiktok'];
 
-            // Carica da localStorage per primo (veloce)
-            platforms.forEach(platform => {
-                let logoData = localStorage.getItem('social_logo_' + platform);
-                if (logoData) {
-                    try {
-                        const logo = JSON.parse(logoData);
-                        const imgElement = document.getElementById(platform + 'LogoSite');
-                        if (imgElement && logo.data) {
-                            imgElement.src = logo.data;
-                            console.log('✅ Logo ' + platform + ' caricato da localStorage');
-                        }
-                    } catch (e) {
-                        console.warn('Errore parsing logo ' + platform + ':', e);
-                    }
-                }
-            });
-
-            // Carica anche da Firebase per assicurarsi di avere i dati più recenti
-            // Percorsi loghi fissi nella cartella /images/social/
+            // Percorsi loghi fissi nella cartella /images/social/ - CARICATE SEMPRE DA QUI (non da localStorage)
             const logoPaths = {
                 facebook: 'images/social/facebook.png',
                 instagram: 'images/social/instagram.png',
                 tiktok: 'images/social/tiktok.png'
             };
 
+            // Carica direttamente dalla cartella con timestamp per bypass cache
             platforms.forEach(platform => {
                 if (logoPaths[platform]) {
                     const imgElement = document.getElementById(platform + 'LogoSite');
                     if (imgElement) {
-                        // Aggiungi timestamp per forzare il caricamento della versione nuova (bypass cache)
-                        imgElement.src = logoPaths[platform] + '?v=' + Date.now();
-                        console.log('✅ Logo ' + platform + ' caricato dalla cartella (cache bypass)');
+                        // Timestamp casuale = versione nuova sempre caricata, mai cachata
+                        imgElement.src = logoPaths[platform] + '?v=' + Math.random().toString(36).substring(7);
+                        console.log('✅ Logo ' + platform + ' caricato da cartella (versione sempre nuova)');
                     }
                 }
             });
