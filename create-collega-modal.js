@@ -7,6 +7,17 @@ const CreateCollegaModal = {
     init() {
         console.log('👨‍💼 Initializing Create Collega Modal...');
 
+        // Controlla se siamo nel contesto parrucchiere (parrucchiere dashboard)
+        const loggedInEmail = localStorage.getItem('loggedInEmail');
+        const currentParrucchiereId = localStorage.getItem('currentParrucchiereId');
+        const isOwner = localStorage.getItem('isOwner') === 'true';
+
+        // Se non siamo loggati come parrucchiere O se non siamo il proprietario, NON caricare il modale
+        if (!loggedInEmail || !currentParrucchiereId || !isOwner) {
+            console.log('⚠️ Non in parrucchiere dashboard o non proprietario, Create Collega Modal non inizializzato');
+            return;
+        }
+
         // Crea il bottone "Crea Collega" (visibile solo al proprietario)
         setTimeout(() => {
             this.addCreateCollegaButton();
@@ -18,19 +29,12 @@ const CreateCollegaModal = {
         const dashboardSection = document.querySelector('[id*="dashboard"], [class*="dashboard"], .parrucchiere-section');
 
         if (!dashboardSection) {
-            console.log('⚠️ Dashboard non trovata, creando bottone globale');
+            console.log('⚠️ Dashboard non trovata, ma siamo in contesto parrucchiere');
             this.createGlobalButton();
             return;
         }
 
-        // Controlla se è il proprietario
-        const isOwner = localStorage.getItem('loggedInAsOwner') === 'true' ||
-            localStorage.getItem('isOwner') === 'true';
-
-        if (!isOwner) {
-            console.log('👤 Utente non è proprietario, bottone non visibile');
-            return;
-        }
+        // A questo punto sappiamo che siamo il proprietario (controllato in init())
 
         // Crea il bottone
         const btn = document.createElement('button');
