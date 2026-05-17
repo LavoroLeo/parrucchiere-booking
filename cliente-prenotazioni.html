@@ -1364,7 +1364,6 @@
                     <label for="clientSurname">Cognome</label>
                     <input type="text" id="clientSurname" required>
                 </div>
-                <div class="login-error-msg" id="loginErrorMsg" style="display: none;">Qualcosa non va</div>
                 <button type="submit" class="btn-login">🔓 Accedi</button>
             </form>
             <a href="index.html" class="back-btn" style="margin-top: 20px; display: inline-block;">← Torna alla Home</a>
@@ -1473,7 +1472,17 @@
 
             const clientName = document.getElementById('clientName').value.trim();
             const clientSurname = document.getElementById('clientSurname').value.trim();
-            const errorMsg = document.getElementById('loginErrorMsg');
+
+            // Crea o ottieni il messaggio di errore
+            let errorMsg = document.getElementById('loginErrorMsg');
+            if (!errorMsg) {
+                errorMsg = document.createElement('div');
+                errorMsg.id = 'loginErrorMsg';
+                errorMsg.className = 'login-error-msg';
+                errorMsg.style.display = 'none';
+                const form = document.getElementById('loginForm');
+                form.appendChild(errorMsg);
+            }
 
             console.log('🔐 INIZIO VERIFICA CODICI ACCESSO');
             console.log('Input Nome (20 cifre):', clientName);
