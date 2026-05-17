@@ -7,6 +7,13 @@ const CreateCollegaModal = {
     init() {
         console.log('👨‍💼 Initializing Create Collega Modal...');
 
+        // Controlla se siamo in una pagina di prenotazioni (cliente)
+        const currentPage = window.location.pathname.toLowerCase();
+        if (currentPage.includes('prenotazioni') || currentPage.includes('cliente')) {
+            console.log('⚠️ Siamo in una pagina di prenotazioni cliente, Create Collega Modal non inizializzato');
+            return;
+        }
+
         // Controlla se siamo nel contesto parrucchiere (parrucchiere dashboard)
         const loggedInEmail = localStorage.getItem('loggedInEmail');
         const currentParrucchiereId = localStorage.getItem('currentParrucchiereId');
