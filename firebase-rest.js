@@ -69,7 +69,8 @@ const LocalStorage = {
                 hoursStart: '09:00',
                 hoursEnd: '18:00',
                 satStart: '09:00',
-                satEnd: '14:00'
+                satEnd: '14:00',
+                logo: null  // Logo caricato dal parrucchiere (base64 o URL)
             },
             socialLinks: {
                 facebook: 'https://facebook.com/parrucchiererossi',
@@ -380,6 +381,37 @@ function getSecurityCodes() {
 }
 
 // ============================================
+// UTILITY FUNCTIONS - LOGO SALONE
+// ============================================
+
+function updateSaloneLogo(logoData) {
+    const data = LocalStorage.load();
+
+    if (!data.settings) {
+        data.settings = {};
+    }
+
+    data.settings.logo = logoData;  // Salva base64 o URL della immagine
+
+    // Salva in localStorage
+    LocalStorage.save(data);
+    console.log('💾 Logo salvato in localStorage');
+
+    // Sincronizza immediatamente con Firebase
+    (async () => {
+        const result = await FirebaseSync.save(data);
+        if (result) {
+            console.log('🔥 Logo sincronizzato con Firebase');
+        } else {
+            console.warn('⚠️ Errore sincronizzazione logo con Firebase');
+        }
+    })();
+
+    console.log('✅ Logo del salone aggiornato');
+    return data.settings.logo;
+}
+
+// ============================================
 // UTILITY FUNCTIONS - GENERALI
 // ============================================
 
@@ -408,6 +440,7 @@ window.addParrucchiere = addParrucchiere;
 window.updateParrucchiere = updateParrucchiere;
 window.updateSecurityCodes = updateSecurityCodes;
 window.getSecurityCodes = getSecurityCodes;
+window.updateSaloneLogo = updateSaloneLogo;
 
 console.log('%c✅ SISTEMA IBRIDO PRONTO', 'color: #00ff00; font-size: 14px; font-weight: bold');
 console.log('📊 localStorage (Primary) ✅ SEMPRE DISPONIBILE');

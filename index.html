@@ -1621,9 +1621,26 @@
                     if (logoPlaceholder && logo.data) {
                         logoPlaceholder.innerHTML = `<img src="${logo.data}" style="width: 100%; height: 100%; border-radius: 10px; object-fit: cover;" alt="Logo">`;
                     }
+                    // Aggiorna anche il favicon con il logo caricato
+                    updateFaviconFromLogo(logo.data);
                 }
             } catch (e) {
                 console.warn('Errore caricamento logo da localStorage:', e.message);
+            }
+        }
+
+        // Aggiorna il favicon con il logo caricato
+        function updateFaviconFromLogo(logoData) {
+            if (logoData) {
+                let favicon = document.querySelector('link[rel="icon"]');
+                if (!favicon) {
+                    favicon = document.createElement('link');
+                    favicon.rel = 'icon';
+                    document.head.appendChild(favicon);
+                }
+                favicon.href = logoData;
+                favicon.type = 'image/png';
+                console.log('✅ Favicon aggiornato con logo caricato');
             }
         }
 
@@ -1664,6 +1681,11 @@
                         if (data && data.settings && data.settings.name) {
                             document.title = data.settings.name;
                             localStorage.setItem('salone_name', data.settings.name);
+                        }
+                        // Carica logo da Firebase se disponibile
+                        if (data && data.settings && data.settings.logo) {
+                            updateFaviconFromLogo(data.settings.logo);
+                            console.log('✅ Favicon caricato da Firebase');
                         }
                     }
                 } catch (e) {
