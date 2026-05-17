@@ -89,7 +89,9 @@
       "Bash(vercel --prod --yes)",
       "Bash(curl -s \"https://parrucchieri-online-default-rtdb.europe-west1.firebasedatabase.app/businesses/demo-parrucchiere-rossi.json\")",
       "Bash(grep -n \"button\\\\|div.*+\" /c/Users/Utente/Desktop\\\\Artigiani/index.html | tail -50)",
-      "Bash(vercel deploy *)"
+      "Bash(vercel deploy *)",
+      "Bash(grep -rn \"Stai visualizzando\" public/)",
+      "Bash(ls public/)"
     ]
   }
 }
