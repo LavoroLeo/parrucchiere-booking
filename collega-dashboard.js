@@ -26,6 +26,13 @@ const CollegaDashboard = {
     },
 
     getParrucchiereId() {
+        // Se è il proprietario, non inizializzare il collega dashboard
+        const isOwner = localStorage.getItem('isOwner') === 'true';
+        if (isOwner) {
+            console.log('👑 È il proprietario, collega dashboard non attivo');
+            return null;
+        }
+
         // Prova 1: Leggere dal sessionStorage salvato dal login handler
         const currentParrucchiereId = localStorage.getItem('currentParrucchiereId');
         if (currentParrucchiereId) {
