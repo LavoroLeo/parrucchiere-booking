@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Parrucchiere</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0f0f0f;
+            color: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: linear-gradient(135deg, rgba(15,15,15,0.99), rgba(20,20,20,0.97));
+            border-bottom: 2px solid #d4af37;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            padding: 0 30px;
+            justify-content: space-between;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo {
+            width: 42px; height: 42px;
+            background: linear-gradient(135deg, #d4af37, #c0a080);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 16px; color: #000;
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #d4af37;
+            letter-spacing: 1px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .parrucchiere-name {
+            color: #f5f5f5;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .btn-logout {
+            padding: 8px 18px;
+            background: transparent;
+            border: 1px solid rgba(212,175,55,0.4);
+            color: #d4af37;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-logout:hover {
+            background: rgba(212,175,55,0.1);
+            border-color: #d4af37;
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .main {
+            margin-top: 70px;
+            padding: 30px;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-top: 100px;
+        }
+
+        /* ===== STATS ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 36px;
+        }
+
+        .stat-card {
+            background: #1a1a1a;
+            border: 1px solid rgba(212,175,55,0.2);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: #d4af37;
+            box-shadow: 0 4px 20px rgba(212,175,55,0.1);
+        }
+
+        .stat-icon { font-size: 32px; margin-bottom: 12px; }
+        .stat-value { font-size: 36px; font-weight: 800; color: #d4af37; margin-bottom: 6px; }
+        .stat-label { color: #999; font-size: 13px; font-weight: 600; letter-spacing: 0.5px; }
+
+        /* ===== SECTIONS ===== */
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #d4af37;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(212,175,55,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* ===== FILTER BAR ===== */
+        .filter-bar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-bar select, .filter-bar input {
+            padding: 10px 14px;
+            background: #1a1a1a;
+            border: 1px solid rgba(212,175,55,0.3);
+            color: #f5f5f5;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .filter-bar select:focus, .filter-bar input:focus {
+            border-color: #d4af37;
+        }
+
+        .filter-bar select option { background: #1a1a1a; }
+
+        /* ===== BOOKINGS TABLE ===== */
+        .table-container {
+            background: #1a1a1a;
+            border: 1px solid rgba(212,175,55,0.2);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 36px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead tr {
+            background: rgba(212,175,55,0.1);
+        }
+
+        thead th {
+            padding: 14px 18px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 700;
+            color: #d4af37;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(212,175,55,0.2);
+        }
+
+        tbody tr {
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: background 0.2s;
+        }
+
+        tbody tr:hover { background: rgba(212,175,55,0.05); }
+        tbody tr:last-child { border-bottom: none; }
+
+        tbody td {
+            padding: 14px 18px;
+            font-size: 14px;
+            color: #cccccc;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-oggi { background: rgba(212,175,55,0.2); color: #d4af37; }
+        .badge-futuro { background: rgba(46,204,113,0.15); color: #2ecc71; }
+        .badge-passato { background: rgba(255,255,255,0.08); color: #888; }
+
+        /* ===== EMPTY STATE ===== */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .empty-state .icon { font-size: 48px; margin-bottom: 16px; }
+        .empty-state p { font-size: 15px; }
+
+        /* ===== TAB NAV ===== */
+        .tab-nav {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 24px;
+            background: #1a1a1a;
+            border-radius: 10px;
+            padding: 6px;
+            width: fit-content;
+        }
+
+        .tab-btn {
+            padding: 10px 22px;
+            border: none;
+            border-radius: 8px;
+            background: transparent;
+            color: #888;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #d4af37, #c0a080);
+            color: #000;
+        }
+
+        .tab-btn:hover:not(.active) { color: #d4af37; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .main { padding: 80px 16px 20px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            table { font-size: 12px; }
+            thead th, tbody td { padding: 10px 12px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="header-left">
+            <div class="logo">PR</div>
+            <div class="header-title">DASHBOARD</div>
+        </div>
+        <div class="header-right">
+            <span class="parrucchiere-name" id="headerName">Caricamento...</span>
+            <a href="index.html" style="color:#d4af37; font-size:13px; text-decoration:none; font-weight:600;">🏠 Sito</a>
+            <button class="btn-logout" onclick="logout()">🔓 Esci</button>
+        </div>
+    </div>
+
+    <div class="main">
+        <!-- STATS -->
+        <div class="stats-grid" id="statsGrid">
+            <div class="stat-card">
+                <div class="stat-icon">📅</div>
+                <div class="stat-value" id="statOggi">0</div>
+                <div class="stat-label">OGGI</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📆</div>
+                <div class="stat-value" id="statSettimana">0</div>
+                <div class="stat-label">QUESTA SETTIMANA</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-value" id="statTotale">0</div>
+                <div class="stat-label">TOTALE</div>
+            </div>
+            <div class="stat-card" id="statOwnerCard" style="display:none;">
+                <div class="stat-icon">👥</div>
+                <div class="stat-value" id="statColleghi">0</div>
+                <div class="stat-label">COLLEGHI</div>
+            </div>
+        </div>
+
+        <!-- TAB NAV -->
+        <div class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab('oggi')">📅 Oggi</button>
+            <button class="tab-btn" onclick="switchTab('tutte')">📋 Tutte</button>
+            <button class="tab-btn" onclick="switchTab('future')">🔜 Future</button>
+        </div>
+
+        <!-- FILTER BAR (solo per owner) -->
+        <div class="filter-bar" id="filterBar" style="display:none;">
+            <label style="color:#888; font-size:13px;">Filtra per parrucchiere:</label>
+            <select id="filterParrucchiere" onchange="renderBookings()">
+                <option value="">Tutti</option>
+            </select>
+            <input type="text" id="filterSearch" placeholder="Cerca cliente..." oninput="renderBookings()" style="width:200px;">
+        </div>
+
+        <!-- BOOKINGS SECTION -->
+        <div class="section-title">
+            <span id="sectionTitleText">📅 Prenotazioni di Oggi</span>
+        </div>
+
+        <div class="table-container" id="bookingsContainer">
+            <div class="empty-state">
+                <div class="icon">⏳</div>
+                <p>Caricamento prenotazioni...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="firebase-rest.js"></script>
+    <script>
+        let allBookings = [];
+        let allParrucchieri = [];
+        let currentParrucchiereId = null;
+        let isOwner = false;
+        let currentTab = 'oggi';
+
+        // ===== INIT =====
+        async function init() {
+            // Controlla se loggato
+            const loggedInEmail = localStorage.getItem('loggedInEmail');
+            currentParrucchiereId = localStorage.getItem('currentParrucchiereId');
+            isOwner = localStorage.getItem('isOwner') === 'true';
+
+            if (!loggedInEmail || !currentParrucchiereId) {
+                window.location.href = '/parrucchiere-login.html';
+                return;
+            }
+
+            // Carica dati
+            const data = LocalStorage ? LocalStorage.load() : JSON.parse(localStorage.getItem('bookingDB') || '{}');
+            allBookings = data.bookings || [];
+            allParrucchieri = data.parrucchieri || [];
+
+            // Trova parrucchiere corrente
+            const me = allParrucchieri.find(p => p.id === currentParrucchiereId);
+            if (me) {
+                document.getElementById('headerName').textContent = `👤 ${me.name} ${me.surname}`;
+            }
+
+            // Se owner: mostra filtri e stats colleghi
+            if (isOwner) {
+                document.getElementById('filterBar').style.display = 'flex';
+                document.getElementById('statOwnerCard').style.display = 'block';
+                document.getElementById('statColleghi').textContent = allParrucchieri.length;
+
+                // Popola select parrucchieri
+                const sel = document.getElementById('filterParrucchiere');
+                allParrucchieri.forEach(p => {
+                    const opt = document.createElement('option');
+                    opt.value = p.id;
+                    opt.textContent = `${p.name} ${p.surname}`;
+                    sel.appendChild(opt);
+                });
+            }
+
+            updateStats();
+            renderBookings();
+        }
+
+        // ===== STATS =====
+        function updateStats() {
+            const today = new Date().toISOString().split('T')[0];
+            const startWeek = getStartOfWeek();
+            const endWeek = getEndOfWeek();
+
+            const myBookings = isOwner ? allBookings : allBookings.filter(b => b.parrucchiereId === currentParrucchiereId);
+
+            const oggi = myBookings.filter(b => b.date === today).length;
+            const settimana = myBookings.filter(b => b.date >= startWeek && b.date <= endWeek).length;
+
+            document.getElementById('statOggi').textContent = oggi;
+            document.getElementById('statSettimana').textContent = settimana;
+            document.getElementById('statTotale').textContent = myBookings.length;
+        }
+
+        // ===== SWITCH TAB =====
+        function switchTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const titles = { oggi: '📅 Prenotazioni di Oggi', tutte: '📋 Tutte le Prenotazioni', future: '🔜 Prenotazioni Future' };
+            document.getElementById('sectionTitleText').textContent = titles[tab];
+            renderBookings();
+        }
+
+        // ===== RENDER BOOKINGS =====
+        function renderBookings() {
+            const today = new Date().toISOString().split('T')[0];
+            const filterP = document.getElementById('filterParrucchiere')?.value || '';
+            const search = document.getElementById('filterSearch')?.value?.toLowerCase() || '';
+
+            // Filtra per parrucchiere
+            let bookings = isOwner
+                ? (filterP ? allBookings.filter(b => b.parrucchiereId === filterP) : allBookings)
+                : allBookings.filter(b => b.parrucchiereId === currentParrucchiereId);
+
+            // Filtra per tab
+            if (currentTab === 'oggi') bookings = bookings.filter(b => b.date === today);
+            if (currentTab === 'future') bookings = bookings.filter(b => b.date > today);
+
+            // Filtra per ricerca
+            if (search) {
+                bookings = bookings.filter(b =>
+                    (b.clientName || '').toLowerCase().includes(search) ||
+                    (b.service || '').toLowerCase().includes(search)
+                );
+            }
+
+            // Ordina per data e ora
+            bookings.sort((a, b) => {
+                if (a.date !== b.date) return a.date.localeCompare(b.date);
+                return (a.time || '').localeCompare(b.time || '');
+            });
+
+            const container = document.getElementById('bookingsContainer');
+
+            if (bookings.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">📭</div>
+                        <p>Nessuna prenotazione trovata</p>
+                    </div>`;
+                return;
+            }
+
+            let html = `<table>
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Ora</th>
+                        <th>Cliente</th>
+                        <th>Servizio</th>
+                        <th>Tel</th>
+                        ${isOwner ? '<th>Parrucchiere</th>' : ''}
+                        <th>Stato</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+
+            bookings.forEach(b => {
+                const dateFormatted = formatDate(b.date);
+                const stato = getStato(b.date, today);
+                const parrName = isOwner ? (allParrucchieri.find(p => p.id === b.parrucchiereId)?.name || '—') : '';
+
+                html += `<tr>
+                    <td style="font-weight:600; color:#f5f5f5;">${dateFormatted}</td>
+                    <td style="color:#d4af37; font-weight:700;">${b.time || '—'}</td>
+                    <td style="color:#f5f5f5;">${b.clientName || b.name || '—'}</td>
+                    <td>${b.service || b.serviceName || '—'}</td>
+                    <td style="color:#aaa;">${b.clientPhone || b.phone || '—'}</td>
+                    ${isOwner ? `<td style="color:#d4af37;">${parrName}</td>` : ''}
+                    <td><span class="badge ${stato.cls}">${stato.label}</span></td>
+                </tr>`;
+            });
+
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        // ===== HELPERS =====
+        function getStato(date, today) {
+            if (date === today) return { cls: 'badge-oggi', label: 'OGGI' };
+            if (date > today) return { cls: 'badge-futuro', label: 'FUTURO' };
+            return { cls: 'badge-passato', label: 'PASSATO' };
+        }
+
+        function formatDate(dateStr) {
+            if (!dateStr) return '—';
+            const [y, m, d] = dateStr.split('-');
+            return `${d}/${m}/${y}`;
+        }
+
+        function getStartOfWeek() {
+            const d = new Date();
+            const day = d.getDay();
+            const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+            d.setDate(diff);
+            return d.toISOString().split('T')[0];
+        }
+
+        function getEndOfWeek() {
+            const d = new Date();
+            const day = d.getDay();
+            const diff = d.getDate() - day + (day === 0 ? 0 : 7);
+            d.setDate(diff);
+            return d.toISOString().split('T')[0];
+        }
+
+        function logout() {
+            localStorage.removeItem('loggedInEmail');
+            localStorage.removeItem('currentParrucchiereId');
+            localStorage.removeItem('isOwner');
+            localStorage.removeItem('parrucchiereSession');
+            window.location.href = '/index.html';
+        }
+
+        // Avvia
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    </script>
+</body>
+</html>

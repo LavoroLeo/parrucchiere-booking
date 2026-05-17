@@ -157,14 +157,9 @@ const ParrucchiereLoginHandler = {
             isOwner: parrucchiere.isOwner
         });
 
-        // Reindirizza al dashboard
+        // Reindirizza al dashboard parrucchiere
         setTimeout(() => {
-            if (parrucchiere.isOwner) {
-                window.location.href = '/index.html';
-            } else {
-                // Collega va al dashboard con filtro automatico
-                window.location.href = '/index.html?parrucchiereId=' + parrucchiere.id;
-            }
+            window.location.href = '/parrucchiere-dashboard.html';
         }, 500);
     },
 
