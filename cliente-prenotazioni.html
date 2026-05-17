@@ -1479,7 +1479,8 @@
                 errorMsg.className = 'login-error-msg';
                 errorMsg.style.display = 'none';
                 const form = document.getElementById('loginForm');
-                form.appendChild(errorMsg);
+                const submitBtn = form.querySelector('button[type="submit"]');
+                form.insertBefore(errorMsg, submitBtn);
             }
 
             console.log('🔐 INIZIO VERIFICA CODICI ACCESSO');
