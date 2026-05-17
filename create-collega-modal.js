@@ -49,26 +49,27 @@ const CreateCollegaModal = {
         btn.className = 'btn-crea-collega';
         btn.innerHTML = '➕ Crea Collega Parrucchiere';
         btn.style.cssText = `
-            padding: 12px 24px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            padding: 14px 32px;
+            background: linear-gradient(135deg, #d4af37, #ffd700);
+            color: #000;
             border: none;
             border-radius: 8px;
-            font-size: 14px;
-            font-weight: bold;
+            font-size: 15px;
+            font-weight: 700;
             cursor: pointer;
             margin: 20px 0;
             transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.25);
         `;
 
         btn.addEventListener('mouseover', () => {
-            btn.style.transform = 'translateY(-2px)';
-            btn.style.boxShadow = '0 4px 12px rgba(102, 126, 234, 0.4)';
+            btn.style.transform = 'translateY(-3px) scale(1.02)';
+            btn.style.boxShadow = '0 12px 35px rgba(212, 175, 55, 0.4)';
         });
 
         btn.addEventListener('mouseout', () => {
-            btn.style.transform = 'translateY(0)';
-            btn.style.boxShadow = 'none';
+            btn.style.transform = 'translateY(0) scale(1)';
+            btn.style.boxShadow = '0 4px 15px rgba(212, 175, 55, 0.25)';
         });
 
         btn.addEventListener('click', () => this.openModal());
@@ -101,21 +102,24 @@ const CreateCollegaModal = {
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: linear-gradient(135deg, #d4af37, #ffd700);
+            color: #000;
             border: none;
-            font-size: 24px;
+            font-size: 28px;
+            font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            transition: all 0.2s;
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+            transition: all 0.3s;
         `;
 
         buttonEl.addEventListener('click', () => this.openModal());
         buttonEl.addEventListener('mouseover', () => {
             buttonEl.style.transform = 'scale(1.1)';
+            buttonEl.style.boxShadow = '0 12px 35px rgba(212, 175, 55, 0.6)';
         });
         buttonEl.addEventListener('mouseout', () => {
             buttonEl.style.transform = 'scale(1)';
+            buttonEl.style.boxShadow = '0 8px 25px rgba(212, 175, 55, 0.4)';
         });
 
         btn.appendChild(buttonEl);
@@ -249,14 +253,16 @@ const CreateCollegaModal = {
                 ">Annulla</button>
                 <button onclick="CreateCollegaModal.saveCollega()" style="
                     flex: 1;
-                    padding: 12px;
-                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                    color: white;
+                    padding: 14px;
+                    background: linear-gradient(135deg, #d4af37, #ffd700);
+                    color: #000;
                     border: none;
                     border-radius: 6px;
                     cursor: pointer;
-                    font-weight: bold;
-                ">Crea Collega</button>
+                    font-weight: 700;
+                    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.25);
+                    transition: all 0.3s;
+                ">✅ Crea Collega</button>
             </div>
 
             <style>
