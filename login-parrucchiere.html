@@ -232,11 +232,24 @@
 
         <div class="back-link">
             <a href="index.html">← Torna alla Home</a>
+            <span style="margin: 0 15px; color: #666;">|</span>
+            <a href="#" onclick="resetCache(); return false;" style="color: #f4d35e; font-size: 12px;">🔄 Resetta Cache</a>
         </div>
     </div>
 
     <script src="firebase-rest.js"></script>
     <script>
+        // Funzione per resettare la cache
+        function resetCache() {
+            if (confirm('🔄 Resetta cache e localStorage?\n\nQuesto cancellerà tutti i dati salvati.')) {
+                localStorage.clear();
+                sessionStorage.clear();
+                console.log('✅ Cache e localStorage cancellati');
+                alert('✅ Cache cancellata! Ricarica la pagina.');
+                location.reload();
+            }
+        }
+
         // Inizializza i dati al caricamento della pagina
         document.addEventListener('DOMContentLoaded', function() {
             console.log('📄 Pagina login caricata');
@@ -294,7 +307,12 @@
             const email = emailInput.toLowerCase();
             const password = passwordInput;
 
-            console.log('🔐 Tentativo login con:', { email, password });
+            console.log('═══════════════════════════════════════');
+            console.log('🔐 TENTATIVO LOGIN');
+            console.log('═══════════════════════════════════════');
+            console.log('Email inserita:', email);
+            console.log('Password inserita:', password);
+            console.log('═══════════════════════════════════════');
 
             try {
                 // Carica i dati
