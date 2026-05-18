@@ -595,6 +595,43 @@
     </style>
 </head>
 <body>
+    <!-- LOGIN SCREEN -->
+    <div id="loginScreen" style="display: flex; align-items: center; justify-content: center; min-height: 100vh; background: linear-gradient(135deg, #0f0f0f, #1a1a1a); padding: 20px;">
+        <div style="background: linear-gradient(135deg, #1a1a1a, #252525); padding: 60px 40px; border-radius: 16px; border: 1px solid rgba(212, 175, 55, 0.2); box-shadow: 0 20px 60px rgba(212, 175, 55, 0.15); max-width: 450px; width: 100%;">
+            <div style="text-align: center; margin-bottom: 50px;">
+                <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #d4af37, #c0a080); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 32px; color: #000; margin: 0 auto 25px; box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);">PR</div>
+                <h1 style="font-family: 'Playfair Display', serif; font-size: 36px; color: #d4af37; margin-bottom: 8px;">Dashboard</h1>
+                <p style="color: #cccccc; font-size: 14px;">Parrucchiere Rossi</p>
+            </div>
+
+            <div id="errorMsg" style="display: none; background: rgba(231, 76, 60, 0.15); color: #e74c3c; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #e74c3c; font-size: 14px;"></div>
+
+            <form id="loginForm" onsubmit="handleLoginInFile(event)" style="width: 100%;">
+                <div style="margin-bottom: 25px;">
+                    <label style="display: block; color: #f5f5f5; font-weight: 600; margin-bottom: 10px; font-size: 14px;">📧 Email</label>
+                    <input type="email" id="email" placeholder="Es: admin@salone.it" required autofocus style="width: 100%; padding: 14px 16px; border: 1px solid #333; background: #0f0f0f; color: #f5f5f5; border-radius: 10px; font-family: inherit; font-size: 15px; transition: all 0.3s;">
+                </div>
+
+                <div style="margin-bottom: 25px;">
+                    <label style="display: block; color: #f5f5f5; font-weight: 600; margin-bottom: 10px; font-size: 14px;">🔐 Password</label>
+                    <input type="password" id="password" placeholder="Inserisci la password" required style="width: 100%; padding: 14px 16px; border: 1px solid #333; background: #0f0f0f; color: #f5f5f5; border-radius: 10px; font-family: inherit; font-size: 15px; transition: all 0.3s;">
+                </div>
+
+                <button type="submit" style="width: 100%; padding: 14px; background: linear-gradient(135deg, #d4af37, #c0a080); color: #000; border: none; border-radius: 10px; font-weight: 700; font-size: 16px; cursor: pointer; transition: all 0.3s; margin-bottom: 20px;">🔓 Accedi al Dashboard</button>
+            </form>
+
+            <div style="margin-top: 30px; padding-top: 30px; border-top: 1px solid rgba(212, 175, 55, 0.2); text-align: center;">
+                <p style="color: #d4af37; font-weight: 600; margin-bottom: 12px; font-size: 13px;">📝 Demo Credentials:</p>
+                <div style="background: #0f0f0f; padding: 12px; border-radius: 8px; border-left: 3px solid #d4af37; margin-bottom: 12px;">
+                    <p style="color: #ccc; font-size: 12px; margin-bottom: 2px;"><strong>Email:</strong> admin@salone.it</p>
+                    <p style="color: #ccc; font-size: 12px;"><strong>Password:</strong> DemoPass123!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div id="dashboardContainer" style="display: none;">
     <div class="container-dashboard">
         <!-- SIDEBAR -->
         <div class="sidebar">
@@ -1568,6 +1605,107 @@
                 }
             });
         });
+
+        // ========================================
+        // LOGIN HANDLER FOR THIS FILE
+        // ========================================
+
+        function handleLoginInFile(event) {
+            event.preventDefault();
+
+            const emailInput = document.getElementById('email').value.trim();
+            const passwordInput = document.getElementById('password').value.trim();
+            const errorMsg = document.getElementById('errorMsg');
+
+            if (!emailInput || !passwordInput) {
+                errorMsg.textContent = '❌ Inserisci email e password';
+                errorMsg.style.display = 'block';
+                setTimeout(() => {
+                    errorMsg.style.display = 'none';
+                }, 3000);
+                return;
+            }
+
+            const email = emailInput.toLowerCase();
+            const password = passwordInput;
+
+            try {
+                let data = null;
+                if (typeof LocalStorage !== 'undefined' && LocalStorage.load) {
+                    data = LocalStorage.load();
+                }
+                if (!data) {
+                    const stored = localStorage.getItem('bookingDB');
+                    if (stored) {
+                        data = JSON.parse(stored);
+                    }
+                }
+                if (!data || !data.parrucchieri) {
+                    if (typeof LocalStorage !== 'undefined' && LocalStorage.getDefaultData) {
+                        data = LocalStorage.getDefaultData();
+                    } else {
+                        throw new Error('Sistema non inizializzato');
+                    }
+                }
+
+                const parrucchiere = data.parrucchieri.find(p =>
+                    p.email.toLowerCase() === email && p.password === password
+                );
+
+                if (parrucchiere) {
+                    console.log('✅ LOGIN RIUSCITO:', parrucchiere.name);
+
+                    // Salva sessione
+                    localStorage.setItem('loggedInEmail', parrucchiere.email);
+                    localStorage.setItem('currentParrucchiereId', parrucchiere.id);
+                    localStorage.setItem('isOwner', parrucchiere.isOwner ? 'true' : 'false');
+                    localStorage.setItem('parrucchiereSession', JSON.stringify({
+                        email: parrucchiere.email,
+                        parrucchiereId: parrucchiere.id,
+                        name: parrucchiere.name,
+                        surname: parrucchiere.surname,
+                        isOwner: parrucchiere.isOwner,
+                        loginTime: new Date().toISOString()
+                    }));
+
+                    // Nascondi login, mostra dashboard
+                    document.getElementById('loginScreen').style.display = 'none';
+                    document.getElementById('dashboardContainer').style.display = 'block';
+
+                    // Carica dati dashboard
+                    loadDashboardData();
+                    generateCalendar();
+                    initializeSidebar();
+                } else {
+                    errorMsg.textContent = '❌ Email o password non corretti';
+                    errorMsg.style.display = 'block';
+                    document.getElementById('email').value = '';
+                    document.getElementById('password').value = '';
+                    setTimeout(() => {
+                        errorMsg.style.display = 'none';
+                    }, 5000);
+                }
+            } catch (error) {
+                errorMsg.textContent = '❌ Errore: ' + error.message;
+                errorMsg.style.display = 'block';
+            }
+        }
+
+        // Mostra login o dashboard al caricamento
+        window.addEventListener('load', function() {
+            const loggedInEmail = localStorage.getItem('loggedInEmail');
+            if (loggedInEmail) {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('dashboardContainer').style.display = 'block';
+                loadDashboardData();
+                generateCalendar();
+                initializeSidebar();
+            } else {
+                document.getElementById('loginScreen').style.display = 'flex';
+                document.getElementById('dashboardContainer').style.display = 'none';
+            }
+        });
     </script>
+    </div> <!-- Chiude dashboardContainer -->
 </body>
 </html>
