@@ -236,7 +236,52 @@
     </div>
 
     <script src="firebase-rest.js"></script>
-    <!-- Firebase REST API - Soluzione Definitiva -->
-    <script src="firebase-rest.js"></script>
+    <script>
+        function handleLogin(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const errorMsg = document.getElementById('errorMsg');
+
+            let data = LocalStorage ? LocalStorage.load() : JSON.parse(localStorage.getItem('bookingDB') || '{}');
+
+            if (!data.parrucchieri || data.parrucchieri.length === 0) {
+                if (LocalStorage && LocalStorage.getDefaultData) {
+                    data = LocalStorage.getDefaultData();
+                } else {
+                    errorMsg.textContent = '❌ Errore: Nessun parrucchiere configurato';
+                    errorMsg.classList.add('show');
+                    return;
+                }
+            }
+
+            const parrucchiere = data.parrucchieri.find(p => p.email === email && p.password === password);
+
+            if (parrucchiere) {
+                console.log('✅ Login riuscito per:', parrucchiere.name);
+                localStorage.setItem('loggedInEmail', email);
+                localStorage.setItem('currentParrucchiereId', parrucchiere.id);
+                localStorage.setItem('isOwner', parrucchiere.isOwner ? 'true' : 'false');
+                localStorage.setItem('parrucchiereSession', JSON.stringify({
+                    email: email,
+                    parrucchiereId: parrucchiere.id,
+                    name: parrucchiere.name,
+                    surname: parrucchiere.surname,
+                    isOwner: parrucchiere.isOwner,
+                    loginTime: new Date().toISOString()
+                }));
+                window.location.href = '/parrucchiere-login.html';
+            } else {
+                errorMsg.textContent = '❌ Email o password non corretti. Riprova.';
+                errorMsg.classList.add('show');
+                document.getElementById('email').value = '';
+                document.getElementById('password').value = '';
+                setTimeout(() => {
+                    errorMsg.classList.remove('show');
+                }, 4000);
+            }
+        }
+    </script>
 </body>
 </html>
