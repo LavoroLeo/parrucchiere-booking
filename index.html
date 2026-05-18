@@ -1477,6 +1477,9 @@
                     const footerTitle = document.getElementById('footerSalonName');
                     if (footerTitle) footerTitle.textContent = salonName;
 
+                    const footerDesc = document.getElementById('footerSalonDesc');
+                    if (footerDesc && settings.description) footerDesc.textContent = settings.description;
+
                     const footerCopy = document.querySelector('.footer-bottom p');
                     if (footerCopy) footerCopy.textContent = '© 2026 ' + salonName + '. Tutti i diritti riservati.';
 
