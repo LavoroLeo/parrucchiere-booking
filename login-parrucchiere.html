@@ -240,46 +240,85 @@
         function handleLogin(event) {
             event.preventDefault();
 
-            const email = document.getElementById('email').value.trim();
+            const email = document.getElementById('email').value.trim().toLowerCase();
             const password = document.getElementById('password').value.trim();
             const errorMsg = document.getElementById('errorMsg');
 
-            let data = LocalStorage ? LocalStorage.load() : JSON.parse(localStorage.getItem('bookingDB') || '{}');
+            console.log('🔐 Tentativo login:', { email, password });
 
-            if (!data.parrucchieri || data.parrucchieri.length === 0) {
-                if (LocalStorage && LocalStorage.getDefaultData) {
-                    data = LocalStorage.getDefaultData();
-                } else {
-                    errorMsg.textContent = '❌ Errore: Nessun parrucchiere configurato';
-                    errorMsg.classList.add('show');
-                    return;
+            try {
+                // Prova a caricure i dati con LocalStorage (definito in firebase-rest.js)
+                let data = null;
+
+                // Metodo 1: Usa LocalStorage (firebase-rest.js)
+                if (typeof LocalStorage !== 'undefined' && LocalStorage.load) {
+                    data = LocalStorage.load();
+                    console.log('📦 Dati caricati da LocalStorage:', data);
                 }
-            }
 
-            const parrucchiere = data.parrucchieri.find(p => p.email === email && p.password === password);
+                // Metodo 2: Se non disponibile, carica da localStorage diretto
+                if (!data) {
+                    const stored = localStorage.getItem('bookingDB');
+                    if (stored) {
+                        data = JSON.parse(stored);
+                        console.log('📦 Dati caricati da localStorage diretto:', data);
+                    }
+                }
 
-            if (parrucchiere) {
-                console.log('✅ Login riuscito per:', parrucchiere.name);
-                localStorage.setItem('loggedInEmail', email);
-                localStorage.setItem('currentParrucchiereId', parrucchiere.id);
-                localStorage.setItem('isOwner', parrucchiere.isOwner ? 'true' : 'false');
-                localStorage.setItem('parrucchiereSession', JSON.stringify({
-                    email: email,
-                    parrucchiereId: parrucchiere.id,
-                    name: parrucchiere.name,
-                    surname: parrucchiere.surname,
-                    isOwner: parrucchiere.isOwner,
-                    loginTime: new Date().toISOString()
-                }));
-                window.location.href = '/parrucchiere-login.html';
-            } else {
-                errorMsg.textContent = '❌ Email o password non corretti. Riprova.';
+                // Metodo 3: Se ancora vuoto, usa i dati di default
+                if (!data || !data.parrucchieri) {
+                    if (typeof LocalStorage !== 'undefined' && LocalStorage.getDefaultData) {
+                        data = LocalStorage.getDefaultData();
+                        console.log('📦 Usando dati di default:', data);
+                    } else {
+                        throw new Error('Nessun dato disponibile');
+                    }
+                }
+
+                console.log('🔍 Parrucchieri disponibili:', data.parrucchieri ? data.parrucchieri.map(p => p.email) : 'NESSUNO');
+
+                // Cerca il parrucchiere
+                const parrucchiere = data.parrucchieri.find(p =>
+                    p.email.toLowerCase() === email && p.password === password
+                );
+
+                console.log('🔍 Parrucchiere trovato?', parrucchiere ? 'SÌ' : 'NO');
+
+                if (parrucchiere) {
+                    console.log('✅ Login riuscito per:', parrucchiere.name);
+
+                    // Salva i dati della sessione
+                    localStorage.setItem('loggedInEmail', email);
+                    localStorage.setItem('currentParrucchiereId', parrucchiere.id);
+                    localStorage.setItem('isOwner', parrucchiere.isOwner ? 'true' : 'false');
+                    localStorage.setItem('parrucchiereSession', JSON.stringify({
+                        email: parrucchiere.email,
+                        parrucchiereId: parrucchiere.id,
+                        name: parrucchiere.name,
+                        surname: parrucchiere.surname,
+                        isOwner: parrucchiere.isOwner,
+                        loginTime: new Date().toISOString()
+                    }));
+
+                    console.log('💾 Sessione salvata, redirect a parrucchiere-login.html');
+
+                    // Reindirizza al dashboard
+                    setTimeout(() => {
+                        window.location.href = '/parrucchiere-login.html';
+                    }, 500);
+                } else {
+                    errorMsg.textContent = '❌ Email o password non corretti. Riprova.';
+                    errorMsg.classList.add('show');
+                    document.getElementById('email').value = '';
+                    document.getElementById('password').value = '';
+                    setTimeout(() => {
+                        errorMsg.classList.remove('show');
+                    }, 4000);
+                }
+            } catch (error) {
+                console.error('❌ Errore login:', error);
+                errorMsg.textContent = '❌ Errore: ' + error.message;
                 errorMsg.classList.add('show');
-                document.getElementById('email').value = '';
-                document.getElementById('password').value = '';
-                setTimeout(() => {
-                    errorMsg.classList.remove('show');
-                }, 4000);
             }
         }
     </script>
