@@ -370,10 +370,13 @@
                     errorMsg.style.color = '#14c579';
                     errorMsg.classList.add('show');
 
-                    // Reindirizza al dashboard
+                    console.log('🔄 Reindirizzamento a /parrucchiere-login.html...');
+
+                    // Reindirizza al dashboard (aumentato timeout per assicurare localStorage)
                     setTimeout(() => {
+                        console.log('✅ Redirect eseguito');
                         window.location.href = '/parrucchiere-login.html';
-                    }, 800);
+                    }, 1500);
                 } else {
                     // Errore di credenziali
                     console.log('❌ CREDENZIALI NON VALIDE');
