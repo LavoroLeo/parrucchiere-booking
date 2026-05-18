@@ -1,0 +1,164 @@
+PARRUCCHIERE DASHBOARD BUTTON FUNCTIONALITY TEST REPORT
+======================================================
+
+TEST DATE: 2026-05-18
+DASHBOARD FILES TESTED:
+- parrucchiere-login.html (main dashboard)
+- parrucchiere-dashboard.html (alternative dashboard)
+
+SIDEBAR MENU ITEMS:
+===================
+
+1. Dashboard (📊)
+   - Handler: onclick="showSection('dashboard')"
+   - Status: BROKEN - showSection() function NOT DEFINED
+   - Impact: Clicking this button will cause JavaScript error
+
+2. Calendario (📅)
+   - Handler: onclick="showSection('calendario')"
+   - Status: BROKEN - showSection() function NOT DEFINED
+   - Impact: Clicking this button will cause JavaScript error
+
+3. Prenotazioni (📋)
+   - Handler: onclick="showSection('prenotazioni')"
+   - Status: BROKEN - showSection() function NOT DEFINED
+   - Impact: Clicking this button will cause JavaScript error
+
+4. Clienti (👥)
+   - Handler: onclick="showSection('clienti')"
+   - Status: BROKEN - showSection() function NOT DEFINED
+   - Impact: Clicking this button will cause JavaScript error
+
+5. Servizi (✂️)
+   - Handler: onclick="showSection('servizi')"
+   - Status: BROKEN - showSection() function NOT DEFINED
+   - Impact: Clicking this button will cause JavaScript error
+
+6. Recensioni (⭐)
+   - Handler: onclick="showSection('recensioni')"
+   - Status: BROKEN - showSection() function NOT DEFINED
+   - Impact: Clicking this button will cause JavaScript error
+
+7. Impostazioni (⚙️)
+   - Handler: onclick="showSection('impostazioni')"
+   - Status: BROKEN - showSection() function NOT DEFINED
+   - Impact: Clicking this button will cause JavaScript error
+
+LOGOUT BUTTON:
+==============
+- Location: Header right (onclick="logout()") and Sidebar (onclick="logout()")
+- Status: BROKEN - logout() function NOT DEFINED in parrucchiere-login.html
+- Impact: Logout functionality is non-functional
+- Note: parrucchiere-dashboard.html HAS logout() defined (line 513)
+
+OTHER BUTTONS IN parrucchiere-login.html:
+==========================================
+- "← Precedente" (prevMonth): BROKEN - prevMonth() not defined
+- "Successivo →" (nextMonth): BROKEN - nextMonth() not defined
+- "🔒 Blocca Orario": BROKEN - mostraFormBlocca() not defined
+- "🔓 Sblocca Orario": BROKEN - mostraFormSblocca() not defined
+- "✅ Conferma Blocco": BROKEN - salvaOrariBlocco() not defined
+- "💾 Salva Dati Salone": BROKEN - salvaSettingsSalone() not defined
+- "💾 Salva Link Social": BROKEN - saveSocialLinks() not defined
+- "🔑 Cambia Password": BROKEN - openPasswordModal() not defined
+- "📧 Cambia Email": BROKEN - openEmailModal() not defined
+- "💾 Salva Servizio": BROKEN - saveService() not defined
+- "➕ Aggiungi Servizio": BROKEN - openServiceModal() not defined
+
+BUTTONS IN parrucchiere-dashboard.html:
+========================================
+- Tab buttons (Oggi, Tutte, Future): WORKING - switchTab() IS DEFINED (line 400)
+- Logout button: WORKING - logout() IS DEFINED (line 513)
+- Status: FUNCTIONAL
+
+CRITICAL FINDINGS:
+==================
+
+PRIMARY ISSUE:
+The parrucchiere-login.html file is mostly non-functional. It has:
+- All HTML structure and styling in place
+- All onclick handlers defined in HTML
+- BUT missing ALL JavaScript function implementations
+
+The file loads these external scripts (via firebase-rest.js):
+- notification-handler.js
+- parrucchieri-selector.js
+- booking-interceptor.js
+- dashboard-columns.js
+- create-collega-modal.js
+- collega-dashboard.js
+
+However, none of these scripts define the required functions.
+
+SECONDARY NOTE:
+The parrucchiere-dashboard.html appears more complete with at least:
+- logout() function implemented
+- switchTab() function for filtering bookings
+
+MISSING FUNCTIONS THAT NEED IMPLEMENTATION:
+===========================================
+
+Navigation:
+- showSection(sectionId) - Shows/hides sections based on menu selection
+
+Calendar:
+- prevMonth() - Navigate to previous month
+- nextMonth() - Navigate to next month
+- mostraFormBlocca() - Show time blocking form
+- nascondiFormBlocca() - Hide time blocking form
+- salvaOrariBlocco() - Save blocked time slots
+- mostraFormSblocca() - Show time unblocking form
+- nascondiFormSblocca() - Hide time unblocking form
+- salvaOrarisbloco() - Save unblocked time slots
+
+Services:
+- openServiceModal() - Open service creation modal
+- closeServiceModal() - Close service modal
+- saveService() - Save new service
+
+Settings:
+- salvaSettingsSalone() - Save salon settings
+- saveSocialLinks() - Save social media links
+- uploadLogo() - Upload salon logo
+
+Account:
+- logout() - Logout and redirect
+- openPasswordModal() - Open password change modal
+- closePasswordModal() - Close password modal
+- saveNewPassword() - Save new password
+- openEmailModal() - Open email change modal
+- closeEmailModal() - Close email modal
+- saveNewEmail() - Save new email
+
+RECOMMENDATIONS:
+================
+
+1. IMMEDIATE: Implement all missing functions in parrucchiere-login.html or extract them from another working implementation
+
+2. CONSOLIDATE: Consider unifying the dashboard implementation
+   - parrucchiere-login.html (comprehensive structure but missing functions)
+   - parrucchiere-dashboard.html (partial but working)
+
+3. INTEGRATION: Determine the correct relationship between these two files
+
+4. TESTING: Once functions are implemented, systematically test each button
+
+FILE PATHS:
+===========
+Main Dashboard (Non-functional):
+/C:\Users\Utente\Desktop\Artigiani\parrucchiere-login.html
+
+Alternative Dashboard (Partial functionality):
+/C:\Users\Utente\Desktop\Artigiani\parrucchiere-dashboard.html
+
+External Scripts to Review:
+/C:\Users\Utente\Desktop\Artigiani\firebase-rest.js
+/C:\Users\Utente\Desktop\Artigiani\notification-handler.js
+/C:\Users\Utente\Desktop\Artigiani\parrucchieri-selector.js
+/C:\Users\Utente\Desktop\Artigiani\booking-interceptor.js
+/C:\Users\Utente\Desktop\Artigiani\dashboard-columns.js
+/C:\Users\Utente\Desktop\Artigiani\create-collega-modal.js
+/C:\Users\Utente\Desktop\Artigiani\collega-dashboard.js
+
+TEST RESULT: FAILED - Dashboard Navigation is NOT functional
+Only partial functionality available in alternative parrucchiere-dashboard.html

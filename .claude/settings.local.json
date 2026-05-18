@@ -100,7 +100,10 @@
       "Bash(python -c \"import sys, json; print\\(json.dumps\\(json.load\\(sys.stdin\\), indent=2\\)\\)\")",
       "Bash(npx vercel *)",
       "Bash(node -e ' *)",
-      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('Nome salone:', d.get\\('name'\\)\\); print\\('Tutti i campi:', list\\(d.keys\\(\\)\\)\\)\")"
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('Nome salone:', d.get\\('name'\\)\\); print\\('Tutti i campi:', list\\(d.keys\\(\\)\\)\\)\")",
+      "Bash(findstr /i \"listen\")",
+      "Bash(findstr \"80\\\\|8000\\\\|8080\\\\|3000\\\\|5000\")",
+      "Bash(python -m http.server 8000 > /tmp/server.log 2>&1 & *)"
     ]
   }
 }

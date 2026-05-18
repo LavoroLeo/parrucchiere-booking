@@ -240,19 +240,38 @@
         // Inizializza i dati al caricamento della pagina
         document.addEventListener('DOMContentLoaded', function() {
             console.log('📄 Pagina login caricata');
+            console.log('⏳ Attesa 500ms per firebase-rest.js...');
 
-            // Assicura che i dati di default siano nel localStorage
-            if (!localStorage.getItem('bookingDB')) {
-                if (typeof LocalStorage !== 'undefined' && LocalStorage.getDefaultData) {
-                    const defaultData = LocalStorage.getDefaultData();
-                    localStorage.setItem('bookingDB', JSON.stringify(defaultData));
-                    console.log('✅ Dati di default salvati in localStorage');
-                    console.log('📝 Credenziali disponibili:', defaultData.parrucchieri.map(p => `${p.email} / ${p.password}`));
+            // Aspetta che firebase-rest.js sia caricato
+            setTimeout(function() {
+                console.log('🔍 Checking LocalStorage availability...');
+                console.log('typeof LocalStorage:', typeof LocalStorage);
+
+                // Assicura che i dati di default siano nel localStorage
+                if (!localStorage.getItem('bookingDB')) {
+                    console.log('📦 localStorage vuoto, carico i dati di default...');
+                    if (typeof LocalStorage !== 'undefined' && LocalStorage.getDefaultData) {
+                        try {
+                            const defaultData = LocalStorage.getDefaultData();
+                            localStorage.setItem('bookingDB', JSON.stringify(defaultData));
+                            console.log('✅ Dati di default salvati in localStorage');
+                            console.log('📝 Credenziali disponibili:', defaultData.parrucchieri.map(p => `${p.email} / ${p.password}`));
+                        } catch (error) {
+                            console.error('❌ Errore salvataggio dati:', error);
+                        }
+                    } else {
+                        console.error('❌ LocalStorage non disponibile');
+                    }
+                } else {
+                    console.log('✅ Dati già presenti in localStorage');
+                    try {
+                        const data = JSON.parse(localStorage.getItem('bookingDB'));
+                        console.log('📝 Credenziali disponibili:', data.parrucchieri?.map(p => `${p.email} / ${p.password}`) || 'NESSUNA');
+                    } catch (error) {
+                        console.error('❌ Errore lettura localStorage:', error);
+                    }
                 }
-            } else {
-                const data = JSON.parse(localStorage.getItem('bookingDB'));
-                console.log('📝 Credenziali disponibili:', data.parrucchieri?.map(p => `${p.email} / ${p.password}`) || 'NESSUNA');
-            }
+            }, 500);
         });
 
         function handleLogin(event) {

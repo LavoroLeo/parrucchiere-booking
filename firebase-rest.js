@@ -8,16 +8,25 @@
  * Se Firebase up → sincronizza dati in background
  */
 
-const FIREBASE_DB_URL = 'https://parrucchieri-online-default-rtdb.europe-west1.firebasedatabase.app';
-const BUSINESS_ID = 'demo-parrucchiere-rossi';
+// Usa window per evitare ridichiarazioni
+if (typeof window.FIREBASE_DB_URL === 'undefined') {
+    window.FIREBASE_DB_URL = 'https://parrucchieri-online-default-rtdb.europe-west1.firebasedatabase.app';
+    window.BUSINESS_ID = 'demo-parrucchiere-rossi';
+    window.ACCESS_CODE_NUMBERS = '82947365019284756301';  // 20 cifre
+    window.ACCESS_CODE_LETTERS = 'KXMQPVLZNRWHJDGFCBYA';  // 20 lettere
 
-// 🔐 CODICI DI ACCESSO PARRUCCHIERE (20 cifre + 20 lettere)
-const ACCESS_CODE_NUMBERS = '82947365019284756301';  // 20 cifre
-const ACCESS_CODE_LETTERS = 'KXMQPVLZNRWHJDGFCBYA';  // 20 lettere
+    console.log('%c💾 HYBRID STORAGE SYSTEM INIZIALIZZATO', 'color: #00ff00; font-size: 14px; font-weight: bold');
+    console.log('✅ PRIMARY: localStorage (locale, sempre disponibile)');
+    console.log('✅ SECONDARY: Firebase (backup opzionale)');
+} else {
+    console.log('%c💾 HYBRID STORAGE SYSTEM - Già inizializzato', 'color: #00ff00; font-size: 14px; font-weight: bold');
+}
 
-console.log('%c💾 HYBRID STORAGE SYSTEM INIZIALIZZATO', 'color: #00ff00; font-size: 14px; font-weight: bold');
-console.log('✅ PRIMARY: localStorage (locale, sempre disponibile)');
-console.log('✅ SECONDARY: Firebase (backup opzionale)');
+// Short-hand per comodità
+const FIREBASE_DB_URL = window.FIREBASE_DB_URL;
+const BUSINESS_ID = window.BUSINESS_ID;
+const ACCESS_CODE_NUMBERS = window.ACCESS_CODE_NUMBERS;
+const ACCESS_CODE_LETTERS = window.ACCESS_CODE_LETTERS;
 
 // ============================================
 // LOCALSTORAGE - PRIMARY (sempre disponibile)
