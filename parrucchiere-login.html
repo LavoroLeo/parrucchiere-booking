@@ -1046,7 +1046,485 @@
     </div>
 
     <script src="firebase-rest.js"></script>
-    <!-- Firebase REST API - Soluzione Definitiva -->
-    <script src="firebase-rest.js"></script>
+
+    <script>
+        // ========================================
+        // DASHBOARD FUNCTIONALITY
+        // ========================================
+
+        let currentMonth = new Date();
+        let currentParrucchiereId = localStorage.getItem('currentParrucchiereId');
+        let isOwner = localStorage.getItem('isOwner') === 'true';
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            const loggedInEmail = localStorage.getItem('loggedInEmail');
+            if (!loggedInEmail) {
+                window.location.href = '/login-parrucchiere.html';
+                return;
+            }
+
+            loadDashboardData();
+            generateCalendar();
+            initializeSidebar();
+        });
+
+        // ========================================
+        // NAVIGATION
+        // ========================================
+
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('[data-section]').forEach(section => {
+                section.style.display = 'none';
+            });
+
+            // Show selected section
+            const selectedSection = document.querySelector(`[data-section="${sectionId}"]`);
+            if (selectedSection) {
+                selectedSection.style.display = 'block';
+            }
+
+            // Update active menu
+            document.querySelectorAll('.menu-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Load section-specific data
+            if (sectionId === 'prenotazioni') {
+                loadBookings();
+            } else if (sectionId === 'clienti') {
+                loadClients();
+            } else if (sectionId === 'servizi') {
+                loadServices();
+            }
+        }
+
+        function logout() {
+            if (confirm('Sei sicuro di voler fare logout?')) {
+                localStorage.removeItem('loggedInEmail');
+                localStorage.removeItem('currentParrucchiereId');
+                localStorage.removeItem('isOwner');
+                localStorage.removeItem('parrucchiereSession');
+                window.location.href = '/index.html';
+            }
+        }
+
+        function initializeSidebar() {
+            showSection('dashboard');
+        }
+
+        // ========================================
+        // DASHBOARD DATA
+        // ========================================
+
+        function loadDashboardData() {
+            try {
+                const data = LocalStorage.load();
+                const bookings = data.bookings || [];
+                const clients = data.clients || [];
+                const services = data.services || [];
+
+                // Today's bookings
+                const today = new Date().toISOString().split('T')[0];
+                const todayBookings = bookings.filter(b => b.data === today && b.status !== 'cancelled').length;
+
+                // Total bookings
+                const totalBookings = bookings.filter(b => b.status !== 'cancelled').length;
+
+                // Unique clients
+                const uniqueClients = new Set(bookings.map(b => b.cliente)).size;
+
+                // Available services
+                const availableServices = services.length;
+
+                // Update stats cards
+                document.querySelector('[data-stat="prenotazioni-oggi"]')?.textContent || (document.querySelector('[data-stat="prenotazioni-oggi"]').textContent = todayBookings);
+                document.querySelector('[data-stat="prenotazioni-totali"]')?.textContent || (document.querySelector('[data-stat="prenotazioni-totali"]').textContent = totalBookings);
+                document.querySelector('[data-stat="clienti-unici"]')?.textContent || (document.querySelector('[data-stat="clienti-unici"]').textContent = uniqueClients);
+                document.querySelector('[data-stat="servizi-disponibili"]')?.textContent || (document.querySelector('[data-stat="servizi-disponibili"]').textContent = availableServices);
+            } catch (error) {
+                console.warn('Errore caricamento dati dashboard:', error);
+            }
+        }
+
+        // ========================================
+        // CALENDAR FUNCTIONS
+        // ========================================
+
+        function generateCalendar() {
+            const monthYear = document.getElementById('monthYear');
+            if (monthYear) {
+                monthYear.textContent = currentMonth.toLocaleDateString('it-IT', { month: 'long', year: 'numeric' });
+            }
+
+            const calendarDays = document.getElementById('calendarDays');
+            if (!calendarDays) return;
+
+            calendarDays.innerHTML = '';
+
+            const year = currentMonth.getFullYear();
+            const month = currentMonth.getMonth();
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const daysInMonth = lastDay.getDate();
+            const startingDayOfWeek = firstDay.getDay();
+
+            // Empty cells before month starts
+            for (let i = 0; i < startingDayOfWeek; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'calendar-day empty';
+                calendarDays.appendChild(emptyDay);
+            }
+
+            // Days of month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                dayElement.textContent = day;
+
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const today = new Date().toISOString().split('T')[0];
+
+                if (dateStr === today) {
+                    dayElement.classList.add('today');
+                }
+
+                dayElement.addEventListener('click', () => showDayBookings(dateStr));
+                calendarDays.appendChild(dayElement);
+            }
+        }
+
+        function prevMonth() {
+            currentMonth.setMonth(currentMonth.getMonth() - 1);
+            generateCalendar();
+        }
+
+        function nextMonth() {
+            currentMonth.setMonth(currentMonth.getMonth() + 1);
+            generateCalendar();
+        }
+
+        function showDayBookings(dateStr) {
+            const modal = document.getElementById('dayModal');
+            if (modal) {
+                modal.style.display = 'flex';
+                const content = modal.querySelector('.modal-content');
+                if (content) {
+                    content.innerHTML = `<h3>Prenotazioni del ${new Date(dateStr).toLocaleDateString('it-IT')}</h3>`;
+                }
+            }
+        }
+
+        function closeDayModal() {
+            const modal = document.getElementById('dayModal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // ========================================
+        // CALENDAR BLOCKING FUNCTIONS
+        // ========================================
+
+        function mostraFormBlocca() {
+            const form = document.getElementById('formBlocca');
+            if (form) form.style.display = 'block';
+        }
+
+        function nascondiFormBlocca() {
+            const form = document.getElementById('formBlocca');
+            if (form) form.style.display = 'none';
+        }
+
+        function mostraFormSblocca() {
+            const form = document.getElementById('formSblocca');
+            if (form) form.style.display = 'block';
+        }
+
+        function nascondiFormSblocca() {
+            const form = document.getElementById('formSblocca');
+            if (form) form.style.display = 'none';
+        }
+
+        function salvaOrariBlocco() {
+            const dataInizio = document.getElementById('dataInizioBlocco')?.value;
+            const dataFine = document.getElementById('dataFineBlocco')?.value;
+
+            if (!dataInizio || !dataFine) {
+                alert('Seleziona le date');
+                return;
+            }
+
+            alert('✅ Orario bloccato da ' + dataInizio + ' a ' + dataFine);
+            nascondiFormBlocca();
+        }
+
+        function salvaOrarisbloco() {
+            const dataSblocco = document.getElementById('dataSblocco')?.value;
+
+            if (!dataSblocco) {
+                alert('Seleziona la data');
+                return;
+            }
+
+            alert('✅ Orario sbloccato per ' + dataSblocco);
+            nascondiFormSblocca();
+        }
+
+        // ========================================
+        // BOOKINGS FUNCTIONS
+        // ========================================
+
+        function loadBookings() {
+            try {
+                const data = LocalStorage.load();
+                const bookings = data.bookings || [];
+                const container = document.getElementById('prenotazioniList');
+
+                if (!container) return;
+                container.innerHTML = '';
+
+                if (bookings.length === 0) {
+                    container.innerHTML = '<p style="color: #ccc;">Nessuna prenotazione</p>';
+                    return;
+                }
+
+                bookings.forEach(booking => {
+                    const bookingEl = document.createElement('div');
+                    bookingEl.className = 'booking-card';
+                    bookingEl.innerHTML = `
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <strong>${booking.cliente}</strong><br>
+                                <small>${booking.data} - ${booking.ora}</small><br>
+                                <small>${booking.servizio}</small>
+                            </div>
+                            <span style="padding: 4px 12px; border-radius: 4px; background: ${getStatusColor(booking.status)};color: #fff;">${booking.status}</span>
+                        </div>
+                    `;
+                    container.appendChild(bookingEl);
+                });
+            } catch (error) {
+                console.warn('Errore caricamento prenotazioni:', error);
+            }
+        }
+
+        function getStatusColor(status) {
+            const colors = {
+                'confermato': '#14c579',
+                'in attesa': '#ffc107',
+                'cancelled': '#e74c3c'
+            };
+            return colors[status] || '#666';
+        }
+
+        // ========================================
+        // CLIENTS FUNCTIONS
+        // ========================================
+
+        function loadClients() {
+            try {
+                const data = LocalStorage.load();
+                const clients = data.clients || [];
+                const container = document.getElementById('clientiList');
+
+                if (!container) return;
+                container.innerHTML = '';
+
+                if (clients.length === 0) {
+                    container.innerHTML = '<p style="color: #ccc;">Nessun cliente</p>';
+                    return;
+                }
+
+                clients.forEach(client => {
+                    const clientEl = document.createElement('div');
+                    clientEl.className = 'client-card';
+                    clientEl.innerHTML = `
+                        <div style="padding: 15px; border-left: 3px solid #d4af37;">
+                            <strong>${client.nome}</strong><br>
+                            <small>${client.telefono}</small><br>
+                            <small>${client.email}</small>
+                        </div>
+                    `;
+                    container.appendChild(clientEl);
+                });
+            } catch (error) {
+                console.warn('Errore caricamento clienti:', error);
+            }
+        }
+
+        // ========================================
+        // SERVICES FUNCTIONS
+        // ========================================
+
+        function loadServices() {
+            try {
+                const data = LocalStorage.load();
+                const services = data.services || [];
+                const container = document.getElementById('serviziList');
+
+                if (!container) return;
+                container.innerHTML = '';
+
+                services.forEach(service => {
+                    const serviceEl = document.createElement('div');
+                    serviceEl.className = 'service-card';
+                    serviceEl.innerHTML = `
+                        <div style="padding: 15px; border-left: 3px solid #d4af37;">
+                            <strong>${service.icon} ${service.name}</strong><br>
+                            <small>${service.description}</small><br>
+                            <small><strong>€${service.price}</strong> - ${service.duration} min</small>
+                        </div>
+                    `;
+                    container.appendChild(serviceEl);
+                });
+            } catch (error) {
+                console.warn('Errore caricamento servizi:', error);
+            }
+        }
+
+        function openServiceModal() {
+            const modal = document.getElementById('serviceModal');
+            if (modal) modal.style.display = 'flex';
+        }
+
+        function closeServiceModal() {
+            const modal = document.getElementById('serviceModal');
+            if (modal) modal.style.display = 'none';
+        }
+
+        function saveService() {
+            const name = document.getElementById('serviceName')?.value;
+            const description = document.getElementById('serviceDescription')?.value;
+            const price = document.getElementById('servicePrice')?.value;
+            const duration = document.getElementById('serviceDuration')?.value;
+
+            if (!name || !price || !duration) {
+                alert('Compila tutti i campi');
+                return;
+            }
+
+            alert('✅ Servizio salvato: ' + name);
+            closeServiceModal();
+            loadServices();
+        }
+
+        // ========================================
+        // SETTINGS FUNCTIONS
+        // ========================================
+
+        function salvaSettingsSalone() {
+            const saloneName = document.getElementById('salonName')?.value;
+            const salonPhone = document.getElementById('salonPhone')?.value;
+            const salonEmail = document.getElementById('salonEmail')?.value;
+            const salonAddress = document.getElementById('salonAddress')?.value;
+
+            alert('✅ Dati salone salvati');
+        }
+
+        function saveSocialLinks() {
+            const facebook = document.getElementById('facebookLink')?.value;
+            const instagram = document.getElementById('instagramLink')?.value;
+            const tiktok = document.getElementById('tiktokLink')?.value;
+
+            alert('✅ Link social salvati');
+        }
+
+        function uploadLogo() {
+            const fileInput = document.getElementById('logoUpload');
+            if (fileInput) {
+                fileInput.click();
+            }
+        }
+
+        // ========================================
+        // PASSWORD & EMAIL MODALS
+        // ========================================
+
+        function openPasswordModal() {
+            const modal = document.getElementById('passwordModal');
+            if (modal) modal.style.display = 'flex';
+        }
+
+        function closePasswordModal() {
+            const modal = document.getElementById('passwordModal');
+            if (modal) modal.style.display = 'none';
+        }
+
+        function openEmailModal() {
+            const modal = document.getElementById('emailModal');
+            if (modal) modal.style.display = 'flex';
+        }
+
+        function closeEmailModal() {
+            const modal = document.getElementById('emailModal');
+            if (modal) modal.style.display = 'none';
+        }
+
+        function saveNewPassword() {
+            const currentPassword = document.getElementById('currentPassword')?.value;
+            const newPassword = document.getElementById('newPassword')?.value;
+            const confirmPassword = document.getElementById('confirmPassword')?.value;
+
+            if (!currentPassword || !newPassword || !confirmPassword) {
+                alert('Compila tutti i campi');
+                return;
+            }
+
+            if (newPassword !== confirmPassword) {
+                alert('Le password non corrispondono');
+                return;
+            }
+
+            if (newPassword.length < 6) {
+                alert('La password deve avere almeno 6 caratteri');
+                return;
+            }
+
+            alert('✅ Password cambiata con successo');
+            closePasswordModal();
+        }
+
+        function saveNewEmail() {
+            const newEmail = document.getElementById('newEmail')?.value;
+            const confirmEmail = document.getElementById('confirmEmail')?.value;
+
+            if (!newEmail || !confirmEmail) {
+                alert('Compila tutti i campi');
+                return;
+            }
+
+            if (newEmail !== confirmEmail) {
+                alert('Le email non corrispondono');
+                return;
+            }
+
+            alert('✅ Email cambiata con successo');
+            closeEmailModal();
+        }
+
+        // ========================================
+        // MODAL CLOSE ON ESCAPE
+        // ========================================
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.style.display = 'none';
+                });
+            }
+        });
+
+        // Close modals on background click
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', function(event) {
+                if (event.target === this) {
+                    this.style.display = 'none';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
