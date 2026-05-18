@@ -1093,17 +1093,10 @@
         let currentParrucchiereId = localStorage.getItem('currentParrucchiereId');
         let isOwner = localStorage.getItem('isOwner') === 'true';
 
-        // Initialize dashboard
+        // Initialize dashboard (login logic moved to window.load event below)
         document.addEventListener('DOMContentLoaded', function() {
-            const loggedInEmail = localStorage.getItem('loggedInEmail');
-            if (!loggedInEmail) {
-                window.location.href = '/login-parrucchiere.html';
-                return;
-            }
-
-            loadDashboardData();
-            generateCalendar();
-            initializeSidebar();
+            // Dashboard initialization will happen after login via window.load event
+            // This prevents redirect loops
         });
 
         // ========================================
