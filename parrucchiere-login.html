@@ -1075,12 +1075,12 @@
 
         function showSection(sectionId) {
             // Hide all sections
-            document.querySelectorAll('[data-section]').forEach(section => {
+            document.querySelectorAll('.section-container').forEach(section => {
                 section.style.display = 'none';
             });
 
             // Show selected section
-            const selectedSection = document.querySelector(`[data-section="${sectionId}"]`);
+            const selectedSection = document.getElementById(`${sectionId}-section`);
             if (selectedSection) {
                 selectedSection.style.display = 'block';
             }
@@ -1089,7 +1089,9 @@
             document.querySelectorAll('.menu-link').forEach(link => {
                 link.classList.remove('active');
             });
-            event.target.classList.add('active');
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
 
             // Load section-specific data
             if (sectionId === 'prenotazioni') {
@@ -1281,33 +1283,57 @@
             try {
                 const data = LocalStorage.load();
                 const bookings = data.bookings || [];
-                const container = document.getElementById('prenotazioniList');
+                const tbody = document.getElementById('prenotazioniTable')?.querySelector('tbody') || document.createElement('tbody');
 
-                if (!container) return;
-                container.innerHTML = '';
+                tbody.innerHTML = '';
 
                 if (bookings.length === 0) {
-                    container.innerHTML = '<p style="color: #ccc;">Nessuna prenotazione</p>';
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px; color: #999;">Nessuna prenotazione</td></tr>';
                     return;
                 }
 
                 bookings.forEach(booking => {
-                    const bookingEl = document.createElement('div');
-                    bookingEl.className = 'booking-card';
-                    bookingEl.innerHTML = `
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <div>
-                                <strong>${booking.cliente}</strong><br>
-                                <small>${booking.data} - ${booking.ora}</small><br>
-                                <small>${booking.servizio}</small>
-                            </div>
-                            <span style="padding: 4px 12px; border-radius: 4px; background: ${getStatusColor(booking.status)};color: #fff;">${booking.status}</span>
-                        </div>
+                    const row = document.createElement('tr');
+                    const statusColor = getStatusColor(booking.status);
+                    row.innerHTML = `
+                        <td>${booking.data}</td>
+                        <td>${booking.ora}</td>
+                        <td>${booking.cliente}</td>
+                        <td>${booking.servizio}</td>
+                        <td>${booking.telefono}</td>
+                        <td><span style="padding: 4px 8px; border-radius: 4px; background: ${statusColor}; color: #fff; font-size: 12px;">${booking.status}</span></td>
                     `;
-                    container.appendChild(bookingEl);
+                    tbody.appendChild(row);
                 });
             } catch (error) {
                 console.warn('Errore caricamento prenotazioni:', error);
+            }
+        }
+
+        function applicaFiltri() {
+            const data = localStorage.getItem('bookingDB') ? JSON.parse(localStorage.getItem('bookingDB')) : {};
+            const bookings = data.bookings || [];
+            const filterData = document.getElementById('filterData')?.value || '';
+            const filterServizio = document.getElementById('filterServizio')?.value || '';
+
+            const filtered = bookings.filter(b => {
+                const matchData = !filterData || b.data === filterData;
+                const matchServizio = !filterServizio || b.servizio === filterServizio;
+                return matchData && matchServizio;
+            });
+
+            const tbody = document.getElementById('prenotazioniTable')?.querySelector('tbody');
+            if (tbody) {
+                tbody.innerHTML = filtered.map(booking => `
+                    <tr>
+                        <td>${booking.data}</td>
+                        <td>${booking.ora}</td>
+                        <td>${booking.cliente}</td>
+                        <td>${booking.servizio}</td>
+                        <td>${booking.telefono}</td>
+                        <td><span style="padding: 4px 8px; border-radius: 4px; background: ${getStatusColor(booking.status)}; color: #fff; font-size: 12px;">${booking.status}</span></td>
+                    </tr>
+                `).join('');
             }
         }
 
@@ -1327,28 +1353,42 @@
         function loadClients() {
             try {
                 const data = LocalStorage.load();
-                const clients = data.clients || [];
-                const container = document.getElementById('clientiList');
+                const bookings = data.bookings || [];
+                const tbody = document.getElementById('clientiBody');
 
-                if (!container) return;
-                container.innerHTML = '';
+                if (!tbody) return;
+                tbody.innerHTML = '';
+
+                // Get unique clients from bookings
+                const clientsMap = new Map();
+                bookings.forEach(booking => {
+                    if (booking.cliente && booking.telefono) {
+                        if (!clientsMap.has(booking.cliente)) {
+                            clientsMap.set(booking.cliente, {
+                                nome: booking.cliente,
+                                telefono: booking.telefono,
+                                count: 0
+                            });
+                        }
+                        clientsMap.get(booking.cliente).count++;
+                    }
+                });
+
+                const clients = Array.from(clientsMap.values());
 
                 if (clients.length === 0) {
-                    container.innerHTML = '<p style="color: #ccc;">Nessun cliente</p>';
+                    tbody.innerHTML = '<tr><td colspan="3" style="text-align: center; padding: 20px; color: #999;">Nessun cliente</td></tr>';
                     return;
                 }
 
                 clients.forEach(client => {
-                    const clientEl = document.createElement('div');
-                    clientEl.className = 'client-card';
-                    clientEl.innerHTML = `
-                        <div style="padding: 15px; border-left: 3px solid #d4af37;">
-                            <strong>${client.nome}</strong><br>
-                            <small>${client.telefono}</small><br>
-                            <small>${client.email}</small>
-                        </div>
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${client.nome}</td>
+                        <td>${client.telefono}</td>
+                        <td>${client.count}</td>
                     `;
-                    container.appendChild(clientEl);
+                    tbody.appendChild(row);
                 });
             } catch (error) {
                 console.warn('Errore caricamento clienti:', error);
@@ -1363,22 +1403,25 @@
             try {
                 const data = LocalStorage.load();
                 const services = data.services || [];
-                const container = document.getElementById('serviziList');
+                const tbody = document.getElementById('serviziBody') || document.querySelector('#serviziTable tbody');
 
-                if (!container) return;
-                container.innerHTML = '';
+                if (!tbody) return;
+                tbody.innerHTML = '';
+
+                if (services.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 20px; color: #999;">Nessun servizio</td></tr>';
+                    return;
+                }
 
                 services.forEach(service => {
-                    const serviceEl = document.createElement('div');
-                    serviceEl.className = 'service-card';
-                    serviceEl.innerHTML = `
-                        <div style="padding: 15px; border-left: 3px solid #d4af37;">
-                            <strong>${service.icon} ${service.name}</strong><br>
-                            <small>${service.description}</small><br>
-                            <small><strong>€${service.price}</strong> - ${service.duration} min</small>
-                        </div>
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${service.icon} ${service.name}</td>
+                        <td>€${service.price}</td>
+                        <td>${service.duration} min</td>
+                        <td><small>${service.description}</small></td>
                     `;
-                    container.appendChild(serviceEl);
+                    tbody.appendChild(row);
                 });
             } catch (error) {
                 console.warn('Errore caricamento servizi:', error);
