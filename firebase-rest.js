@@ -22,12 +22,6 @@ if (typeof window.FIREBASE_DB_URL === 'undefined') {
     console.log('%c💾 HYBRID STORAGE SYSTEM - Già inizializzato', 'color: #00ff00; font-size: 14px; font-weight: bold');
 }
 
-// Short-hand per comodità
-const FIREBASE_DB_URL = window.FIREBASE_DB_URL;
-const BUSINESS_ID = window.BUSINESS_ID;
-const ACCESS_CODE_NUMBERS = window.ACCESS_CODE_NUMBERS;
-const ACCESS_CODE_LETTERS = window.ACCESS_CODE_LETTERS;
-
 // ============================================
 // LOCALSTORAGE - PRIMARY (sempre disponibile)
 // ============================================
