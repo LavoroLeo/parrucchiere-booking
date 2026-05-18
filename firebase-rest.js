@@ -8,8 +8,12 @@
  * Se Firebase up → sincronizza dati in background
  */
 
-// Usa window per evitare ridichiarazioni
-if (typeof window.FIREBASE_DB_URL === 'undefined') {
+// Protezione da caricamenti duplicati
+if (window.FIREBASE_REST_LOADED) {
+    console.log('%c💾 HYBRID STORAGE SYSTEM - Già caricato, skip', 'color: #00ff00; font-size: 14px; font-weight: bold');
+} else {
+    window.FIREBASE_REST_LOADED = true;
+
     window.FIREBASE_DB_URL = 'https://parrucchieri-online-default-rtdb.europe-west1.firebasedatabase.app';
     window.BUSINESS_ID = 'demo-parrucchiere-rossi';
     window.ACCESS_CODE_NUMBERS = '82947365019284756301';  // 20 cifre
@@ -18,9 +22,6 @@ if (typeof window.FIREBASE_DB_URL === 'undefined') {
     console.log('%c💾 HYBRID STORAGE SYSTEM INIZIALIZZATO', 'color: #00ff00; font-size: 14px; font-weight: bold');
     console.log('✅ PRIMARY: localStorage (locale, sempre disponibile)');
     console.log('✅ SECONDARY: Firebase (backup opzionale)');
-} else {
-    console.log('%c💾 HYBRID STORAGE SYSTEM - Già inizializzato', 'color: #00ff00; font-size: 14px; font-weight: bold');
-}
 
 // ============================================
 // LOCALSTORAGE - PRIMARY (sempre disponibile)
@@ -535,3 +536,5 @@ async function startBookingMonitoring() {
 setTimeout(() => {
     startBookingMonitoring();
 }, 2000);
+
+} // Chiude l'else block del FIREBASE_REST_LOADED check
