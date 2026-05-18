@@ -263,7 +263,15 @@
                 localStorage.setItem('loggedInEmail', email);
                 localStorage.setItem('currentParrucchiereId', parrucchiere.id);
                 localStorage.setItem('isOwner', parrucchiere.isOwner ? 'true' : 'false');
-                window.location.href = '/index.html';
+                localStorage.setItem('parrucchiereSession', JSON.stringify({
+                    email: email,
+                    parrucchiereId: parrucchiere.id,
+                    name: parrucchiere.name,
+                    surname: parrucchiere.surname,
+                    isOwner: parrucchiere.isOwner,
+                    loginTime: new Date().toISOString()
+                }));
+                window.location.href = '/parrucchiere-dashboard.html';
             } else {
                 // ❌ Login fallito
                 console.log('❌ Email o password non corretti');

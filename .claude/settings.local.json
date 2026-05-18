@@ -93,7 +93,14 @@
       "Bash(grep -rn \"Stai visualizzando\" public/)",
       "Bash(ls public/)",
       "Bash(git revert *)",
-      "Bash(grep -E \"\\\\.html$\")"
+      "Bash(grep -E \"\\\\.html$\")",
+      "Bash(python -c \"import sys, json; data=json.load\\(sys.stdin\\); print\\('KEYS:', list\\(data.keys\\(\\)\\) if data else 'VUOTO/NULL'\\)\")",
+      "Bash(python -c ' *)",
+      "Bash(curl -s \"https://parrucchieri-online-default-rtdb.europe-west1.firebasedatabase.app/businesses/demo-parrucchiere-rossi/settings.json\")",
+      "Bash(python -c \"import sys, json; print\\(json.dumps\\(json.load\\(sys.stdin\\), indent=2\\)\\)\")",
+      "Bash(npx vercel *)",
+      "Bash(node -e ' *)",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('Nome salone:', d.get\\('name'\\)\\); print\\('Tutti i campi:', list\\(d.keys\\(\\)\\)\\)\")"
     ]
   }
 }
