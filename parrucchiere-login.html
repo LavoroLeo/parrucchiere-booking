@@ -1147,217 +1147,24 @@
 
     <script>
         // ========================================
-        // FIREBASE SYSTEM - PRIMARY DATABASE
+        // GLOBAL CONFIGURATION
         // ========================================
+        window.FIREBASE_DB_URL = 'https://parrucchieri-online-default-rtdb.europe-west1.firebasedatabase.app';
+        window.BUSINESS_ID = 'demo-parrucchiere-rossi';
 
-        // Protezione da caricamenti duplicati
-        if (!window.FIREBASE_SYSTEM_LOADED) {
-            window.FIREBASE_SYSTEM_LOADED = true;
-
-            // Firebase Configuration
-            window.FIREBASE_DB_URL = 'https://parrucchieri-online-default-rtdb.europe-west1.firebasedatabase.app';
-            window.BUSINESS_ID = 'demo-parrucchiere-rossi';
-            window.ACCESS_CODE_NUMBERS = '82947365019284756301';
-            window.ACCESS_CODE_LETTERS = 'KXMQPVLZNRWHJDGFCBYA';
-
-            console.log('%c🔥 FIREBASE SYSTEM INIZIALIZZATO (PRIMARY)', 'color: #ff6b35; font-size: 14px; font-weight: bold');
-            console.log('✅ PRIMARY: Firebase (database principale)');
-            console.log('✅ FALLBACK: localStorage (backup locale)');
-
-            // LocalStorage Object
-            const LocalStorage = {
-                load() {
-                    try {
-                        const saved = localStorage.getItem('bookingDB');
-                        if (saved) {
-                            const data = JSON.parse(saved);
-                            console.log('💾 Dati caricati da localStorage (fallback)');
-                            return data;
-                        }
-                    } catch (e) {
-                        console.warn('⚠️ Errore lettura localStorage:', e.message);
-                    }
-                    return this.getDefaultData();
-                },
-
-                save(data) {
-                    try {
-                        localStorage.setItem('bookingDB', JSON.stringify(data));
-                        console.log('💾 Dati salvati in localStorage (backup)');
-                        return true;
-                    } catch (e) {
-                        console.warn('⚠️ Errore salvataggio localStorage:', e.message);
-                        return false;
-                    }
-                },
-
-                getDefaultData() {
-                    return {
-                        bookings: [],
-                        clients: [],
-                        services: [
-                            { id: 1, name: 'Taglio Uomo', description: 'Taglio classico', price: 25, duration: 30, icon: '✂️' },
-                            { id: 2, name: 'Taglio Donna', description: 'Taglio e styling', price: 35, duration: 45, icon: '💇' },
-                            { id: 3, name: 'Trattamento', description: 'Barba o viso', price: 20, duration: 20, icon: '🧖' },
-                            { id: 4, name: 'Colore', description: 'Colorazione completa', price: 80, duration: 120, icon: '💇‍♀️' },
-                            { id: 5, name: 'pedicure', description: 'rtghyjug', price: 30, duration: 40, icon: '✨' }
-                        ],
-                        reviews: [],
-                        settings: {
-                            name: 'Parrucchiere Rossi',
-                            phone: '+39 011 555 1234',
-                            email: 'info@parrucchiererossi.it',
-                            address: 'Via Roma 15, Torino',
-                            hoursStart: '09:00',
-                            hoursEnd: '18:00',
-                            satStart: '09:00',
-                            satEnd: '14:00',
-                            logo: null,
-                            dividers: {
-                                enabled: true,
-                                color: '#d4af37',
-                                height: 3,
-                                glowIntensity: 0.6,
-                                sections: ['hero-prenota', 'prenota-servizi', 'servizi-recensioni', 'recensioni-social', 'social-contatti']
-                            }
-                        },
-                        socialLinks: {
-                            facebook: 'https://facebook.com/parrucchiererossi',
-                            instagram: 'https://instagram.com/parrucchiererossi',
-                            tiktok: 'https://tiktok.com/@parrucchiererossi'
-                        },
-                        parrucchieri: [
-                            {
-                                id: 'p1',
-                                name: 'Marco',
-                                surname: 'Rossi',
-                                email: 'admin@admin.it',
-                                password: 'admin123',
-                                isOwner: true,
-                                specializations: ['Taglio Uomo', 'Taglio Donna', 'Colore', 'Barba'],
-                                hoursStart: '09:00',
-                                hoursEnd: '18:00',
-                                satStart: '09:00',
-                                satEnd: '14:00',
-                                phone: '+39 011 555 1234',
-                                photo: '',
-                                socialLinks: {
-                                    facebook: 'https://facebook.com/parrucchiererossi',
-                                    instagram: 'https://instagram.com/parrucchiererossi',
-                                    tiktok: 'https://tiktok.com/@parrucchiererossi'
-                                }
-                            },
-                            {
-                                id: 'p2',
-                                name: 'Anna',
-                                surname: 'Bianchi',
-                                email: 'anna@admin.it',
-                                password: 'anna123',
-                                isOwner: false,
-                                specializations: ['Taglio Donna', 'Styling', 'Colore'],
-                                hoursStart: '10:00',
-                                hoursEnd: '17:00',
-                                satStart: '09:00',
-                                satEnd: '14:00',
-                                phone: '+39 333 444 555',
-                                photo: ''
-                            }
-                        ],
-                        securityCodes: {
-                            accessCode1: '82947365019284756301',
-                            accessCode2: 'KXMQPVLZNRWHJDGFCBYA',
-                            description: 'Codici di accesso per la pagina di login parrucchiere'
-                        }
-                    };
-                }
-            };
-
-            // Firebase Sync - PRIMARY
-            const FirebaseSync = {
-                async load() {
-                    try {
-                        console.log('🔥 Caricando da Firebase...');
-                        const response = await fetch(
-                            `${window.FIREBASE_DB_URL}/businesses/${window.BUSINESS_ID}.json`,
-                            { method: 'GET' }
-                        );
-
-                        if (response.ok) {
-                            const data = await response.json();
-                            if (data) {
-                                console.log('🔥 ✅ Dati caricati da Firebase (PRIMARY)');
-                                // Salva backup in localStorage
-                                LocalStorage.save(data);
-                                return data;
-                            }
-                        }
-                    } catch (error) {
-                        console.log('⚠️ Firebase non disponibile, uso localStorage:', error.message);
-                    }
-                    return null;
-                },
-
-                async save(data) {
-                    try {
-                        const response = await fetch(
-                            `${window.FIREBASE_DB_URL}/businesses/${window.BUSINESS_ID}.json`,
-                            {
-                                method: 'PUT',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify(data)
-                            }
-                        );
-
-                        if (response.ok) {
-                            console.log('🔥 ✅ Dati salvati su Firebase (PRIMARY)');
-                            return true;
-                        }
-                    } catch (error) {
-                        console.log('⚠️ Firebase save fallito:', error.message);
-                    }
-                    return false;
-                }
-            };
-
-            // Database Adapter - Firebase PRIMARY, localStorage fallback
-            const DatabaseAdapter = {
-                async load() {
-                    // 1. Prova PRIMA Firebase (PRIMARY)
-                    const firebaseData = await FirebaseSync.load();
-                    if (firebaseData) {
-                        return firebaseData;
-                    }
-
-                    // 2. Se Firebase fallisce, usa localStorage (FALLBACK)
-                    console.log('⚠️ Firebase non disponibile, uso localStorage come fallback');
-                    const localData = LocalStorage.load();
-                    if (localData) {
-                        return localData;
-                    }
-
-                    // 3. Se anche localStorage è vuoto, usa default
-                    console.log('📦 Nessun dato trovato, uso default data');
-                    return LocalStorage.getDefaultData();
-                },
-
-                async save(data) {
-                    // Salva su Firebase (PRIMARY)
-                    const firebaseResult = await FirebaseSync.save(data);
-
-                    // Salva anche su localStorage (FALLBACK)
-                    LocalStorage.save(data);
-
-                    return firebaseResult;
-                }
-            };
-
-            // Expose globally
-            window.LocalStorage = LocalStorage;
-            window.FirebaseSync = FirebaseSync;
-            window.DatabaseAdapter = DatabaseAdapter;
-
-            console.log('%c✅ FIREBASE SYSTEM PRONTO', 'color: #ff6b35; font-size: 14px; font-weight: bold');
-        }
+        // Default data inline
+        window.DEFAULT_DATA = {
+            parrucchieri: [
+                { id: 'p1', name: 'Marco', surname: 'Rossi', email: 'admin@admin.it', password: 'admin123', isOwner: true },
+                { id: 'p2', name: 'Anna', surname: 'Bianchi', email: 'anna@admin.it', password: 'anna123', isOwner: false }
+            ],
+            bookings: [],
+            services: [
+                { id: 1, name: 'Taglio Uomo', price: 25, duration: 30 },
+                { id: 2, name: 'Taglio Donna', price: 35, duration: 45 }
+            ],
+            reviews: []
+        };
     </script>
 
     <script>
