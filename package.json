@@ -1,7 +1,6 @@
 {
   "dependencies": {
-    "docx": "^9.6.1",
-    "firebase": "^12.13.0"
+    "docx": "^9.6.1"
   },
   "name": "artigiani",
   "version": "1.0.0",
