@@ -609,7 +609,7 @@
             <form id="loginForm" onsubmit="handleLoginInFile(event)" style="width: 100%;">
                 <div style="margin-bottom: 25px;">
                     <label style="display: block; color: #f5f5f5; font-weight: 600; margin-bottom: 10px; font-size: 14px;">📧 Email</label>
-                    <input type="email" id="email" placeholder="Es: admin@salone.it" required autofocus style="width: 100%; padding: 14px 16px; border: 1px solid #333; background: #0f0f0f; color: #f5f5f5; border-radius: 10px; font-family: inherit; font-size: 15px; transition: all 0.3s;">
+                    <input type="email" id="email" placeholder="Es: admin@admin.it" required autofocus style="width: 100%; padding: 14px 16px; border: 1px solid #333; background: #0f0f0f; color: #f5f5f5; border-radius: 10px; font-family: inherit; font-size: 15px; transition: all 0.3s;">
                 </div>
 
                 <div style="margin-bottom: 25px;">
@@ -623,8 +623,8 @@
             <div style="margin-top: 30px; padding-top: 30px; border-top: 1px solid rgba(212, 175, 55, 0.2); text-align: center;">
                 <p style="color: #d4af37; font-weight: 600; margin-bottom: 12px; font-size: 13px;">📝 Demo Credentials:</p>
                 <div style="background: #0f0f0f; padding: 12px; border-radius: 8px; border-left: 3px solid #d4af37; margin-bottom: 12px;">
-                    <p style="color: #ccc; font-size: 12px; margin-bottom: 2px;"><strong>Email:</strong> admin@salone.it</p>
-                    <p style="color: #ccc; font-size: 12px;"><strong>Password:</strong> DemoPass123!</p>
+                    <p style="color: #ccc; font-size: 12px; margin-bottom: 2px;"><strong>Email:</strong> admin@admin.it</p>
+                    <p style="color: #ccc; font-size: 12px;"><strong>Password:</strong> admin123</p>
                 </div>
             </div>
         </div>
@@ -788,10 +788,65 @@
                         </div>
                     </div>
                 </div>
+
             </div>
 
             <!-- SECTION: PRENOTAZIONI -->
             <div id="prenotazioni-section" class="section-container" style="display: none;">
+
+                <!-- PRENOTAZIONI TELEFONICHE -->
+                <div class="section" style="margin-bottom: 30px;">
+                    <div class="section-title">📞 Aggiungi Prenotazione Telefonica</div>
+                    <p style="color: #999; font-size: 14px; margin-bottom: 25px;">Per clienti che chiamano al telefono invece di prenotare dal sito</p>
+
+                    <div style="background: rgba(212, 175, 55, 0.05); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 10px; padding: 25px;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                            <div>
+                                <label style="color: #d4af37; font-weight: 600; display: block; margin-bottom: 6px; font-size: 14px;">Nome</label>
+                                <input type="text" id="telNome" placeholder="Es: Mario" style="width: 100%; padding: 10px; background: #0f0f0f; color: #f5f5f5; border: 1px solid #333; border-radius: 6px;">
+                            </div>
+                            <div>
+                                <label style="color: #d4af37; font-weight: 600; display: block; margin-bottom: 6px; font-size: 14px;">Cognome</label>
+                                <input type="text" id="telCognome" placeholder="Es: Rossi" style="width: 100%; padding: 10px; background: #0f0f0f; color: #f5f5f5; border: 1px solid #333; border-radius: 6px;">
+                            </div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                            <div>
+                                <label style="color: #d4af37; font-weight: 600; display: block; margin-bottom: 6px; font-size: 14px;">📞 Telefono</label>
+                                <input type="tel" id="telTelefono" placeholder="Es: 3201234567" style="width: 100%; padding: 10px; background: #0f0f0f; color: #f5f5f5; border: 1px solid #333; border-radius: 6px;">
+                            </div>
+                            <div>
+                                <label style="color: #d4af37; font-weight: 600; display: block; margin-bottom: 6px; font-size: 14px;">📅 Data</label>
+                                <input type="date" id="telData" style="width: 100%; padding: 10px; background: #0f0f0f; color: #f5f5f5; border: 1px solid #333; border-radius: 6px;">
+                            </div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                            <div>
+                                <label style="color: #d4af37; font-weight: 600; display: block; margin-bottom: 6px; font-size: 14px;">⏰ Ora</label>
+                                <input type="time" id="telOra" style="width: 100%; padding: 10px; background: #0f0f0f; color: #f5f5f5; border: 1px solid #333; border-radius: 6px;">
+                            </div>
+                            <div>
+                                <label style="color: #d4af37; font-weight: 600; display: block; margin-bottom: 6px; font-size: 14px;">✂️ Servizio</label>
+                                <select id="telServizio" style="width: 100%; padding: 10px; background: #0f0f0f; color: #f5f5f5; border: 1px solid #333; border-radius: 6px;">
+                                    <option value="">-- Seleziona --</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom: 20px;">
+                            <label style="color: #d4af37; font-weight: 600; display: block; margin-bottom: 6px; font-size: 14px;">💇 Parrucchiere</label>
+                            <select id="telParrucchiere" style="width: 100%; padding: 10px; background: #0f0f0f; color: #f5f5f5; border: 1px solid #333; border-radius: 6px;">
+                                <option value="p1">Marco Rossi (Titolare)</option>
+                                <option value="p2">Anna Bianchi</option>
+                            </select>
+                        </div>
+
+                        <button onclick="salvaPrenotazioneTelefonica()" style="width: 100%; padding: 14px; background: linear-gradient(135deg, #d4af37, #c0a080); color: #000; border: none; border-radius: 8px; font-weight: 700; font-size: 16px; cursor: pointer;">📞 Conferma Prenotazione Telefonica</button>
+                    </div>
+                </div>
+
                 <div class="section">
                     <div class="section-title">📋 Tutte le Prenotazioni</div>
 
@@ -1001,6 +1056,10 @@
                 <label>Durata (minuti)</label>
                 <input type="number" id="serviceDuration" placeholder="Es: 30" min="0">
             </div>
+            <div class="form-group">
+                <label>Azioni / Descrizione</label>
+                <textarea id="serviceDescription" placeholder="Es: Taglio classico e professionale" rows="3" style="width: 100%; padding: 12px; background: #0f0f0f; color: #f5f5f5; border: 1px solid #333; border-radius: 6px; font-family: inherit; font-size: 14px; resize: vertical;"></textarea>
+            </div>
             <button class="btn btn-primary" style="width: 100%; margin-top: 20px;" onclick="saveService()">💾 Salva Servizio</button>
         </div>
     </div>
@@ -1082,7 +1141,220 @@
         </div>
     </div>
 
-    <script src="firebase-rest.js"></script>
+    <script>
+        // ========================================
+        // FIREBASE SYSTEM - PRIMARY DATABASE
+        // ========================================
+
+        // Protezione da caricamenti duplicati
+        if (!window.FIREBASE_SYSTEM_LOADED) {
+            window.FIREBASE_SYSTEM_LOADED = true;
+
+            // Firebase Configuration
+            window.FIREBASE_DB_URL = 'https://parrucchieri-online-default-rtdb.europe-west1.firebasedatabase.app';
+            window.BUSINESS_ID = 'demo-parrucchiere-rossi';
+            window.ACCESS_CODE_NUMBERS = '82947365019284756301';
+            window.ACCESS_CODE_LETTERS = 'KXMQPVLZNRWHJDGFCBYA';
+
+            console.log('%c🔥 FIREBASE SYSTEM INIZIALIZZATO (PRIMARY)', 'color: #ff6b35; font-size: 14px; font-weight: bold');
+            console.log('✅ PRIMARY: Firebase (database principale)');
+            console.log('✅ FALLBACK: localStorage (backup locale)');
+
+            // LocalStorage Object
+            const LocalStorage = {
+                load() {
+                    try {
+                        const saved = localStorage.getItem('bookingDB');
+                        if (saved) {
+                            const data = JSON.parse(saved);
+                            console.log('💾 Dati caricati da localStorage (fallback)');
+                            return data;
+                        }
+                    } catch (e) {
+                        console.warn('⚠️ Errore lettura localStorage:', e.message);
+                    }
+                    return this.getDefaultData();
+                },
+
+                save(data) {
+                    try {
+                        localStorage.setItem('bookingDB', JSON.stringify(data));
+                        console.log('💾 Dati salvati in localStorage (backup)');
+                        return true;
+                    } catch (e) {
+                        console.warn('⚠️ Errore salvataggio localStorage:', e.message);
+                        return false;
+                    }
+                },
+
+                getDefaultData() {
+                    return {
+                        bookings: [],
+                        clients: [],
+                        services: [
+                            { id: 1, name: 'Taglio Uomo', description: 'Taglio classico', price: 25, duration: 30, icon: '✂️' },
+                            { id: 2, name: 'Taglio Donna', description: 'Taglio e styling', price: 35, duration: 45, icon: '💇' },
+                            { id: 3, name: 'Trattamento', description: 'Barba o viso', price: 20, duration: 20, icon: '🧖' },
+                            { id: 4, name: 'Colore', description: 'Colorazione completa', price: 80, duration: 120, icon: '💇‍♀️' },
+                            { id: 5, name: 'pedicure', description: 'rtghyjug', price: 30, duration: 40, icon: '✨' }
+                        ],
+                        reviews: [],
+                        settings: {
+                            name: 'Parrucchiere Rossi',
+                            phone: '+39 011 555 1234',
+                            email: 'info@parrucchiererossi.it',
+                            address: 'Via Roma 15, Torino',
+                            hoursStart: '09:00',
+                            hoursEnd: '18:00',
+                            satStart: '09:00',
+                            satEnd: '14:00',
+                            logo: null,
+                            dividers: {
+                                enabled: true,
+                                color: '#d4af37',
+                                height: 3,
+                                glowIntensity: 0.6,
+                                sections: ['hero-prenota', 'prenota-servizi', 'servizi-recensioni', 'recensioni-social', 'social-contatti']
+                            }
+                        },
+                        socialLinks: {
+                            facebook: 'https://facebook.com/parrucchiererossi',
+                            instagram: 'https://instagram.com/parrucchiererossi',
+                            tiktok: 'https://tiktok.com/@parrucchiererossi'
+                        },
+                        parrucchieri: [
+                            {
+                                id: 'p1',
+                                name: 'Marco',
+                                surname: 'Rossi',
+                                email: 'admin@admin.it',
+                                password: 'admin123',
+                                isOwner: true,
+                                specializations: ['Taglio Uomo', 'Taglio Donna', 'Colore', 'Barba'],
+                                hoursStart: '09:00',
+                                hoursEnd: '18:00',
+                                satStart: '09:00',
+                                satEnd: '14:00',
+                                phone: '+39 011 555 1234',
+                                photo: '',
+                                socialLinks: {
+                                    facebook: 'https://facebook.com/parrucchiererossi',
+                                    instagram: 'https://instagram.com/parrucchiererossi',
+                                    tiktok: 'https://tiktok.com/@parrucchiererossi'
+                                }
+                            },
+                            {
+                                id: 'p2',
+                                name: 'Anna',
+                                surname: 'Bianchi',
+                                email: 'anna@admin.it',
+                                password: 'anna123',
+                                isOwner: false,
+                                specializations: ['Taglio Donna', 'Styling', 'Colore'],
+                                hoursStart: '10:00',
+                                hoursEnd: '17:00',
+                                satStart: '09:00',
+                                satEnd: '14:00',
+                                phone: '+39 333 444 555',
+                                photo: ''
+                            }
+                        ],
+                        securityCodes: {
+                            accessCode1: '82947365019284756301',
+                            accessCode2: 'KXMQPVLZNRWHJDGFCBYA',
+                            description: 'Codici di accesso per la pagina di login parrucchiere'
+                        }
+                    };
+                }
+            };
+
+            // Firebase Sync - PRIMARY
+            const FirebaseSync = {
+                async load() {
+                    try {
+                        console.log('🔥 Caricando da Firebase...');
+                        const response = await fetch(
+                            `${window.FIREBASE_DB_URL}/businesses/${window.BUSINESS_ID}.json`,
+                            { method: 'GET' }
+                        );
+
+                        if (response.ok) {
+                            const data = await response.json();
+                            if (data) {
+                                console.log('🔥 ✅ Dati caricati da Firebase (PRIMARY)');
+                                // Salva backup in localStorage
+                                LocalStorage.save(data);
+                                return data;
+                            }
+                        }
+                    } catch (error) {
+                        console.log('⚠️ Firebase non disponibile, uso localStorage:', error.message);
+                    }
+                    return null;
+                },
+
+                async save(data) {
+                    try {
+                        const response = await fetch(
+                            `${window.FIREBASE_DB_URL}/businesses/${window.BUSINESS_ID}.json`,
+                            {
+                                method: 'PUT',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify(data)
+                            }
+                        );
+
+                        if (response.ok) {
+                            console.log('🔥 ✅ Dati salvati su Firebase (PRIMARY)');
+                            return true;
+                        }
+                    } catch (error) {
+                        console.log('⚠️ Firebase save fallito:', error.message);
+                    }
+                    return false;
+                }
+            };
+
+            // Database Adapter - Firebase PRIMARY, localStorage fallback
+            const DatabaseAdapter = {
+                async load() {
+                    // 1. Prova PRIMA Firebase (PRIMARY)
+                    const firebaseData = await FirebaseSync.load();
+                    if (firebaseData) {
+                        return firebaseData;
+                    }
+
+                    // 2. Se Firebase fallisce, usa localStorage (FALLBACK)
+                    console.log('⚠️ Firebase non disponibile, uso localStorage come fallback');
+                    const localData = LocalStorage.load();
+                    if (localData) {
+                        return localData;
+                    }
+
+                    // 3. Se anche localStorage è vuoto, usa default
+                    console.log('📦 Nessun dato trovato, uso default data');
+                    return LocalStorage.getDefaultData();
+                },
+
+                async save(data) {
+                    // Salva su Firebase (PRIMARY)
+                    const firebaseResult = await FirebaseSync.save(data);
+
+                    // Salva anche su localStorage (FALLBACK)
+                    LocalStorage.save(data);
+
+                    return firebaseResult;
+                }
+            };
+
+            // Expose globally
+            window.LocalStorage = LocalStorage;
+            window.FirebaseSync = FirebaseSync;
+            window.DatabaseAdapter = DatabaseAdapter;
+
+            console.log('%c✅ FIREBASE SYSTEM PRONTO', 'color: #ff6b35; font-size: 14px; font-weight: bold');
+        }
+    </script>
 
     <script>
         // ========================================
@@ -1123,13 +1395,89 @@
                 event.target.classList.add('active');
             }
 
+            // Update Dashboard title based on section
+            const titles = {
+                'dashboard': 'Dashboard',
+                'calendario': 'Calendario',
+                'prenotazioni': 'Prenotazioni',
+                'clienti': 'Clienti',
+                'servizi': 'Servizi',
+                'recensioni': 'Recensioni',
+                'impostazioni': 'Impostazioni'
+            };
+            const titleEl = document.getElementById('dashboardTitle');
+            if (titleEl && titles[sectionId]) {
+                titleEl.textContent = titles[sectionId];
+            }
+
             // Load section-specific data
             if (sectionId === 'prenotazioni') {
                 loadBookings();
+                loadServicesIntoTelDropdown();
+                loadParrucchieriIntoTelDropdown();
             } else if (sectionId === 'clienti') {
                 loadClients();
             } else if (sectionId === 'servizi') {
                 loadServices();
+            } else if (sectionId === 'recensioni') {
+                loadReviews();
+            }
+        }
+
+        // ========================================
+        // RECENSIONI
+        // ========================================
+        async function loadReviews() {
+            try {
+                const data = await firebaseLoad();
+                let reviews = data.reviews || [];
+                if (!Array.isArray(reviews)) reviews = Object.values(reviews);
+
+                // Filtra recensioni vuote/invalide
+                reviews = reviews.filter(r => r && r.cliente && r.cliente.trim() && r.comment && r.comment.trim() && r.rating > 0);
+
+                const container = document.getElementById('recensioniContainer');
+                if (!container) return;
+
+                if (reviews.length === 0) {
+                    container.innerHTML = '<p style="color: #999; text-align: center; padding: 30px;">Nessuna recensione ancora</p>';
+                    return;
+                }
+
+                // Carica nomi parrucchieri per mostrare di chi è la recensione
+                let parrucchieri = data.parrucchieri || [];
+                if (!Array.isArray(parrucchieri)) parrucchieri = Object.values(parrucchieri);
+                const parrucchieriMap = {};
+                parrucchieri.forEach(p => parrucchieriMap[p.id] = `${p.name} ${p.surname}`);
+
+                // Ordina per data (più recenti prima)
+                reviews.sort((a, b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0));
+
+                container.innerHTML = reviews.map(r => {
+                    const stars = '⭐'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+                    const parrucchiereNome = parrucchieriMap[r.parrucchiereId] || 'N/A';
+                    const dataRec = r.timestamp ? new Date(r.timestamp).toLocaleDateString('it-IT') : '';
+
+                    return `
+                        <div style="background: rgba(212, 175, 55, 0.05); border-left: 3px solid #d4af37; padding: 20px; margin-bottom: 15px; border-radius: 8px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                <div>
+                                    <div style="color: #d4af37; font-weight: 700; font-size: 18px;">${r.cliente || 'Cliente'}</div>
+                                    <div style="color: #999; font-size: 12px; margin-top: 4px;">${r.servizio || ''} • ${dataRec}</div>
+                                </div>
+                                <div style="font-size: 20px; color: #ffd700;">${stars}</div>
+                            </div>
+                            <div style="color: #f5f5f5; font-size: 14px; line-height: 1.6; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(212, 175, 55, 0.2);">
+                                💬 ${r.comment || ''}
+                            </div>
+                            <div style="color: #999; font-size: 11px; margin-top: 12px; text-align: right;">
+                                Parrucchiere: <span style="color: #d4af37; font-weight: 600;">${parrucchiereNome}</span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            } catch (err) {
+                console.error('Errore caricamento recensioni:', err);
             }
         }
 
@@ -1151,11 +1499,210 @@
         // DASHBOARD DATA
         // ========================================
 
-        function loadDashboardData() {
+        // ========================================
+        // COMPLETA PRENOTAZIONE + RICHIEDI RECENSIONE
+        // ========================================
+        async function completaPrenotazione(bookingId) {
+            if (!confirm('✅ Servizio completato?\n\nLa prenotazione verrà ELIMINATA definitivamente e verrà generato un link recensione per il cliente.')) return;
+
             try {
-                const data = LocalStorage.load();
-                const bookings = data.bookings || [];
-                const clients = data.clients || [];
+                const data = await firebaseLoad();
+                let bookings = Array.isArray(data.bookings) ? data.bookings : Object.values(data.bookings || {});
+
+                const idx = bookings.findIndex(b => b.id === bookingId);
+                if (idx === -1) {
+                    alert('❌ Prenotazione non trovata');
+                    return;
+                }
+
+                // Salva dati prenotazione per il link recensione PRIMA di eliminarla
+                const b = bookings[idx];
+                const reviewParams = new URLSearchParams({
+                    cliente: b.cliente || '',
+                    servizio: b.servizio || '',
+                    data: b.data || '',
+                    parrucchiereId: b.parrucchiereId || 'p1'
+                });
+
+                // ELIMINA definitivamente la prenotazione
+                bookings.splice(idx, 1);
+                data.bookings = bookings;
+
+                const ok = await firebaseSave(data);
+                if (ok) {
+                    // Genera link recensione (dati nel URL)
+                    const baseUrl = window.location.origin;
+                    const reviewUrl = `${baseUrl}/recensione.html?${reviewParams.toString()}`;
+
+                    // Mostra link da inviare al cliente
+                    prompt('✅ Prenotazione completata ed eliminata!\n\n📲 Invia questo link al cliente (WhatsApp/SMS) per la recensione:', reviewUrl);
+
+                    loadBookings();
+                } else {
+                    alert('❌ Errore nel salvataggio');
+                }
+            } catch (err) {
+                alert('❌ Errore: ' + err.message);
+            }
+        }
+
+        // ========================================
+        // PRENOTAZIONI TELEFONICHE
+        // ========================================
+
+        // Carica i servizi nel dropdown delle prenotazioni telefoniche
+        async function loadServicesIntoTelDropdown() {
+            try {
+                const data = await firebaseLoad();
+                const services = data.services || [];
+                const selectEl = document.getElementById('telServizio');
+
+                if (!selectEl) return;
+
+                selectEl.innerHTML = '<option value="">-- Seleziona --</option>';
+                services.forEach(s => {
+                    const opt = document.createElement('option');
+                    opt.value = `${s.name}|${s.price}|${s.duration}`;
+                    opt.textContent = `${s.name} - €${s.price} (${s.duration}min)`;
+                    selectEl.appendChild(opt);
+                });
+
+                console.log('✅ Servizi caricati nel dropdown telefono:', services.length);
+            } catch (err) {
+                console.error('❌ Errore caricamento servizi dropdown:', err);
+            }
+        }
+
+        // Carica anche parrucchieri nel dropdown
+        async function loadParrucchieriIntoTelDropdown() {
+            try {
+                const data = await firebaseLoad();
+                let parrucchieri = data.parrucchieri || [];
+                if (!Array.isArray(parrucchieri)) parrucchieri = Object.values(parrucchieri);
+
+                const selectEl = document.getElementById('telParrucchiere');
+                if (!selectEl) return;
+
+                selectEl.innerHTML = '';
+                parrucchieri.forEach(p => {
+                    const opt = document.createElement('option');
+                    opt.value = p.id;
+                    opt.textContent = `${p.name} ${p.surname}${p.isOwner ? ' (Titolare)' : ''}`;
+                    selectEl.appendChild(opt);
+                });
+            } catch (err) {
+                console.error('❌ Errore caricamento parrucchieri dropdown:', err);
+            }
+        }
+
+        async function salvaPrenotazioneTelefonica() {
+            const nome = document.getElementById('telNome').value.trim();
+            const cognome = document.getElementById('telCognome').value.trim();
+            const telefono = document.getElementById('telTelefono').value.trim();
+            const data = document.getElementById('telData').value;
+            const ora = document.getElementById('telOra').value;
+            const servizio = document.getElementById('telServizio').value;
+            const parrucchiereId = document.getElementById('telParrucchiere').value;
+
+            if (!nome || !cognome || !telefono || !data || !ora || !servizio) {
+                alert('❌ Compila tutti i campi');
+                return;
+            }
+
+            const [svcName, svcPrice, svcDuration] = servizio.split('|');
+
+            // Formato data italiano
+            const dateObj = new Date(data + 'T00:00:00');
+            const dataIT = dateObj.toLocaleDateString('it-IT');
+
+            const booking = {
+                id: 'booking_' + Date.now(),
+                cliente: nome + ' ' + cognome,
+                telefono: telefono,
+                data: dataIT,
+                ora: ora,
+                servizio: svcName,
+                prezzo: parseInt(svcPrice),
+                durata: parseInt(svcDuration),
+                parrucchiereId: parrucchiereId,
+                status: 'Confermata',
+                timestamp: new Date().toISOString(),
+                source: 'telefonica'
+            };
+
+            try {
+                const FIREBASE_URL = 'https://parrucchieri-online-default-rtdb.europe-west1.firebasedatabase.app';
+                const BUSINESS_ID = 'demo-parrucchiere-rossi';
+
+                // Carica dati attuali
+                const res = await fetch(`${FIREBASE_URL}/businesses/${BUSINESS_ID}.json`);
+                const allData = await res.json() || {};
+
+                let bookings = allData.bookings || [];
+                if (!Array.isArray(bookings)) bookings = Object.values(bookings);
+
+                bookings.push(booking);
+                allData.bookings = bookings;
+
+                // Salva su Firebase
+                const saveRes = await fetch(`${FIREBASE_URL}/businesses/${BUSINESS_ID}.json`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(allData)
+                });
+
+                if (saveRes.ok) {
+                    alert('✅ Prenotazione telefonica salvata!');
+                    // Pulisci i campi
+                    document.getElementById('telNome').value = '';
+                    document.getElementById('telCognome').value = '';
+                    document.getElementById('telTelefono').value = '';
+                    document.getElementById('telData').value = '';
+                    document.getElementById('telOra').value = '';
+                    document.getElementById('telServizio').value = '';
+                    // Ricarica dashboard
+                    loadDashboardData();
+                } else {
+                    alert('❌ Errore nel salvataggio');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('❌ Errore: ' + err.message);
+            }
+        }
+
+        async function loadDashboardData() {
+            try {
+                // Carica PRIMA da Firebase
+                let data = null;
+                try {
+                    const FIREBASE_URL = 'https://parrucchieri-online-default-rtdb.europe-west1.firebasedatabase.app';
+                    const BUSINESS_ID = 'demo-parrucchiere-rossi';
+                    const response = await fetch(`${FIREBASE_URL}/businesses/${BUSINESS_ID}.json`);
+                    if (response.ok) {
+                        data = await response.json();
+                        console.log('🔥 Dashboard: dati caricati da Firebase');
+                    }
+                } catch (e) {
+                    console.warn('⚠️ Firebase non disponibile, uso localStorage');
+                }
+
+                // Fallback localStorage
+                if (!data) {
+                    try {
+                        data = window.LocalStorage.load();
+                    } catch (e) {
+                        console.error('Errore caricamento LocalStorage:', e);
+                        data = {};
+                    }
+                }
+
+                let bookings = data.bookings || [];
+                // Converti in array se è oggetto
+                if (!Array.isArray(bookings)) {
+                    bookings = Object.values(bookings);
+                }
+
                 const services = data.services || [];
 
                 // Today's bookings
@@ -1166,16 +1713,81 @@
                 const totalBookings = bookings.filter(b => b.status !== 'cancelled').length;
 
                 // Unique clients
-                const uniqueClients = new Set(bookings.map(b => b.cliente)).size;
+                const uniqueClients = new Set(bookings.map(b => b.cliente || ((b.clientName || '') + ' ' + (b.clientSurname || '')).trim())).size;
 
                 // Available services
                 const availableServices = services.length;
 
                 // Update stats cards
-                document.querySelector('[data-stat="prenotazioni-oggi"]')?.textContent || (document.querySelector('[data-stat="prenotazioni-oggi"]').textContent = todayBookings);
-                document.querySelector('[data-stat="prenotazioni-totali"]')?.textContent || (document.querySelector('[data-stat="prenotazioni-totali"]').textContent = totalBookings);
-                document.querySelector('[data-stat="clienti-unici"]')?.textContent || (document.querySelector('[data-stat="clienti-unici"]').textContent = uniqueClients);
-                document.querySelector('[data-stat="servizi-disponibili"]')?.textContent || (document.querySelector('[data-stat="servizi-disponibili"]').textContent = availableServices);
+                const statOggi = document.getElementById('statOggi');
+                const statTotale = document.getElementById('statTotale');
+                const statClienti = document.getElementById('statClienti');
+                const statServizi = document.getElementById('statServizi');
+
+                if (statOggi) statOggi.textContent = todayBookings;
+                if (statTotale) statTotale.textContent = totalBookings;
+                if (statClienti) statClienti.textContent = uniqueClients;
+                if (statServizi) statServizi.textContent = availableServices;
+
+                // ===== PRENOTAZIONI RECENTI =====
+                const dashPrenotazioni = document.getElementById('dashboardPrenotazioni');
+                if (dashPrenotazioni) {
+                    // Prendi ultime 5 prenotazioni
+                    const recent = bookings.slice(-5).reverse();
+                    if (recent.length === 0) {
+                        dashPrenotazioni.innerHTML = '<p style="color: #999; padding: 20px; text-align: center;">Nessuna prenotazione</p>';
+                    } else {
+                        dashPrenotazioni.innerHTML = recent.map(b => {
+                            const nome = b.cliente || ((b.clientName || '') + ' ' + (b.clientSurname || '')).trim() || 'N/A';
+                            const data = b.data || b.date || 'N/A';
+                            const ora = b.ora || b.time || 'N/A';
+                            const servizio = b.servizio || b.service || 'N/A';
+                            return `
+                                <div style="background: rgba(212, 175, 55, 0.05); border-left: 3px solid #d4af37; padding: 15px; margin-bottom: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <div style="color: #d4af37; font-weight: 600; font-size: 16px;">${nome}</div>
+                                        <div style="color: #ccc; font-size: 13px; margin-top: 5px;">✂️ ${servizio}</div>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <div style="color: #d4af37; font-weight: 600;">📅 ${data}</div>
+                                        <div style="color: #ccc; font-size: 13px; margin-top: 5px;">⏰ ${ora}</div>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('');
+                    }
+                }
+
+                // ===== SERVIZI PIÙ RICHIESTI =====
+                const dashServizi = document.getElementById('dashboardServizi');
+                if (dashServizi) {
+                    // Conta i servizi
+                    const serviceCounts = {};
+                    bookings.forEach(b => {
+                        const s = b.servizio || b.service || 'Sconosciuto';
+                        serviceCounts[s] = (serviceCounts[s] || 0) + 1;
+                    });
+
+                    // Ordina per popolarità
+                    const sorted = Object.entries(serviceCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
+
+                    if (sorted.length === 0) {
+                        dashServizi.innerHTML = '<p style="color: #999; padding: 20px; text-align: center;">Nessun servizio</p>';
+                    } else {
+                        dashServizi.innerHTML = sorted.map(([servizio, count], idx) => {
+                            const medal = idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : '✂️';
+                            return `
+                                <div style="background: rgba(212, 175, 55, 0.05); border-left: 3px solid #d4af37; padding: 15px; margin-bottom: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                                    <div style="display: flex; align-items: center; gap: 15px;">
+                                        <span style="font-size: 24px;">${medal}</span>
+                                        <span style="color: #d4af37; font-weight: 600; font-size: 16px;">${servizio}</span>
+                                    </div>
+                                    <span style="background: rgba(212, 175, 55, 0.2); color: #d4af37; padding: 6px 12px; border-radius: 8px; font-weight: 600;">${count} prenotazion${count === 1 ? 'e' : 'i'}</span>
+                                </div>
+                            `;
+                        }).join('');
+                    }
+                }
             } catch (error) {
                 console.warn('Errore caricamento dati dashboard:', error);
             }
@@ -1185,46 +1797,97 @@
         // CALENDAR FUNCTIONS
         // ========================================
 
-        function generateCalendar() {
+        async function generateCalendar() {
             const monthYear = document.getElementById('monthYear');
             if (monthYear) {
-                monthYear.textContent = currentMonth.toLocaleDateString('it-IT', { month: 'long', year: 'numeric' });
+                const monthName = currentMonth.toLocaleDateString('it-IT', { month: 'long', year: 'numeric' });
+                monthYear.textContent = monthName.charAt(0).toUpperCase() + monthName.slice(1);
             }
 
-            const calendarDays = document.getElementById('calendarDays');
-            if (!calendarDays) return;
+            // BUG FIX: l'ID è calendarGrid, non calendarDays
+            const calendarGrid = document.getElementById('calendarGrid');
+            if (!calendarGrid) return;
 
-            calendarDays.innerHTML = '';
+            calendarGrid.innerHTML = '';
+
+            // Carica prenotazioni da Firebase per evidenziare giorni con prenotazioni
+            let bookingsPerDay = {};
+            try {
+                const data = await firebaseLoad();
+                let bookings = data.bookings || [];
+                if (!Array.isArray(bookings)) bookings = Object.values(bookings);
+
+                bookings.forEach(b => {
+                    let dateKey = b.data || b.date || '';
+                    // Converti formato italiano (gg/mm/aaaa) a (aaaa-mm-gg) per matching
+                    if (dateKey.includes('/')) {
+                        const parts = dateKey.split('/');
+                        if (parts.length === 3) {
+                            dateKey = `${parts[2]}-${parts[1].padStart(2,'0')}-${parts[0].padStart(2,'0')}`;
+                        }
+                    }
+                    if (dateKey) {
+                        bookingsPerDay[dateKey] = (bookingsPerDay[dateKey] || 0) + 1;
+                    }
+                });
+            } catch (e) { console.warn('Errore caricamento prenotazioni calendario:', e); }
 
             const year = currentMonth.getFullYear();
             const month = currentMonth.getMonth();
             const firstDay = new Date(year, month, 1);
             const lastDay = new Date(year, month + 1, 0);
             const daysInMonth = lastDay.getDate();
-            const startingDayOfWeek = firstDay.getDay();
+            // Lunedì = 0, Domenica = 6 (formato italiano)
+            let startingDayOfWeek = firstDay.getDay() - 1;
+            if (startingDayOfWeek < 0) startingDayOfWeek = 6;
 
             // Empty cells before month starts
             for (let i = 0; i < startingDayOfWeek; i++) {
                 const emptyDay = document.createElement('div');
-                emptyDay.className = 'calendar-day empty';
-                calendarDays.appendChild(emptyDay);
+                emptyDay.style.cssText = 'padding: 15px; background: transparent;';
+                calendarGrid.appendChild(emptyDay);
             }
 
             // Days of month
+            const today = new Date().toISOString().split('T')[0];
             for (let day = 1; day <= daysInMonth; day++) {
-                const dayElement = document.createElement('div');
-                dayElement.className = 'calendar-day';
-                dayElement.textContent = day;
-
                 const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-                const today = new Date().toISOString().split('T')[0];
+                const bookingsCount = bookingsPerDay[dateStr] || 0;
+                const isToday = dateStr === today;
+                const isPast = new Date(dateStr) < new Date(today);
 
-                if (dateStr === today) {
-                    dayElement.classList.add('today');
-                }
+                const dayElement = document.createElement('div');
+                dayElement.style.cssText = `
+                    padding: 12px 8px;
+                    text-align: center;
+                    border-radius: 8px;
+                    border: 1.5px solid ${isToday ? '#d4af37' : (bookingsCount > 0 ? 'rgba(212, 175, 55, 0.5)' : '#333')};
+                    background: ${isToday ? 'rgba(212, 175, 55, 0.2)' : (bookingsCount > 0 ? 'rgba(212, 175, 55, 0.05)' : '#0f0f0f')};
+                    min-height: 70px;
+                    cursor: pointer;
+                    transition: all 0.3s;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    opacity: ${isPast ? '0.5' : '1'};
+                `;
+
+                dayElement.innerHTML = `
+                    <div style="font-weight: 700; font-size: 16px; color: ${isToday ? '#fff' : '#d4af37'};">${day}</div>
+                    ${bookingsCount > 0 ? `<div style="font-size: 11px; color: #14c579; font-weight: 600; margin-top: 5px;">📋 ${bookingsCount}</div>` : ''}
+                `;
+
+                dayElement.onmouseenter = () => {
+                    dayElement.style.transform = 'scale(1.05)';
+                    dayElement.style.boxShadow = '0 4px 15px rgba(212, 175, 55, 0.3)';
+                };
+                dayElement.onmouseleave = () => {
+                    dayElement.style.transform = 'scale(1)';
+                    dayElement.style.boxShadow = 'none';
+                };
 
                 dayElement.addEventListener('click', () => showDayBookings(dateStr));
-                calendarDays.appendChild(dayElement);
+                calendarGrid.appendChild(dayElement);
             }
         }
 
@@ -1238,7 +1901,86 @@
             generateCalendar();
         }
 
-        function showDayBookings(dateStr) {
+        async function showDayBookings(dateStr) {
+            // Carica prenotazioni del giorno da Firebase
+            const data = await firebaseLoad();
+            let bookings = data.bookings || [];
+            if (!Array.isArray(bookings)) bookings = Object.values(bookings);
+
+            // Filtra prenotazioni del giorno
+            const dayBookings = bookings.filter(b => {
+                let bDate = b.data || b.date || '';
+                if (bDate.includes('/')) {
+                    const parts = bDate.split('/');
+                    if (parts.length === 3) {
+                        bDate = `${parts[2]}-${parts[1].padStart(2,'0')}-${parts[0].padStart(2,'0')}`;
+                    }
+                }
+                return bDate === dateStr;
+            });
+
+            const dateDisplay = new Date(dateStr).toLocaleDateString('it-IT', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+
+            // Costruisci contenuto modale
+            let modalContent = '';
+            if (dayBookings.length === 0) {
+                modalContent = `
+                    <div style="text-align: center; padding: 30px 0;">
+                        <div style="font-size: 50px; margin-bottom: 15px;">📅</div>
+                        <p style="color: #ccc; font-size: 16px;">Nessuna prenotazione per questo giorno</p>
+                    </div>
+                `;
+            } else {
+                // Ordina per ora
+                dayBookings.sort((a, b) => (a.ora || a.time || '').localeCompare(b.ora || b.time || ''));
+
+                modalContent = `
+                    <div style="background: rgba(212, 175, 55, 0.1); padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center;">
+                        <div style="color: #d4af37; font-size: 32px; font-weight: 700;">${dayBookings.length}</div>
+                        <div style="color: #ccc; font-size: 13px;">Appuntament${dayBookings.length === 1 ? 'o' : 'i'}</div>
+                    </div>
+                    <div style="display: grid; gap: 12px;">
+                ` + dayBookings.map(b => {
+                    const cliente = b.cliente || ((b.clientName || '') + ' ' + (b.clientSurname || '')).trim();
+                    return `
+                        <div style="background: rgba(212, 175, 55, 0.05); border-left: 3px solid #d4af37; padding: 15px; border-radius: 8px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <div style="color: #d4af37; font-weight: 700; font-size: 18px;">⏰ ${b.ora || b.time}</div>
+                                <div style="color: #14c579; font-size: 12px;">€${b.prezzo || b.price || ''}</div>
+                            </div>
+                            <div style="color: #f5f5f5; font-weight: 600; margin-bottom: 4px;">👤 ${cliente}</div>
+                            <div style="color: #ccc; font-size: 14px;">✂️ ${b.servizio || b.service} • ${b.durata || b.duration || ''} min</div>
+                        </div>
+                    `;
+                }).join('') + '</div>';
+            }
+
+            // Crea/aggiorna modale
+            let modal = document.getElementById('dayDetailModal');
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'dayDetailModal';
+                modal.style.cssText = 'display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999; align-items:center; justify-content:center; padding:20px;';
+                modal.onclick = (e) => { if (e.target === modal) modal.style.display = 'none'; };
+                document.body.appendChild(modal);
+            }
+
+            modal.innerHTML = `
+                <div style="background: linear-gradient(135deg, #1a1a1a, #252525); border: 2px solid #d4af37; border-radius: 16px; max-width: 550px; width: 100%; padding: 35px; box-shadow: 0 20px 60px rgba(212, 175, 55, 0.3); max-height: 85vh; overflow-y: auto;">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 20px;">
+                        <div>
+                            <h3 style="color: #d4af37; font-family: 'Playfair Display', serif; font-size: 24px; margin: 0;">📅 ${dateDisplay.charAt(0).toUpperCase() + dateDisplay.slice(1)}</h3>
+                        </div>
+                        <button onclick="document.getElementById('dayDetailModal').style.display='none'" style="background: none; border: none; color: #d4af37; font-size: 28px; cursor: pointer; line-height: 1;">&times;</button>
+                    </div>
+                    <div style="height: 1.5px; background: #d4af37; margin-bottom: 20px;"></div>
+                    ${modalContent}
+                    <button onclick="document.getElementById('dayDetailModal').style.display='none'" style="width: 100%; margin-top: 25px; padding: 12px; background: linear-gradient(135deg, #d4af37, #c0a080); color: #000; border: none; border-radius: 8px; font-weight: 700; cursor: pointer;">Chiudi</button>
+                </div>
+            `;
+            modal.style.display = 'flex';
+            return;
+
             const modal = document.getElementById('dayModal');
             if (modal) {
                 modal.style.display = 'flex';
@@ -1309,29 +2051,67 @@
         // BOOKINGS FUNCTIONS
         // ========================================
 
-        function loadBookings() {
+        async function loadBookings() {
             try {
-                const data = LocalStorage.load();
-                const bookings = data.bookings || [];
-                const tbody = document.getElementById('prenotazioniTable')?.querySelector('tbody') || document.createElement('tbody');
+                const data = await firebaseLoad();
 
+                // Popola dropdown filtro servizi da Firebase
+                const filterEl = document.getElementById('filterServizio');
+                if (filterEl) {
+                    const services = data.services || [];
+                    filterEl.innerHTML = '<option value="">-- Tutti i Servizi --</option>';
+                    services.forEach(s => {
+                        const opt = document.createElement('option');
+                        opt.value = s.name;
+                        opt.textContent = s.name;
+                        filterEl.appendChild(opt);
+                    });
+                }
+
+                let bookings = data.bookings || [];
+                if (!Array.isArray(bookings)) bookings = Object.values(bookings);
+
+                // Normalizza: gestisce entrambi i formati (cliente vs clientName)
+                bookings = bookings.map(b => ({
+                    ...b,
+                    cliente: b.cliente || ((b.clientName || '') + ' ' + (b.clientSurname || '')).trim(),
+                    data: b.data || b.date,
+                    ora: b.ora || b.time,
+                    servizio: b.servizio || b.service,
+                    telefono: b.telefono || b.clientPhone || b.phone,
+                    prezzo: b.prezzo || b.price,
+                    durata: b.durata || b.duration
+                })).filter(b => b.cliente && b.cliente.trim().length > 0 && b.data && b.ora);
+
+                const tbody = document.getElementById('prenotazioniTable')?.querySelector('tbody') || document.createElement('tbody');
                 tbody.innerHTML = '';
 
                 if (bookings.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px; color: #999;">Nessuna prenotazione</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 20px; color: #999;">Nessuna prenotazione</td></tr>';
                     return;
                 }
 
                 bookings.forEach(booking => {
                     const row = document.createElement('tr');
-                    const statusColor = getStatusColor(booking.status);
+                    const statusLower = (booking.status || '').toLowerCase();
+                    const isCompleted = statusLower.includes('complet');
+
+                    let actionCell = '';
+                    if (isCompleted) {
+                        actionCell = `<span style="padding: 6px 12px; border-radius: 6px; background: #14c579; color: #fff; font-size: 12px; font-weight: 600;">✅ Completato</span>`;
+                    } else {
+                        actionCell = `<button onclick="completaPrenotazione('${booking.id}')" style="padding: 8px 14px; background: linear-gradient(135deg, #d4af37, #c0a080); color: #000; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 12px;">✓ Completato</button>`;
+                    }
+
                     row.innerHTML = `
                         <td>${booking.data}</td>
                         <td>${booking.ora}</td>
                         <td>${booking.cliente}</td>
+                        <td>${booking.telefono || ''}</td>
                         <td>${booking.servizio}</td>
-                        <td>${booking.telefono}</td>
-                        <td><span style="padding: 4px 8px; border-radius: 4px; background: ${statusColor}; color: #fff; font-size: 12px;">${booking.status}</span></td>
+                        <td>€${booking.prezzo || ''}</td>
+                        <td>${booking.durata || ''} min</td>
+                        <td>${actionCell}</td>
                     `;
                     tbody.appendChild(row);
                 });
@@ -1340,30 +2120,62 @@
             }
         }
 
-        function applicaFiltri() {
-            const data = localStorage.getItem('bookingDB') ? JSON.parse(localStorage.getItem('bookingDB')) : {};
-            const bookings = data.bookings || [];
+        async function applicaFiltri() {
+            const data = await firebaseLoad();
+            let bookings = data.bookings || [];
+            if (!Array.isArray(bookings)) bookings = Object.values(bookings);
+
+            // Normalizza
+            bookings = bookings.map(b => ({
+                ...b,
+                id: b.id,
+                cliente: b.cliente || ((b.clientName || '') + ' ' + (b.clientSurname || '')).trim(),
+                data: b.data || b.date,
+                ora: b.ora || b.time,
+                servizio: b.servizio || b.service,
+                telefono: b.telefono || b.clientPhone || b.phone,
+                prezzo: b.prezzo || b.price,
+                durata: b.durata || b.duration
+            })).filter(b => b.cliente && b.cliente.trim().length > 0 && b.data && b.ora);
+
             const filterData = document.getElementById('filterData')?.value || '';
             const filterServizio = document.getElementById('filterServizio')?.value || '';
 
+            // Converti formato data input (yyyy-mm-dd) a italiano (dd/mm/yyyy) per match
+            let filterDataIT = filterData;
+            if (filterData && filterData.includes('-')) {
+                const parts = filterData.split('-');
+                filterDataIT = `${parts[2]}/${parts[1]}/${parts[0]}`;
+            }
+
             const filtered = bookings.filter(b => {
-                const matchData = !filterData || b.data === filterData;
+                const matchData = !filterData || b.data === filterDataIT || b.data === filterData;
                 const matchServizio = !filterServizio || b.servizio === filterServizio;
                 return matchData && matchServizio;
             });
 
             const tbody = document.getElementById('prenotazioniTable')?.querySelector('tbody');
             if (tbody) {
-                tbody.innerHTML = filtered.map(booking => `
+                tbody.innerHTML = filtered.map(booking => {
+                    const statusLower = (booking.status || '').toLowerCase();
+                    const isCompleted = statusLower.includes('complet');
+                    const actionCell = isCompleted
+                        ? `<span style="padding: 6px 12px; border-radius: 6px; background: #14c579; color: #fff; font-size: 12px; font-weight: 600;">✅ Completato</span>`
+                        : `<button onclick="completaPrenotazione('${booking.id}')" style="padding: 8px 14px; background: linear-gradient(135deg, #d4af37, #c0a080); color: #000; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 12px;">✓ Completato</button>`;
+
+                    return `
                     <tr>
                         <td>${booking.data}</td>
                         <td>${booking.ora}</td>
                         <td>${booking.cliente}</td>
+                        <td>${booking.telefono || ''}</td>
                         <td>${booking.servizio}</td>
-                        <td>${booking.telefono}</td>
-                        <td><span style="padding: 4px 8px; border-radius: 4px; background: ${getStatusColor(booking.status)}; color: #fff; font-size: 12px;">${booking.status}</span></td>
+                        <td>€${booking.prezzo || ''}</td>
+                        <td>${booking.durata || ''} min</td>
+                        <td>${actionCell}</td>
                     </tr>
-                `).join('');
+                    `;
+                }).join('');
             }
         }
 
@@ -1380,23 +2192,30 @@
         // CLIENTS FUNCTIONS
         // ========================================
 
-        function loadClients() {
+        async function loadClients() {
             try {
-                const data = LocalStorage.load();
-                const bookings = data.bookings || [];
-                const tbody = document.getElementById('clientiBody');
+                const data = await firebaseLoad();
+                let bookings = data.bookings || [];
+                if (!Array.isArray(bookings)) bookings = Object.values(bookings);
 
+                // Normalizza formati
+                bookings = bookings.map(b => ({
+                    cliente: b.cliente || ((b.clientName || '') + ' ' + (b.clientSurname || '')).trim(),
+                    telefono: b.telefono || b.clientPhone || b.phone
+                })).filter(b => b.cliente && b.cliente.trim().length > 0);
+
+                const tbody = document.getElementById('clientiBody');
                 if (!tbody) return;
                 tbody.innerHTML = '';
 
                 // Get unique clients from bookings
                 const clientsMap = new Map();
                 bookings.forEach(booking => {
-                    if (booking.cliente && booking.telefono) {
+                    if (booking.cliente) {
                         if (!clientsMap.has(booking.cliente)) {
                             clientsMap.set(booking.cliente, {
                                 nome: booking.cliente,
-                                telefono: booking.telefono,
+                                telefono: booking.telefono || '',
                                 count: 0
                             });
                         }
@@ -1429,9 +2248,9 @@
         // SERVICES FUNCTIONS
         // ========================================
 
-        function loadServices() {
+        async function loadServices() {
             try {
-                const data = LocalStorage.load();
+                const data = await firebaseLoad();
                 const services = data.services || [];
                 const tbody = document.getElementById('serviziBody') || document.querySelector('#serviziTable tbody');
 
@@ -1446,10 +2265,10 @@
                 services.forEach(service => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
-                        <td>${service.icon} ${service.name}</td>
+                        <td>${service.name}</td>
                         <td>€${service.price}</td>
                         <td>${service.duration} min</td>
-                        <td><small>${service.description}</small></td>
+                        <td><small>${service.description || ''}</small></td>
                     `;
                     tbody.appendChild(row);
                 });
@@ -1468,9 +2287,9 @@
             if (modal) modal.style.display = 'none';
         }
 
-        function saveService() {
+        async function saveService() {
             const name = document.getElementById('serviceName')?.value;
-            const description = document.getElementById('serviceDescription')?.value;
+            const description = document.getElementById('serviceDescription')?.value || '';
             const price = document.getElementById('servicePrice')?.value;
             const duration = document.getElementById('serviceDuration')?.value;
 
@@ -1479,37 +2298,167 @@
                 return;
             }
 
-            alert('✅ Servizio salvato: ' + name);
-            closeServiceModal();
-            loadServices();
+            try {
+                const data = await firebaseLoad();
+                if (!data.services) data.services = [];
+
+                const newService = {
+                    id: Date.now(),
+                    name: name,
+                    description: description,
+                    price: parseInt(price),
+                    duration: parseInt(duration),
+                    icon: '✂️'
+                };
+
+                data.services.push(newService);
+
+                const ok = await firebaseSave(data);
+                if (ok) {
+                    alert('✅ Servizio salvato su Firebase: ' + name);
+                    closeServiceModal();
+                    loadServices();
+                    loadServicesIntoTelDropdown(); // Aggiorna anche il dropdown telefonico
+                    // Pulisci i campi
+                    document.getElementById('serviceName').value = '';
+                    document.getElementById('serviceDescription').value = '';
+                    document.getElementById('servicePrice').value = '';
+                    document.getElementById('serviceDuration').value = '';
+                } else {
+                    alert('❌ Errore nel salvataggio');
+                }
+            } catch (err) {
+                alert('❌ Errore: ' + err.message);
+            }
         }
 
         // ========================================
         // SETTINGS FUNCTIONS
         // ========================================
 
-        function salvaSettingsSalone() {
-            const saloneName = document.getElementById('salonName')?.value;
-            const salonPhone = document.getElementById('salonPhone')?.value;
-            const salonEmail = document.getElementById('salonEmail')?.value;
-            const salonAddress = document.getElementById('salonAddress')?.value;
+        // ========================================
+        // HELPER: SALVA SU FIREBASE
+        // ========================================
+        const FIREBASE_URL = 'https://parrucchieri-online-default-rtdb.europe-west1.firebasedatabase.app';
+        const BUSINESS_ID = 'demo-parrucchiere-rossi';
 
-            alert('✅ Dati salone salvati');
-        }
-
-        function saveSocialLinks() {
-            const facebook = document.getElementById('facebookLink')?.value;
-            const instagram = document.getElementById('instagramLink')?.value;
-            const tiktok = document.getElementById('tiktokLink')?.value;
-
-            alert('✅ Link social salvati');
-        }
-
-        function uploadLogo() {
-            const fileInput = document.getElementById('logoUpload');
-            if (fileInput) {
-                fileInput.click();
+        async function firebaseLoad() {
+            try {
+                const res = await fetch(`${FIREBASE_URL}/businesses/${BUSINESS_ID}.json`);
+                return await res.json() || {};
+            } catch (e) {
+                console.error(e);
+                return {};
             }
+        }
+
+        async function firebaseSave(data) {
+            try {
+                const res = await fetch(`${FIREBASE_URL}/businesses/${BUSINESS_ID}.json`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                return res.ok;
+            } catch (e) {
+                console.error(e);
+                return false;
+            }
+        }
+
+        async function salvaSettingsSalone() {
+            const saloneName = document.getElementById('salonName')?.value || '';
+            const salonPhone = document.getElementById('salonPhone')?.value || '';
+            const salonEmail = document.getElementById('salonEmail')?.value || '';
+            const salonAddress = document.getElementById('salonAddress')?.value || '';
+            const salonCity = document.getElementById('salonCity')?.value || '';
+            const hoursWeekday = document.getElementById('hoursWeekday')?.value || '';
+            const hoursSaturday = document.getElementById('hoursSaturday')?.value || '';
+            const hoursSunday = document.getElementById('hoursSunday')?.value || '';
+
+            try {
+                const data = await firebaseLoad();
+                if (!data.settings) data.settings = {};
+
+                data.settings.name = saloneName;
+                data.settings.phone = salonPhone;
+                data.settings.email = salonEmail;
+                data.settings.address = salonAddress;
+                data.settings.city = salonCity;
+                data.settings.hoursWeekday = hoursWeekday;
+                data.settings.hoursSaturday = hoursSaturday;
+                data.settings.hoursSunday = hoursSunday;
+
+                const ok = await firebaseSave(data);
+                if (ok) {
+                    alert('✅ Dati salone salvati su Firebase!');
+                    // Aggiorna anche il nome nella sidebar
+                    const sidebarTitle = document.getElementById('salonNameDisplay');
+                    if (sidebarTitle && saloneName) sidebarTitle.textContent = saloneName;
+                } else {
+                    alert('❌ Errore nel salvataggio');
+                }
+            } catch (err) {
+                alert('❌ Errore: ' + err.message);
+            }
+        }
+
+        async function saveSocialLinks() {
+            const facebook = document.getElementById('facebookLink')?.value || '';
+            const instagram = document.getElementById('instagramLink')?.value || '';
+            const tiktok = document.getElementById('tiktokLink')?.value || '';
+
+            try {
+                const data = await firebaseLoad();
+                if (!data.socialLinks) data.socialLinks = {};
+
+                data.socialLinks.facebook = facebook;
+                data.socialLinks.instagram = instagram;
+                data.socialLinks.tiktok = tiktok;
+
+                const ok = await firebaseSave(data);
+                alert(ok ? '✅ Link social salvati su Firebase!' : '❌ Errore nel salvataggio');
+            } catch (err) {
+                alert('❌ Errore: ' + err.message);
+            }
+        }
+
+        async function uploadLogo() {
+            const fileInput = document.getElementById('logoUpload');
+            if (!fileInput) return;
+
+            // Se non c'è file selezionato, apri il selector
+            if (!fileInput.files || fileInput.files.length === 0) {
+                fileInput.click();
+                // Quando l'utente seleziona, ricarica la funzione
+                fileInput.onchange = () => uploadLogo();
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = async (e) => {
+                const logoBase64 = e.target.result;
+                try {
+                    const data = await firebaseLoad();
+                    if (!data.settings) data.settings = {};
+                    data.settings.logo = logoBase64;
+
+                    const ok = await firebaseSave(data);
+                    if (ok) {
+                        alert('✅ Logo caricato su Firebase!');
+                        // Aggiorna preview
+                        const preview = document.getElementById('logoPreview');
+                        if (preview) preview.src = logoBase64;
+                    } else {
+                        alert('❌ Errore nel caricamento');
+                    }
+                } catch (err) {
+                    alert('❌ Errore: ' + err.message);
+                }
+            };
+            reader.readAsDataURL(file);
         }
 
         // ========================================
@@ -1536,7 +2485,7 @@
             if (modal) modal.style.display = 'none';
         }
 
-        function saveNewPassword() {
+        async function saveNewPassword() {
             const currentPassword = document.getElementById('currentPassword')?.value;
             const newPassword = document.getElementById('newPassword')?.value;
             const confirmPassword = document.getElementById('confirmPassword')?.value;
@@ -1556,11 +2505,46 @@
                 return;
             }
 
-            alert('✅ Password cambiata con successo');
-            closePasswordModal();
+            try {
+                const loggedInEmail = localStorage.getItem('loggedInEmail');
+                const data = await firebaseLoad();
+
+                if (!data.parrucchieri) {
+                    alert('❌ Errore: dati parrucchieri non trovati');
+                    return;
+                }
+
+                let parrucchieri = Array.isArray(data.parrucchieri) ? data.parrucchieri : Object.values(data.parrucchieri);
+
+                // Trova parrucchiere e verifica password attuale
+                const idx = parrucchieri.findIndex(p => p.email === loggedInEmail);
+                if (idx === -1) {
+                    alert('❌ Parrucchiere non trovato');
+                    return;
+                }
+
+                if (parrucchieri[idx].password !== currentPassword) {
+                    alert('❌ Password attuale non corretta');
+                    return;
+                }
+
+                // Aggiorna password
+                parrucchieri[idx].password = newPassword;
+                data.parrucchieri = parrucchieri;
+
+                const ok = await firebaseSave(data);
+                if (ok) {
+                    alert('✅ Password cambiata su Firebase!');
+                    closePasswordModal();
+                } else {
+                    alert('❌ Errore nel salvataggio');
+                }
+            } catch (err) {
+                alert('❌ Errore: ' + err.message);
+            }
         }
 
-        function saveNewEmail() {
+        async function saveNewEmail() {
             const newEmail = document.getElementById('newEmail')?.value;
             const confirmEmail = document.getElementById('confirmEmail')?.value;
 
@@ -1574,8 +2558,37 @@
                 return;
             }
 
-            alert('✅ Email cambiata con successo');
-            closeEmailModal();
+            try {
+                const loggedInEmail = localStorage.getItem('loggedInEmail');
+                const data = await firebaseLoad();
+
+                if (!data.parrucchieri) {
+                    alert('❌ Errore: dati parrucchieri non trovati');
+                    return;
+                }
+
+                let parrucchieri = Array.isArray(data.parrucchieri) ? data.parrucchieri : Object.values(data.parrucchieri);
+
+                const idx = parrucchieri.findIndex(p => p.email === loggedInEmail);
+                if (idx === -1) {
+                    alert('❌ Parrucchiere non trovato');
+                    return;
+                }
+
+                parrucchieri[idx].email = newEmail;
+                data.parrucchieri = parrucchieri;
+
+                const ok = await firebaseSave(data);
+                if (ok) {
+                    localStorage.setItem('loggedInEmail', newEmail);
+                    alert('✅ Email cambiata su Firebase!');
+                    closeEmailModal();
+                } else {
+                    alert('❌ Errore nel salvataggio');
+                }
+            } catch (err) {
+                alert('❌ Errore: ' + err.message);
+            }
         }
 
         // ========================================
@@ -1603,12 +2616,14 @@
         // LOGIN HANDLER FOR THIS FILE
         // ========================================
 
-        function handleLoginInFile(event) {
+        async function handleLoginInFile(event) {
             event.preventDefault();
 
             const emailInput = document.getElementById('email').value.trim();
             const passwordInput = document.getElementById('password').value.trim();
             const errorMsg = document.getElementById('errorMsg');
+
+            console.log('🔐 LOGIN ATTEMPT:', { emailInput, passwordInput });
 
             if (!emailInput || !passwordInput) {
                 errorMsg.textContent = '❌ Inserisci email e password';
@@ -1624,29 +2639,80 @@
 
             try {
                 let data = null;
-                if (typeof LocalStorage !== 'undefined' && LocalStorage.load) {
-                    data = LocalStorage.load();
+
+                // FIREBASE PRIMARY - carica direttamente da Firebase
+                console.log('🔥 Loading from Firebase...');
+                try {
+                    const FB_URL = 'https://parrucchieri-online-default-rtdb.europe-west1.firebasedatabase.app';
+                    const BIZ_ID = 'demo-parrucchiere-rossi';
+                    const res = await fetch(`${FB_URL}/businesses/${BIZ_ID}.json`);
+                    if (res.ok) {
+                        data = await res.json();
+                        console.log('🔥 ✅ Dati caricati da Firebase!');
+                    }
+                } catch (e) {
+                    console.warn('⚠️ Firebase non disponibile:', e.message);
                 }
+
+                // Fallback localStorage
                 if (!data) {
+                    console.log('📦 Trying localStorage.getItem()');
                     const stored = localStorage.getItem('bookingDB');
                     if (stored) {
                         data = JSON.parse(stored);
-                    }
-                }
-                if (!data || !data.parrucchieri) {
-                    if (typeof LocalStorage !== 'undefined' && LocalStorage.getDefaultData) {
-                        data = LocalStorage.getDefaultData();
-                    } else {
-                        throw new Error('Sistema non inizializzato');
+                        console.log('✅ Got data from localStorage');
                     }
                 }
 
-                const parrucchiere = data.parrucchieri.find(p =>
-                    p.email.toLowerCase() === email && p.password === password
-                );
+                // If still empty, use default data
+                if (!data || !data.parrucchieri) {
+                    console.log('📦 Using default data');
+                    if (window.LocalStorage && typeof window.LocalStorage.getDefaultData === 'function') {
+                        data = window.LocalStorage.getDefaultData();
+                        console.log('✅ Default data loaded');
+                    } else {
+                        console.error('❌ LocalStorage non disponibile!');
+                        throw new Error('Sistema non inizializzato - LocalStorage non disponibile');
+                    }
+                }
+
+                // Normalizza parrucchieri (può essere oggetto o array)
+                if (data.parrucchieri && !Array.isArray(data.parrucchieri)) {
+                    data.parrucchieri = Object.values(data.parrucchieri);
+                }
+
+                // Log available credentials
+                console.log('📋 Available credentials:');
+                data.parrucchieri.forEach(p => {
+                    if (p && p.email) {
+                        console.log(`  - ${p.email} / ${p.password || '(no password)'}`);
+                    } else {
+                        console.warn('  - ⚠️ Parrucchiere senza email:', p);
+                    }
+                });
+
+                // Find parrucchiere
+                console.log('🔍 Searching for:', { email, password });
+                const parrucchiere = data.parrucchieri.find(p => {
+                    if (!p || !p.email || !p.password) {
+                        console.warn('⚠️ Parrucchiere con dati incompleti:', p);
+                        return false;
+                    }
+                    try {
+                        const pEmail = String(p.email).toLowerCase().trim();
+                        const pPassword = String(p.password).trim();
+                        const emailMatch = pEmail === email;
+                        const passwordMatch = pPassword === password;
+                        console.log(`  Checking: ${pEmail} === ${email} (${emailMatch}) && ${pPassword} === ${password} (${passwordMatch})`);
+                        return emailMatch && passwordMatch;
+                    } catch (e) {
+                        console.error('❌ Errore nel controllo credenziali:', e, p);
+                        return false;
+                    }
+                });
 
                 if (parrucchiere) {
-                    console.log('✅ LOGIN RIUSCITO:', parrucchiere.name);
+                    console.log('✅✅✅ LOGIN RIUSCITO:', parrucchiere.name, parrucchiere.surname);
 
                     // Salva sessione
                     localStorage.setItem('loggedInEmail', parrucchiere.email);
@@ -1661,16 +2727,27 @@
                         loginTime: new Date().toISOString()
                     }));
 
+                    console.log('💾 Session saved');
+
                     // Nascondi login, mostra dashboard
                     document.getElementById('loginScreen').style.display = 'none';
                     document.getElementById('dashboardContainer').style.display = 'block';
 
+                    console.log('✅ UI updated - dashboard shown');
+
                     // Carica dati dashboard
-                    loadDashboardData();
-                    generateCalendar();
-                    initializeSidebar();
+                    try {
+                        await loadDashboardData();
+                        await generateCalendar();
+                        initializeSidebar();
+                        console.log('✅ Dashboard loaded');
+                    } catch (initError) {
+                        console.error('❌ Errore durante init:', initError);
+                        throw new Error('Errore caricamento dashboard: ' + initError.message);
+                    }
                 } else {
-                    errorMsg.textContent = '❌ Email o password non corretti';
+                    console.log('❌ CREDENZIALI NON VALIDE');
+                    errorMsg.textContent = '❌ Email o password non corretti. Verifica i dati.';
                     errorMsg.style.display = 'block';
                     document.getElementById('email').value = '';
                     document.getElementById('password').value = '';
@@ -1679,20 +2756,33 @@
                     }, 5000);
                 }
             } catch (error) {
+                console.error('❌ ERRORE:', error);
                 errorMsg.textContent = '❌ Errore: ' + error.message;
                 errorMsg.style.display = 'block';
             }
         }
 
         // Mostra login o dashboard al caricamento
-        window.addEventListener('load', function() {
+        window.addEventListener('load', async function() {
             const loggedInEmail = localStorage.getItem('loggedInEmail');
             if (loggedInEmail) {
-                document.getElementById('loginScreen').style.display = 'none';
-                document.getElementById('dashboardContainer').style.display = 'block';
-                loadDashboardData();
-                generateCalendar();
-                initializeSidebar();
+                try {
+                    document.getElementById('loginScreen').style.display = 'none';
+                    document.getElementById('dashboardContainer').style.display = 'block';
+                    await loadDashboardData();
+                    await generateCalendar();
+                    initializeSidebar();
+                    console.log('✅ Dashboard restored from session');
+                } catch (err) {
+                    console.error('❌ Errore ripristino dashboard:', err);
+                    // Se c'è errore, fai logout e mostra login screen
+                    localStorage.removeItem('loggedInEmail');
+                    localStorage.removeItem('currentParrucchiereId');
+                    localStorage.removeItem('isOwner');
+                    localStorage.removeItem('parrucchiereSession');
+                    document.getElementById('loginScreen').style.display = 'flex';
+                    document.getElementById('dashboardContainer').style.display = 'none';
+                }
             } else {
                 document.getElementById('loginScreen').style.display = 'flex';
                 document.getElementById('dashboardContainer').style.display = 'none';
