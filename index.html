@@ -133,6 +133,7 @@
             padding: 6px 0;
             border-bottom: 2px solid transparent;
             white-space: nowrap;
+            margin-bottom: 8px;
         }
 
         .nav-menu a:hover {
@@ -651,7 +652,7 @@
     </section>
 
     <!-- DIVIDER (FALLBACK FROM HTML) -->
-    <div style="height: 1px; background: #d4af37; width: 100vw; margin: 0; padding: 0; margin-left: calc(-50vw + 50%); box-shadow: none; z-index: 10; display: block; line-height: 1;"></div>
+    <div style="height: 1.5px; background: #d4af37; width: 100vw; margin: 0; padding: 0; margin-left: calc(-50vw + 50%); box-shadow: none; z-index: 10; display: block; line-height: 1;"></div>
 
     <!-- BOOKING FORM SECTION -->
     <section id="prenota" style="background: #1a1a1a; padding: 80px 64px;">
@@ -702,6 +703,14 @@
                     </div>
                 </div>
 
+                <!-- PARRUCCHIERE DROPDOWN -->
+                <div style="margin-top: 25px; padding-top: 25px; border-top: 1px solid rgba(212, 175, 55, 0.3);">
+                    <label style="color: #d4af37; font-weight: 700; display: block; margin-bottom: 8px;">💇 Scegli il Parrucchiere</label>
+                    <select id="bookingParrucchiere" required onchange="updateAvailableTimes()" style="background: #1a1a1a; color: #f5f5f5; border: 1px solid #333; padding: 12px; font-weight: 600; width: 100%; font-size: 16px; cursor: pointer; border-radius: 4px;">
+                        <option value="">-- Seleziona un parrucchiere --</option>
+                    </select>
+                </div>
+
                 <!-- ORARI DISPONIBILI -->
                 <div style="margin-top: 30px; padding-top: 30px; border-top: 1px solid rgba(212, 175, 55, 0.3); min-height: 80px;">
                     <label style="color: #d4af37; font-weight: 700; display: block; margin-bottom: 15px;">⏰ Scegli l'Orario</label>
@@ -732,7 +741,7 @@
     </section>
 
     <!-- DIVIDER (FALLBACK FROM HTML) -->
-    <div style="height: 1px; background: #d4af37; width: 100vw; margin: 0; padding: 0; margin-left: calc(-50vw + 50%); box-shadow: none; z-index: 10; display: block; line-height: 1;"></div>
+    <div style="height: 1.5px; background: #d4af37; width: 100vw; margin: 0; padding: 0; margin-left: calc(-50vw + 50%); box-shadow: none; z-index: 10; display: block; line-height: 1;"></div>
 
     <!-- SERVIZI SECTION -->
     <section id="servizi" style="background: #0f0f0f; padding: 80px 64px;">
@@ -743,7 +752,7 @@
     </section>
 
     <!-- DIVIDER (FALLBACK FROM HTML) -->
-    <div style="height: 1px; background: #d4af37; width: 100vw; margin: 0; padding: 0; margin-left: calc(-50vw + 50%); box-shadow: none; z-index: 10; display: block; line-height: 1;"></div>
+    <div style="height: 1.5px; background: #d4af37; width: 100vw; margin: 0; padding: 0; margin-left: calc(-50vw + 50%); box-shadow: none; z-index: 10; display: block; line-height: 1;"></div>
 
     <!-- RECENSIONI SECTION -->
     <section id="recensioni" style="background: #1a1a1a; padding: 80px 64px;">
@@ -773,10 +782,10 @@
     </section>
 
     <!-- DIVIDER (FALLBACK FROM HTML) -->
-    <div style="height: 1px; background: #d4af37; width: 100vw; margin: 0; padding: 0; margin-left: calc(-50vw + 50%); box-shadow: none; z-index: 10; display: block; line-height: 1;"></div>
+    <div style="height: 1.5px; background: #d4af37; width: 100vw; margin: 0; padding: 0; margin-left: calc(-50vw + 50%); box-shadow: none; z-index: 10; display: block; line-height: 1;"></div>
 
     <!-- SEGUICI SUI SOCIAL SECTION -->
-    <section id="social" style="background: linear-gradient(135deg, #1a1a1a, #252525); padding: 80px 64px; scroll-margin-top: 82px; margin: 0;">
+    <section id="social" style="background: linear-gradient(135deg, #1a1a1a, #252525); padding: 30px 64px 80px 64px; scroll-margin-top: 82px; margin: 0;">
         <div style="max-width: 1280px; margin: 0 auto; text-align: center;">
             <h2 style="font-family: 'Playfair Display', serif; font-size: 42px; color: #d4af37; margin-bottom: 15px;">📱 Seguici sui Social</h2>
             <p style="color: #cccccc; font-size: 16px; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto;">
@@ -827,7 +836,7 @@
     </section>
 
     <!-- DIVIDER (FALLBACK FROM HTML) -->
-    <div style="height: 1px; background: #d4af37; width: 100vw; margin: 0; padding: 0; margin-left: calc(-50vw + 50%); box-shadow: none; z-index: 10; display: block; line-height: 1;"></div>
+    <div style="height: 1.5px; background: #d4af37; width: 100vw; margin: 0; padding: 0; margin-left: calc(-50vw + 50%); box-shadow: none; z-index: 10; display: block; line-height: 1;"></div>
 
     <!-- CONTATTI SECTION -->
     <section id="contatti" style="background: #0f0f0f; padding: 80px 64px;">
@@ -937,7 +946,7 @@
             <div class="footer-section">
                 <h4>Legale</h4>
                 <ul style="list-style: none; padding: 0; margin: 0;">
-                    <li style="margin-top: 10px;"><a href="#" onclick="window.open('privacy.html', '_blank', 'width=900,height=700'); return false;" style="color: #ccc; text-decoration: none;">Privacy Policy</a></li>
+                    <li style="margin-top: 10px;"><a href="#" onclick="document.getElementById('privacyModal').style.display='flex'; return false;" style="color: #ccc; text-decoration: none;">Privacy Policy</a></li>
                 </ul>
             </div>
         </div>
@@ -949,7 +958,7 @@
 
     <!-- Firebase REST API - Soluzione Definitiva (No SDK, No Errors) -->
     <script src="firebase-rest.js"></script>
-    <script src="create-collega-modal.js"></script>
+    <!-- Pulsante crea collega solo nel dashboard parrucchiere, NON in index.html -->
     <script src="collega-dashboard.js"></script>
 
     <!-- Rimuovi banner e pulsante + se non loggato come parrucchiere -->
@@ -1021,6 +1030,44 @@
         }
 
         // Carica servizi da Firebase all'avvio
+        // Carica parrucchieri da Firebase e popola dropdown
+        async function loadParrucchieriFromFirebase() {
+            try {
+                const FIREBASE_URL = 'https://parrucchieri-online-default-rtdb.europe-west1.firebasedatabase.app';
+                const BUSINESS_ID = 'demo-parrucchiere-rossi';
+
+                const response = await fetch(`${FIREBASE_URL}/businesses/${BUSINESS_ID}/parrucchieri.json`);
+                let parrucchieri = await response.json();
+
+                // Se non trovati su Firebase, usa default
+                if (!parrucchieri) {
+                    parrucchieri = [
+                        { id: 'p1', name: 'Marco', surname: 'Rossi' },
+                        { id: 'p2', name: 'Anna', surname: 'Bianchi' }
+                    ];
+                }
+
+                // Converti in array se è oggetto
+                if (!Array.isArray(parrucchieri)) {
+                    parrucchieri = Object.values(parrucchieri);
+                }
+
+                const selectEl = document.getElementById('bookingParrucchiere');
+                if (selectEl) {
+                    selectEl.innerHTML = '<option value="">-- Seleziona un parrucchiere --</option>';
+                    parrucchieri.forEach(p => {
+                        const option = document.createElement('option');
+                        option.value = p.id;
+                        option.textContent = `${p.name} ${p.surname}${p.isOwner ? ' (Titolare)' : ''}`;
+                        selectEl.appendChild(option);
+                    });
+                    console.log('✅ Parrucchieri caricati:', parrucchieri.length);
+                }
+            } catch (err) {
+                console.error('❌ Errore caricamento parrucchieri:', err);
+            }
+        }
+
         async function loadServicesFromFirebase() {
             try {
                 if (typeof DatabaseAdapter === 'undefined') {
@@ -1702,11 +1749,11 @@
                     const targetSection = document.querySelector(selector.target);
                     if (!targetSection) return;
 
-                    // Crea il divider - 1px sottile e ORO
+                    // Crea il divider - 1.5px sottile e ORO
                     const divider = document.createElement('div');
                     divider.id = selector.id;
                     divider.style.cssText = `
-                        height: 1px;
+                        height: 1.5px;
                         background: #d4af37;
                         width: 100vw;
                         margin: 0;
@@ -1750,6 +1797,9 @@
                 await loadServicesFromFirebase();
                 loadServices();
 
+                // Carica parrucchieri da Firebase
+                await loadParrucchieriFromFirebase();
+
                 // Inizializza e salva social links in Firebase
                 await initializeSocialLinksInFirebase();
                 loadSocialLinks();
@@ -1778,5 +1828,20 @@
             })();
         });
     </script>
+    <!-- PRIVACY POLICY MODAL -->
+    <div id="privacyModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9999; align-items: center; justify-content: center; padding: 20px;" onclick="if(event.target===this) this.style.display='none';">
+        <div style="background: linear-gradient(135deg, #1a1a1a, #252525); border: 2px solid #d4af37; border-radius: 16px; max-width: 600px; width: 100%; padding: 40px; box-shadow: 0 20px 60px rgba(212, 175, 55, 0.3); max-height: 85vh; overflow-y: auto;">
+            <div style="text-align: center; margin-bottom: 25px;">
+                <h2 style="font-family: 'Playfair Display', serif; color: #d4af37; font-size: 32px; margin-bottom: 10px;">Privacy Policy</h2>
+                <p style="color: #ccc; font-size: 14px;">Parrucchiere Rossi - Tutela dei dati personali</p>
+                <div style="height: 1.5px; background: #d4af37; width: 80%; margin: 20px auto;"></div>
+            </div>
+            <p style="color: #f5f5f5; font-size: 15px; line-height: 1.7; margin-bottom: 30px;">
+                Raccogliamo il tuo nome, telefono ed email per gestire la tua prenotazione e contattarti per il tuo appuntamento. I tuoi dati sono protetti e non saranno condivisi con nessuno.
+            </p>
+            <button onclick="document.getElementById('privacyModal').style.display='none';" style="width: 100%; padding: 14px; background: linear-gradient(135deg, #d4af37, #c0a080); color: #000; border: none; border-radius: 8px; font-weight: 700; font-size: 16px; cursor: pointer; transition: all 0.3s;">Chiudi</button>
+        </div>
+    </div>
+
 </body>
 </html>

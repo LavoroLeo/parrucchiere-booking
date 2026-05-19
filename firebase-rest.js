@@ -481,10 +481,13 @@ const script4 = document.createElement('script');
 script4.src = 'dashboard-columns.js';
 document.head.appendChild(script4);
 
-// Carica il create collega modal
-const script5 = document.createElement('script');
-script5.src = 'create-collega-modal.js';
-document.head.appendChild(script5);
+// Carica il create collega modal SOLO se loggato come Owner
+const isOwnerLoggedIn = localStorage.getItem('isOwner') === 'true' && !!localStorage.getItem('loggedInEmail');
+if (isOwnerLoggedIn) {
+    const script5 = document.createElement('script');
+    script5.src = 'create-collega-modal.js';
+    document.head.appendChild(script5);
+}
 
 // Carica il collega dashboard (filtra prenotazioni per collega)
 const script6 = document.createElement('script');

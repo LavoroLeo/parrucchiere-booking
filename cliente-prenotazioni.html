@@ -1366,6 +1366,7 @@
                 </div>
                 <button type="submit" class="btn-login">🔓 Accedi</button>
             </form>
+            <div id="loginErrorMsg" style="display: none; background: rgba(231, 76, 60, 0.15); color: #e74c3c; padding: 12px; border-radius: 8px; margin-top: 15px; border-left: 3px solid #e74c3c; font-size: 13px;"></div>
             <a href="index.html" class="back-btn" style="margin-top: 20px; display: inline-block;">← Torna alla Home</a>
         </div>
 
@@ -1465,130 +1466,314 @@
 
     <!-- VERIFICA CODICI ACCESSO PARRUCCHIERE -->
     <script>
+        // ========================================
+        // ANNULLA APPUNTAMENTO
+        // ========================================
+        async function annullaAppuntamento(bookingId) {
+            // Mostra conferma personalizzata
+            const conferma = confirm('⚠️ Sei sicuro di voler annullare l\'appuntamento?\n\nQuesta azione non può essere annullata.');
+
+            if (!conferma) {
+                console.log('❌ Annullamento cancellato');
+                return;
+            }
+
+            console.log('🗑️ Annullando prenotazione:', bookingId);
+
+            try {
+                const FIREBASE_URL = 'https://parrucchieri-online-default-rtdb.europe-west1.firebasedatabase.app';
+                const BUSINESS_ID = 'demo-parrucchiere-rossi';
+
+                // Carica i dati attuali da Firebase
+                const response = await fetch(`${FIREBASE_URL}/businesses/${BUSINESS_ID}.json`);
+                const data = await response.json();
+
+                if (!data || !data.bookings) {
+                    alert('❌ Errore: prenotazioni non trovate');
+                    return;
+                }
+
+                // Converti in array se è oggetto
+                let bookingsArray = Array.isArray(data.bookings) ? data.bookings : Object.values(data.bookings);
+
+                // Filtra rimuovendo la prenotazione
+                const newBookings = bookingsArray.filter(b => b.id !== bookingId);
+
+                console.log('Prenotazioni prima:', bookingsArray.length);
+                console.log('Prenotazioni dopo:', newBookings.length);
+
+                // Aggiorna i dati
+                data.bookings = newBookings;
+
+                // Salva su Firebase
+                const saveResponse = await fetch(`${FIREBASE_URL}/businesses/${BUSINESS_ID}.json`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (saveResponse.ok) {
+                    console.log('✅ Prenotazione annullata su Firebase');
+
+                    // Aggiorna anche localStorage
+                    try {
+                        localStorage.setItem('bookingDB', JSON.stringify(data));
+                    } catch (e) {}
+
+                    alert('✅ Appuntamento annullato con successo!');
+
+                    // Torna alla schermata di login
+                    document.getElementById('loginSection').classList.add('active');
+                    document.getElementById('loginSection').style.display = 'block';
+                    document.getElementById('prenotazioniSection').classList.remove('active');
+                    document.getElementById('prenotazioniSection').style.display = 'none';
+
+                    // Pulisci i campi
+                    document.getElementById('clientName').value = '';
+                    document.getElementById('clientSurname').value = '';
+                } else {
+                    alert('❌ Errore nel salvataggio. Riprova.');
+                }
+            } catch (err) {
+                console.error('❌ Errore:', err);
+                alert('❌ Errore: ' + err.message);
+            }
+        }
+
         async function handleLogin(event) {
             event.preventDefault();
 
+            console.log('✅ 1. handleLogin INIZIATO');
+
             const clientName = document.getElementById('clientName').value.trim();
             const clientSurname = document.getElementById('clientSurname').value.trim();
+            const errorMsg = document.getElementById('loginErrorMsg');
 
-            // Crea o ottieni il messaggio di errore
-            let errorMsg = document.getElementById('loginErrorMsg');
-            if (!errorMsg) {
-                errorMsg = document.createElement('div');
-                errorMsg.id = 'loginErrorMsg';
-                errorMsg.className = 'login-error-msg';
-                errorMsg.style.display = 'none';
-                const form = document.getElementById('loginForm');
-                const submitBtn = form.querySelector('button[type="submit"]');
-                form.insertBefore(errorMsg, submitBtn);
+            console.log('✅ 2. Input letto:', clientName, clientSurname);
+
+            // Nascondi messaggi precedenti
+            errorMsg.style.display = 'none';
+
+            console.log('🔐 LOGIN - Controllando input');
+            console.log('Nome:', clientName);
+            console.log('Cognome:', clientSurname);
+
+            // Carica i dati - PRIMA DA FIREBASE
+            console.log('✅ 3. Caricando dati da FIREBASE...');
+            let data = null;
+
+            try {
+                // FIREBASE PRIMARY - carica direttamente da Firebase API
+                console.log('🔥 Tentativo caricamento da Firebase...');
+                const FIREBASE_URL = 'https://parrucchieri-online-default-rtdb.europe-west1.firebasedatabase.app';
+                const BUSINESS_ID = 'demo-parrucchiere-rossi';
+
+                const response = await fetch(`${FIREBASE_URL}/businesses/${BUSINESS_ID}.json`);
+                if (response.ok) {
+                    const firebaseData = await response.json();
+                    if (firebaseData) {
+                        data = firebaseData;
+                        console.log('🔥 ✅ Dati caricati da FIREBASE!', data);
+                    }
+                }
+
+                // FALLBACK: localStorage solo se Firebase non ha dati
+                if (!data) {
+                    console.log('⚠️ Firebase vuoto, uso localStorage come fallback');
+                    if (window.LocalStorage && typeof window.LocalStorage.load === 'function') {
+                        data = window.LocalStorage.load();
+                    } else {
+                        data = JSON.parse(localStorage.getItem('bookingDB') || '{}');
+                    }
+                }
+
+                console.log('✅ 5. Dati caricati:', data);
+                console.log('📋 Prenotazioni nel database:', data.bookings || []);
+            } catch (err) {
+                console.error('❌ ERRORE nel caricamento Firebase:', err);
+                // Fallback su localStorage
+                if (window.LocalStorage && typeof window.LocalStorage.load === 'function') {
+                    data = window.LocalStorage.load();
+                } else {
+                    data = JSON.parse(localStorage.getItem('bookingDB') || '{}');
+                }
             }
 
-            console.log('🔐 INIZIO VERIFICA CODICI ACCESSO');
-            console.log('Input Nome (20 cifre):', clientName);
-            console.log('Input Cognome (20 lettere):', clientSurname);
-
-            // Carica i codici dal database
-            let data = LocalStorage ? LocalStorage.load() : JSON.parse(localStorage.getItem('bookingDB') || '{}');
-
-            // Se data non ha securityCodes, usa i dati di default
-            if (!data.securityCodes) {
-                console.warn('⚠️ Nessun securityCodes trovato, carico dati di default');
-                if (LocalStorage && LocalStorage.getDefaultData) {
-                    data = LocalStorage.getDefaultData();
-                    console.log('📊 Dati di default caricati');
+            if (!data || !data.securityCodes) {
+                console.log('✅ 6. securityCodes non trovato, carico default');
+                if (window.LocalStorage && typeof window.LocalStorage.getDefaultData === 'function') {
+                    data = window.LocalStorage.getDefaultData();
+                    console.log('✅ 7. Default data caricato');
                 } else {
-                    console.error('❌ ERRORE: Security codes non trovati nel database');
+                    console.error('❌ ERRORE: LocalStorage non disponibile');
                     errorMsg.style.display = 'block';
-                    errorMsg.textContent = '❌ ERRORE: Codici di accesso non configurati nel sistema!';
+                    errorMsg.textContent = '❌ ERRORE: Dati non disponibili!';
                     return;
                 }
             }
 
-            const CORRECT_CODE_NUMBERS = data.securityCodes.accessCode1;
-            const CORRECT_CODE_LETTERS = data.securityCodes.accessCode2;
+            // ========================================
+            // CONTROLLA SE SONO CODICI PARRUCCHIERE
+            // ========================================
+            const isNameNumbers = /^\d{20}$/.test(clientName);
+            const isNameLetters = /^[A-Za-z]{20}$/.test(clientName);
+            const isSurnameLetters = /^[A-Za-z]{20}$/.test(clientSurname);
+            const isSurnameNumbers = /^\d{20}$/.test(clientSurname);
 
-            console.log('✅ Codice atteso (20 cifre):', CORRECT_CODE_NUMBERS);
-            console.log('✅ Codice atteso (20 lettere):', CORRECT_CODE_LETTERS);
-            console.log('Lunghezza Code1:', CORRECT_CODE_NUMBERS.length);
-            console.log('Lunghezza Code2:', CORRECT_CODE_LETTERS.length);
-            console.log('Lunghezza Input Nome:', clientName.length);
-            console.log('Lunghezza Input Cognome:', clientSurname.length);
+            // Se ENTRAMBI sono 20 caratteri nel formato corretto (numeri+lettere)
+            if (isNameNumbers && isSurnameLetters && clientName.length === 20 && clientSurname.length === 20) {
+                console.log('🔐 VERIFICA CODICI PARRUCCHIERE');
 
-            // ✅ VALIDAZIONE DI LUNGHEZZA E FORMATO
-            if (clientName.length !== 20 || clientSurname.length !== 20) {
-                // ❌ Lunghezza non corretta
-                console.log('❌ LUNGHEZZA NON VALIDA!');
+                const CORRECT_CODE_NUMBERS = data.securityCodes.accessCode1;
+                const CORRECT_CODE_LETTERS = data.securityCodes.accessCode2;
+
+                if (clientName === CORRECT_CODE_NUMBERS && clientSurname === CORRECT_CODE_LETTERS) {
+                    console.log('✅ CODICI PARRUCCHIERE CORRETTI! Reindirizzamento...');
+                    window.location.href = '/parrucchiere-login.html';
+                    return;
+                } else {
+                    console.log('❌ Codici parrucchiere non corretti');
+                    errorMsg.style.display = 'block';
+                    errorMsg.textContent = '❌ Codice di accesso errato!';
+                    document.getElementById('clientName').value = '';
+                    document.getElementById('clientSurname').value = '';
+                    setTimeout(() => { errorMsg.style.display = 'none'; }, 4000);
+                    return;
+                }
+            }
+
+            // ========================================
+            // ALTRIMENTI: CERCA PRENOTAZIONE CLIENTE
+            // ========================================
+            console.log('🔍 RICERCA PRENOTAZIONE CLIENTE');
+
+            const searchName = clientName.toLowerCase();
+            const searchSurname = clientSurname.toLowerCase();
+
+            if (!data.bookings) {
                 errorMsg.style.display = 'block';
-                errorMsg.textContent = 'Controlla i campi e riprova.';
-
-                // Pulisci gli input
-                document.getElementById('clientName').value = '';
-                document.getElementById('clientSurname').value = '';
-
-                // Nascondi il messaggio dopo 4 secondi
-                setTimeout(() => {
-                    errorMsg.style.display = 'none';
-                }, 4000);
+                errorMsg.textContent = '❌ Nessuna prenotazione trovata';
                 return;
             }
 
-            // ✅ VALIDAZIONE DEL TIPO DI CARATTERI
-            if (!/^\d{20}$/.test(clientName)) {
-                // ❌ Nome non contiene 20 numeri
-                console.log('❌ NOME NON È UN CODICE NUMERICO VALIDO!');
-                errorMsg.style.display = 'block';
-                errorMsg.textContent = 'Controlla i campi e riprova.';
+            // Cerca la prenotazione - gestisce ENTRAMBI i formati
+            const searchFull = (searchName + ' ' + searchSurname).trim().toLowerCase();
+            console.log('🔍 Cerco:', searchFull);
+            console.log('🔍 Nome:', searchName, 'Cognome:', searchSurname);
+            console.log('📋 Tutte le prenotazioni:', data.bookings);
 
-                // Pulisci gli input
+            // Converti data.bookings se è un oggetto (Firebase) in array
+            let bookingsArray = data.bookings;
+            if (bookingsArray && !Array.isArray(bookingsArray)) {
+                bookingsArray = Object.values(bookingsArray);
+            }
+            console.log('📋 Bookings array:', bookingsArray);
+
+            const booking = bookingsArray.find(b => {
+                // Formato 1: cliente = "Nome Cognome"
+                const bookingCliente = (b.cliente || '').trim().toLowerCase();
+
+                // Formato 2: clientName + clientSurname
+                const bookingClientName = (b.clientName || '').trim().toLowerCase();
+                const bookingClientSurname = (b.clientSurname || '').trim().toLowerCase();
+                const bookingFullName2 = (bookingClientName + ' ' + bookingClientSurname).trim();
+
+                console.log(`  Formato 1: "${bookingCliente}" === "${searchFull}" -> ${bookingCliente === searchFull}`);
+                console.log(`  Formato 2: "${bookingFullName2}" === "${searchFull}" -> ${bookingFullName2 === searchFull}`);
+                console.log(`  Formato 2b: name="${bookingClientName}"==="${searchName}" && surname="${bookingClientSurname}"==="${searchSurname}"`);
+
+                return bookingCliente === searchFull ||
+                       bookingFullName2 === searchFull ||
+                       (bookingClientName === searchName && bookingClientSurname === searchSurname);
+            });
+
+            if (!booking) {
+                console.log('❌ Prenotazione NON trovata');
+                errorMsg.style.display = 'block';
+                errorMsg.textContent = '❌ Nessuna prenotazione trovata. Controlla nome e cognome.';
                 document.getElementById('clientName').value = '';
                 document.getElementById('clientSurname').value = '';
-
-                // Nascondi il messaggio dopo 4 secondi
-                setTimeout(() => {
-                    errorMsg.style.display = 'none';
-                }, 4000);
                 return;
             }
 
-            if (!/^[A-Za-z]{20}$/.test(clientSurname)) {
-                // ❌ Cognome non contiene 20 lettere
-                console.log('❌ COGNOME NON È UN CODICE LETTERALE VALIDO!');
-                errorMsg.style.display = 'block';
-                errorMsg.textContent = 'Controlla i campi e riprova.';
+            console.log('✅ PRENOTAZIONE TROVATA!', booking);
 
-                // Pulisci gli input
-                document.getElementById('clientName').value = '';
-                document.getElementById('clientSurname').value = '';
+            // Nascondi il form login e mostra la sezione prenotazioni
+            const loginSection = document.getElementById('loginSection');
+            const prenotazioniSection = document.getElementById('prenotazioniSection');
 
-                // Nascondi il messaggio dopo 4 secondi
-                setTimeout(() => {
-                    errorMsg.style.display = 'none';
-                }, 4000);
-                return;
+            // Rimuovi classe active dal login e aggiungila alle prenotazioni
+            loginSection.classList.remove('active');
+            loginSection.style.display = 'none';
+
+            prenotazioniSection.classList.add('active');
+            prenotazioniSection.style.setProperty('display', 'block', 'important');
+
+            // Aggiorna il titolo - gestisce entrambi i formati
+            const clienteName = booking.cliente ||
+                                (booking.clientName && booking.clientSurname ? booking.clientName + ' ' + booking.clientSurname : '') ||
+                                booking.name ||
+                                'Cliente';
+            const titleElement = document.getElementById('clientePrenotazioneTitle');
+            if (titleElement) {
+                titleElement.textContent = `Prenotazione di ${clienteName}`;
             }
 
-            // ✅ SE PASSA TUTTE LE VALIDAZIONI, VERIFICA I CODICI ESATTI
-            if (clientName === CORRECT_CODE_NUMBERS && clientSurname === CORRECT_CODE_LETTERS) {
-                // ✅ Codici corretti → Reindirizza al form di login parrucchiere
-                console.log('✅✅✅ CODICI CORRETTI! Reindirizzamento a login-parrucchiere.html');
-                window.location.href = '/login-parrucchiere.html';
-            } else {
-                // ❌ Codici non corretti → Mostra errore in rosso
-                console.log('❌ CODICI NON VALIDI!');
-                console.log('Nome corretto?', clientName === CORRECT_CODE_NUMBERS);
-                console.log('Cognome corretto?', clientSurname === CORRECT_CODE_LETTERS);
+            // Popola il contenitore prenotazioni con la card della prenotazione
+            const prenotazioniContainer = document.getElementById('prenotazioniContainer');
+            if (prenotazioniContainer) {
+                const statusLower = (booking.status || '').toLowerCase();
+                const statusColor = statusLower.includes('conferm') ? '#14c579' : (statusLower.includes('attesa') ? '#ffc107' : '#e74c3c');
+                const statusColorBg = statusLower.includes('conferm') ? 'rgba(20, 197, 121, 0.1)' : (statusLower.includes('attesa') ? 'rgba(255, 193, 7, 0.1)' : 'rgba(231, 76, 60, 0.1)');
 
-                errorMsg.style.display = 'block';
-                errorMsg.textContent = '❌ CODICE DI ACCESSO ERRATO! Riprova.';
+                // Mappa i campi compatibilmente con entrambi i formati
+                const bData = booking.data || booking.date || 'N/A';
+                const bOra = booking.ora || booking.time || 'N/A';
+                const bServizio = booking.servizio || booking.service || 'Servizio';
+                const bPrezzo = booking.prezzo || booking.price || '0';
+                const bDurata = booking.durata || booking.duration || '0';
+                const bStatus = booking.status || 'Confermata';
 
-                // Pulisci gli input
-                document.getElementById('clientName').value = '';
-                document.getElementById('clientSurname').value = '';
+                prenotazioniContainer.innerHTML = `
+                    <div style="background: linear-gradient(135deg, #1a1a1a, #252525); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 12px; padding: 30px; margin-bottom: 40px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <h3 style="color: #d4af37; margin: 0; font-size: 24px;">✂️ ${bServizio}</h3>
+                            <span style="padding: 8px 16px; background: ${statusColorBg}; color: ${statusColor}; border-radius: 8px; font-weight: 600; font-size: 12px; text-transform: uppercase;">
+                                ${bStatus}
+                            </span>
+                        </div>
 
-                // Nascondi il messaggio dopo 4 secondi
-                setTimeout(() => {
-                    errorMsg.style.display = 'none';
-                }, 4000);
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                            <div style="background: rgba(212, 175, 55, 0.1); padding: 15px; border-radius: 8px; border-left: 3px solid #d4af37;">
+                                <div style="color: #999; font-size: 12px; margin-bottom: 5px;">📅 Data</div>
+                                <div style="color: #d4af37; font-size: 18px; font-weight: 600;">${bData}</div>
+                            </div>
+                            <div style="background: rgba(212, 175, 55, 0.1); padding: 15px; border-radius: 8px; border-left: 3px solid #d4af37;">
+                                <div style="color: #999; font-size: 12px; margin-bottom: 5px;">⏰ Ora</div>
+                                <div style="color: #d4af37; font-size: 18px; font-weight: 600;">${bOra}</div>
+                            </div>
+                            <div style="background: rgba(212, 175, 55, 0.1); padding: 15px; border-radius: 8px; border-left: 3px solid #d4af37;">
+                                <div style="color: #999; font-size: 12px; margin-bottom: 5px;">🏪 Parrucchiere</div>
+                                <div style="color: #d4af37; font-size: 18px; font-weight: 600;">Parrucchiere Rossi</div>
+                            </div>
+                            <div style="background: rgba(212, 175, 55, 0.1); padding: 15px; border-radius: 8px; border-left: 3px solid #d4af37;">
+                                <div style="color: #999; font-size: 12px; margin-bottom: 5px;">💰 Prezzo</div>
+                                <div style="color: #d4af37; font-size: 18px; font-weight: 600;">€${bPrezzo}</div>
+                            </div>
+                            <div style="background: rgba(212, 175, 55, 0.1); padding: 15px; border-radius: 8px; border-left: 3px solid #d4af37;">
+                                <div style="color: #999; font-size: 12px; margin-bottom: 5px;">⏱️ Durata</div>
+                                <div style="color: #d4af37; font-size: 18px; font-weight: 600;">${bDurata} min</div>
+                            </div>
+                        </div>
+
+                        <div style="background: rgba(20, 197, 121, 0.1); padding: 15px; border-radius: 8px; border-left: 3px solid #14c579; margin-bottom: 20px;">
+                            <div style="color: #14c579; font-weight: 600; font-size: 14px;">✅ Prenotazione Confermata</div>
+                            <div style="color: #ccc; font-size: 13px; margin-top: 5px;">La tua prenotazione è stata registrata. Ti aspettiamo!</div>
+                        </div>
+
+                        <button onclick="annullaAppuntamento('${booking.id}')" style="width: 100%; padding: 12px; background: linear-gradient(135deg, #e74c3c, #c0392b); color: #fff; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s; font-size: 15px;">🗑️ Annulla Appuntamento</button>
+                    </div>
+                `;
             }
         }
     </script>

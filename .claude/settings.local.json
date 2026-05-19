@@ -103,7 +103,20 @@
       "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('Nome salone:', d.get\\('name'\\)\\); print\\('Tutti i campi:', list\\(d.keys\\(\\)\\)\\)\")",
       "Bash(findstr /i \"listen\")",
       "Bash(findstr \"80\\\\|8000\\\\|8080\\\\|3000\\\\|5000\")",
-      "Bash(python -m http.server 8000 > /tmp/server.log 2>&1 & *)"
+      "Bash(python -m http.server 8000 > /tmp/server.log 2>&1 & *)",
+      "Bash(curl -s http://localhost:8888/parrucchiere-login.html)",
+      "Bash(python -m http.server 8888)",
+      "Bash(curl -s -I http://localhost:8888/parrucchiere-login.html)",
+      "Bash(vercel --prod --confirm)",
+      "Bash(tee deploy.log)",
+      "Bash(python -c \"import sys, json; data = json.load\\(sys.stdin\\); print\\('Bookings:', json.dumps\\(data.get\\('bookings', []\\), indent=2\\)[:2000] if data else 'No data'\\)\")",
+      "Bash(curl -s \"https://parrucchieri-online-default-rtdb.europe-west1.firebasedatabase.app/businesses/demo-parrucchiere-rossi/bookings.json\")",
+      "Bash(node test-search.js)",
+      "Bash(curl -s \"https://parrucchieri-online-default-rtdb.europe-west1.firebasedatabase.app/businesses/demo-parrucchiere-rossi/parrucchieri.json\")",
+      "Bash(curl -s -X PUT \"https://parrucchieri-online-default-rtdb.europe-west1.firebasedatabase.app/businesses/demo-parrucchiere-rossi/parrucchieri.json\" -H \"Content-Type: application/json\" -d '[{\"id\":\"p1\",\"name\":\"Marco\",\"surname\":\"Rossi\",\"email\":\"admin@admin.it\",\"password\":\"admin123\",\"isOwner\":true,\"phone\":\"+39 011 555 1234\"},{\"id\":\"p2\",\"name\":\"Anna\",\"surname\":\"Bianchi\",\"email\":\"anna@admin.it\",\"password\":\"anna123\",\"isOwner\":false,\"phone\":\"+39 333 444 555\"}]')",
+      "Bash(cd \"/c/Users/Utente/Desktop/Artigiani\" && wc -l parrucchiere-login.html)",
+      "Bash(node -c parrucchiere-login.html)",
+      "Bash(node validate-login.js)"
     ]
   }
 }
