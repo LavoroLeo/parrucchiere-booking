@@ -116,7 +116,11 @@
       "Bash(curl -s -X PUT \"https://parrucchieri-online-default-rtdb.europe-west1.firebasedatabase.app/businesses/demo-parrucchiere-rossi/parrucchieri.json\" -H \"Content-Type: application/json\" -d '[{\"id\":\"p1\",\"name\":\"Marco\",\"surname\":\"Rossi\",\"email\":\"admin@admin.it\",\"password\":\"admin123\",\"isOwner\":true,\"phone\":\"+39 011 555 1234\"},{\"id\":\"p2\",\"name\":\"Anna\",\"surname\":\"Bianchi\",\"email\":\"anna@admin.it\",\"password\":\"anna123\",\"isOwner\":false,\"phone\":\"+39 333 444 555\"}]')",
       "Bash(cd \"/c/Users/Utente/Desktop/Artigiani\" && wc -l parrucchiere-login.html)",
       "Bash(node -c parrucchiere-login.html)",
-      "Bash(node validate-login.js)"
+      "Bash(node validate-login.js)",
+      "Bash(echo \"node_modules/\")",
+      "Bash(git rm *)",
+      "Bash(rm -rf node_modules package-lock.json)",
+      "Bash(echo \"package-lock.json\")"
     ]
   }
 }
