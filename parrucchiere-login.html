@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Parrucchiere Rossi - Admin</title>
+    <script>
+        // Block specific errors from external libraries
+        window.addEventListener('error', function(e) {
+            if (e.message && e.message.includes("Identifier 'model' has already been declared")) {
+                e.preventDefault();
+                return false;
+            }
+        }, true);
+    </script>
     <style>
         * {
             margin: 0;
