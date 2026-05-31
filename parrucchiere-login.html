@@ -1804,16 +1804,6 @@
                 </div>
             `;
             modal.style.display = 'flex';
-            return;
-
-            const modal = document.getElementById('dayModal');
-            if (modal) {
-                modal.style.display = 'flex';
-                const content = modal.querySelector('.modal-content');
-                if (content) {
-                    content.innerHTML = `<h3>Prenotazioni del ${new Date(dateStr).toLocaleDateString('it-IT')}</h3>`;
-                }
-            }
         }
 
         function closeDayModal() {
