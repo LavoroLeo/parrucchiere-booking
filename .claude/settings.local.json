@@ -120,7 +120,9 @@
       "Bash(echo \"node_modules/\")",
       "Bash(git rm *)",
       "Bash(rm -rf node_modules package-lock.json)",
-      "Bash(echo \"package-lock.json\")"
+      "Bash(echo \"package-lock.json\")",
+      "Bash(node -e \"const fs = require\\('fs'\\); const html = fs.readFileSync\\('parrucchiere-login.html', 'utf8'\\); console.log\\('✅ FILE SIZE:', \\(html.length / 1024\\).toFixed\\(2\\), 'KB'\\); console.log\\('✅ Has handleLoginInFile:', html.includes\\('handleLoginInFile'\\) ? 'YES' : 'NO'\\); console.log\\('✅ Has window.DEFAULT_DATA:', html.includes\\('window.DEFAULT_DATA'\\) ? 'YES' : 'NO'\\); console.log\\('✅ Has admin@admin.it:', html.includes\\('admin@admin.it'\\) ? 'YES' : 'NO'\\); console.log\\('✅ No dead code \\(const modal after return\\):', !html.match\\(/return;[\\\\s\\\\S]*?const modal\\\\s*=/\\) ? 'YES' : 'NO'\\);\")",
+      "Bash(node --check parrucchiere-login.html)"
     ]
   }
 }

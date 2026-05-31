@@ -13,6 +13,21 @@
             }
         }, true);
     </script>
+    <script>
+        // Default data - MUST be in HEAD to be available before login form
+        window.DEFAULT_DATA = {
+            parrucchieri: [
+                { id: 'p1', name: 'Marco', surname: 'Rossi', email: 'admin@admin.it', password: 'admin123', isOwner: true },
+                { id: 'p2', name: 'Anna', surname: 'Bianchi', email: 'anna@admin.it', password: 'anna123', isOwner: false }
+            ],
+            bookings: [],
+            services: [
+                { id: 1, name: 'Taglio Uomo', price: 25, duration: 30 },
+                { id: 2, name: 'Taglio Donna', price: 35, duration: 45 }
+            ],
+            reviews: []
+        };
+    </script>
     <style>
         * {
             margin: 0;
@@ -1160,20 +1175,6 @@
         // ========================================
         window.FIREBASE_DB_URL = 'https://parrucchieri-online-default-rtdb.europe-west1.firebasedatabase.app';
         window.BUSINESS_ID = 'demo-parrucchiere-rossi';
-
-        // Default data inline
-        window.DEFAULT_DATA = {
-            parrucchieri: [
-                { id: 'p1', name: 'Marco', surname: 'Rossi', email: 'admin@admin.it', password: 'admin123', isOwner: true },
-                { id: 'p2', name: 'Anna', surname: 'Bianchi', email: 'anna@admin.it', password: 'anna123', isOwner: false }
-            ],
-            bookings: [],
-            services: [
-                { id: 1, name: 'Taglio Uomo', price: 25, duration: 30 },
-                { id: 2, name: 'Taglio Donna', price: 35, duration: 45 }
-            ],
-            reviews: []
-        };
     </script>
 
     <script>
