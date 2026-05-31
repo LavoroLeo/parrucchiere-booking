@@ -1510,10 +1510,15 @@
                 // Fallback localStorage
                 if (!data) {
                     try {
-                        data = window.LocalStorage.load();
+                        const stored = localStorage.getItem('bookingDB');
+                        if (stored) {
+                            data = JSON.parse(stored);
+                        } else {
+                            data = window.DEFAULT_DATA || {};
+                        }
                     } catch (e) {
-                        console.error('Errore caricamento LocalStorage:', e);
-                        data = {};
+                        console.error('Errore caricamento localStorage:', e);
+                        data = window.DEFAULT_DATA || {};
                     }
                 }
 
@@ -2487,12 +2492,12 @@
                 // If still empty, use default data
                 if (!data || !data.parrucchieri) {
                     console.log('📦 Using default data');
-                    if (window.LocalStorage && typeof window.LocalStorage.getDefaultData === 'function') {
-                        data = window.LocalStorage.getDefaultData();
-                        console.log('✅ Default data loaded');
+                    if (window.DEFAULT_DATA && window.DEFAULT_DATA.parrucchieri) {
+                        data = window.DEFAULT_DATA;
+                        console.log('✅ Default data loaded from window.DEFAULT_DATA');
                     } else {
-                        console.error('❌ LocalStorage non disponibile!');
-                        throw new Error('Sistema non inizializzato - LocalStorage non disponibile');
+                        console.error('❌ Default data non disponibile!');
+                        throw new Error('Sistema non inizializzato - Default data non disponibile');
                     }
                 }
 
